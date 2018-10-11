@@ -11520,11 +11520,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\fabia\\Downloads\\3D Labyrinth\\3D Labyrinth\\3D Labyrinth\\3D Labyrinth.csproj",
+      "projectUniqueName": "C:\\Users\\fabia\\Documents\\GitHub\\3Dproject\\3D Labyrinth\\3D Labyrinth\\3D Labyrinth.csproj",
       "projectName": "3D Labyrinth",
-      "projectPath": "C:\\Users\\fabia\\Downloads\\3D Labyrinth\\3D Labyrinth\\3D Labyrinth\\3D Labyrinth.csproj",
+      "projectPath": "C:\\Users\\fabia\\Documents\\GitHub\\3Dproject\\3D Labyrinth\\3D Labyrinth\\3D Labyrinth.csproj",
       "packagesPath": "C:\\Users\\fabia\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\fabia\\Downloads\\3D Labyrinth\\3D Labyrinth\\3D Labyrinth\\obj\\",
+      "outputPath": "C:\\Users\\fabia\\Documents\\GitHub\\3Dproject\\3D Labyrinth\\3D Labyrinth\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
