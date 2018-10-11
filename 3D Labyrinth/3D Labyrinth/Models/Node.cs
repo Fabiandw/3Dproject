@@ -7,6 +7,7 @@ namespace Models
 {
     public class Node
     {
+        public Guid guid { get; set; }
         private double _x;
         private double _y;
         private double _z;
@@ -22,6 +23,7 @@ namespace Models
             _y = y;
             _z = z;
             this.code = value;
+            guid = Guid.NewGuid();
         }
     }
 }
