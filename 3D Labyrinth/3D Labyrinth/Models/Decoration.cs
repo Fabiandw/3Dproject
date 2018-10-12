@@ -15,7 +15,7 @@ namespace Models
         public Decoration(string type, double x, double y, double z, double rotationX, double rotationY, double rotationZ)
         {
             guid = Guid.NewGuid();
-            type = "decoartion";
+            type = "decoration";
             decoType = type;
 
             _x = x;
