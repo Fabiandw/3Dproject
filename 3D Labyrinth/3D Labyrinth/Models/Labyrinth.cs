@@ -1,24 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text;
+using System.Drawing;
 
 namespace Models
 {
+    // Class redundant? Use Grid instead?
     public class Labyrinth
-{
+    {
         public Guid guid { get; set; }
-        public List<Node> nodeList { get; set; }
-        public List<Connection> connectionList { get; set; }
         public Grid grid { get; set; }
+        
 
-        public Labyrinth(List<Node> nodes, List<Connection> connections, Grid thisGrid)
+        public Labyrinth(Grid thisGrid)
         {
-            nodeList = nodes;
-            connectionList = connections;
+            //use nodeList and connectionList from the Grid
             grid = thisGrid;
             guid = Guid.NewGuid();
         }
+
+        //labyrinth maker
         public void RemoveWalls()
         {
 
