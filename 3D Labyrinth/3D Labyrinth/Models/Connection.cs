@@ -9,13 +9,14 @@ namespace Models
     {
         public Guid guid { get; set; }
         public List<Node> nodeList { get; set; }
-        public bool Wall;
+        public bool wall;
 
         public Connection(Node node1, Node node2)
         {
             nodeList = new List<Node>();
             nodeList.Add(node1);
             nodeList.Add(node2);
+            wall = true;
             guid = Guid.NewGuid();
         }
     }

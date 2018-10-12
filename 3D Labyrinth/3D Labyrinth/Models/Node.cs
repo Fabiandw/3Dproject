@@ -15,6 +15,7 @@ namespace Models
         public double y { get { return _y; } }
         public double z { get { return _z; } }
         public string code { get; }
+        public bool visited { get; set; }
 
         public Node(string value, double x, double y, double z)
         {
@@ -22,6 +23,7 @@ namespace Models
             _x = x;
             _y = y;
             _z = z;
+            visited = false;
             this.code = value;
             guid = Guid.NewGuid();
         }
