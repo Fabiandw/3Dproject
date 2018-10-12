@@ -14,16 +14,18 @@ namespace Models
         public List<Node> nodeList { get; set; }
         public List<Connection> connectionList { get; set; }
 
+        //Constructor
         public Grid(double x, double z)
         {
             _xMax = x;
             _zMax = z;
-            connectionList = new List<Connection>();
-            nodeList = new List<Node>();
+            nodeList = MakeNodes();
+            connectionList = MakeConnections();
         }
 
-        public void MakeNodes()
+        private List<Node> MakeNodes()
         {
+            List<Node> returnList = new List<Node>();
             //Makes all nodes with the given x and z maximum values
             for (int i = 1; i <= xMax; i++)
             {
@@ -33,20 +35,21 @@ namespace Models
                     nodeList.Add(newNode);
                 }
             }
+
+            return returnList;
         }
 
-        //Use MakeNodes first! Later we can join them, maybe. Seperated for clarity
-        public void makeConnections()
+        private List<Connection> MakeConnections()
         {
             List<Connection> returnList = new List<Connection>();
-            // make a connection between every z value of x, starting at 1, stopping at the last.
-            // these are all vertical connections that have to be made.
+            //Make a connection between every z value of x, starting at 1, stopping at the last.
+            //These are all vertical connections that have to be made.
             for (int i = 1; i < xMax; i++)
             {
                 for (int j = 1; j < zMax; j++)
                 {
                     //Using list.Find method to get the right nodes  
-                    //connection between the current node and the one to the right
+                    //Connection between the current node and the one to the right
                     Node n1 = nodeList.Find(match => match.x == i && match.z == j);
                     Node n2 = nodeList.Find(match => match.x == i && match.z+1 == j);
                     Connection newConnection = new Connection(n1, n2);
@@ -60,14 +63,15 @@ namespace Models
                 for (int j = 1; j < xMax; j++)
                 {
                     //Using list.Find method to get the right nodes  
-                    //connection between the current node and the one above
+                    //Connection between the current node and the one above
                     Node n1 = nodeList.Find(match => match.x == i && match.z == j);
                     Node n2 = nodeList.Find(match => match.x == i && match.z + 1 == j);
                     Connection newConnection = new Connection(n1, n2);
                     returnList.Add(newConnection);
                 }
             }
-            connectionList = returnList;
+
+            return returnList;
         }
     }
 }

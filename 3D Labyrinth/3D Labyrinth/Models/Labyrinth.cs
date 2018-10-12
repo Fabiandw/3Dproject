@@ -8,22 +8,23 @@ using System.Drawing;
 
 namespace Models
 {
-    // Class redundant? Use Grid instead?
+    //Class redundant? Use Grid instead?
     public class Labyrinth
     {
         public Guid guid { get; set; }
         public Grid grid { get; set; }
         public List<Connection.Wall> walls { get; set; }
 
+        //Constructor
         public Labyrinth(Grid thisGrid)
         {
-            //use nodeList and connectionList from the Grid
+            //Use nodeList and connectionList from the Grid
             grid = thisGrid;
             guid = Guid.NewGuid();
             walls = MakeWalls(grid.connectionList, 1, 1, 1);
         }
 
-        //labyrinth maker
+        //Labyrinth maker
         public void RemoveWalls()
         {
 
