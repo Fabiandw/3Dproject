@@ -13,11 +13,14 @@ namespace Models
 
         public Connection(Node node1, Node node2)
         {
+            //How will we compare to this class for RemoveWalls?
+            //Maybe use start/end as values for the nodes?
             nodeList = new List<Node>();
             nodeList.Add(node1);
             nodeList.Add(node2);
-            wall = true;
             guid = Guid.NewGuid();
+            //Default true for RemoveWalls method
+            wall = true;
         }
     }
 }
