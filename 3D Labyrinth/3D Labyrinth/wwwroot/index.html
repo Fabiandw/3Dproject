@@ -95,8 +95,8 @@
                 if (command.command == "update") {
                     if (Object.keys(worldObjects).indexOf(command.parameters.guid) < 0) {
                         if (command.parameters.type == "wall") {
-                            //Position and Dimensions need to be optained from the object, but idk how that is done yet
-                            var geometry = new THREE.PlaneGeometry(1, 1, 1);
+                            //Position and Dimensions need to be optained from the object, but idk if this works
+                            var geometry = new THREE.PlaneGeometry(command.parameters.length, command.parameters.width, command.parameters.height);
                             var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/wall.png"), side: THREE.DoubleSide });
                             var wall = new THREE.Mesh(geometry, material);
 
@@ -105,6 +105,24 @@
 
                             scene.add(walls);
                             worldObjects[command.parameters.guid] = walls;
+                        }
+                        else if (command.parameters.type == "decoration") {
+                            var decorations = new THREE.Group();
+                            worldObjects[command.parameters.guid] = decorations;
+
+                            //Examples of decoration types
+                            if (command.parameters.decoType == "tree") {
+                                loadOBJModel("models/tree/", "tree.obj", "models/tree/", "tree.mtl", (mesh) => {
+                                    decorations.add(mesh);
+                                    scene.add(decorations);
+                                });
+                            }
+                            else if (command.parameters.decoType == "torch") {
+                                loadOBJModel("models/torch/", "torch.obj", "models/torch/", "torch.mtl", (mesh) => {
+                                    decorations.add(mesh);
+                                    scene.add(decorations);
+                                });
+                            }
                         }
                     }
 
