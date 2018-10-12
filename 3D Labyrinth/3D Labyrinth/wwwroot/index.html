@@ -94,7 +94,10 @@
 
                 if (command.command == "update") {
                     if (Object.keys(worldObjects).indexOf(command.parameters.guid) < 0) {
-                        if (command.parameters.type == "wall") {
+                        if (command.parameters.type == "player") {
+
+                        }
+                        else if (command.parameters.type == "wall") {
                             //Position and Dimensions need to be optained from the object, but idk if this works
                             var geometry = new THREE.PlaneGeometry(command.parameters.length, command.parameters.width, command.parameters.height);
                             var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/wall.png"), side: THREE.DoubleSide });

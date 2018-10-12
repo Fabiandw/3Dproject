@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\models\" />
     <Folder Include="wwwroot\textures\" />
   </ItemGroup>
 
