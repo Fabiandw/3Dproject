@@ -13,6 +13,28 @@ namespace Models
         public World()
         {
 
+            //DEBUG TEST
+            int counter = 0;
+            Grid newGrid = new Grid(5, 5);
+            Labyrinth newLab = new Labyrinth(newGrid);
+            List<Connection> resultList = new List<Connection>();
+            foreach (Connection connection in newLab.grid.connectionList)
+            {
+                if (connection.wall == false)
+                {
+                    resultList.Add(connection);
+                    counter++;
+                }
+            }
+            int countResult = counter;
+            List<Connection> resultListCheck = resultList;
+            string[] text = new string[countResult];
+            for (int i = 0; i < resultListCheck.Count; i++)
+            {
+                text[i] = " " + Convert.ToString(resultListCheck[i].nodeList[0].x) + "," + Convert.ToString(resultListCheck[i].nodeList[0].z) + "---->" + " " + Convert.ToString(resultListCheck[i].nodeList[1].x) + "," + Convert.ToString(resultListCheck[i].nodeList[1].z);
+
+            }
+            text[0] = ""; 
         }
 
         public override IDisposable Subscribe(IObserver<Command> observer)

@@ -14,14 +14,15 @@ namespace Models
         //Connection Constructor
         public Connection(Node node1, Node node2)
         {
+            guid = Guid.NewGuid();
             //How will we compare to this class for RemoveWalls?
             //Maybe use start/end as values for the nodes?
             nodeList = new List<Node>();
             nodeList.Add(node1);
             nodeList.Add(node2);
-            guid = Guid.NewGuid();
             //Default true for RemoveWalls method
             wall = true;
+
         }
 
         public class Wall : Model3D

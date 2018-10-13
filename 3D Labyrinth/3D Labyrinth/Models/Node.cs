@@ -20,6 +20,11 @@ namespace Models
         public double y { get { return _y; } }
         public double z { get { return _z; } }
         public bool visited { get; set; }
+        public Stack<Node> Stack { get; set; }
+        //For RemoveWalls()
+        public List<Node> connectedNodeList { get; set; }
+        //Praise RNGsus
+        public static Random rng = new Random();
 
         public Node(double x, double y, double z)
         {
@@ -27,10 +32,43 @@ namespace Models
             _x = x;
             _y = y;
             _z = z;
-
+            connectedNodeList = new List<Node>();
             //Default false for the RemoveWalls method
             visited = false;
             guid = Guid.NewGuid();
         }
+
+        // Worksn't
+
+        //public void AddConnectedNode(Node connected)
+        //{
+        //    connectedNodeList.Add(connected);
+        //}
+
+        public Node GetConnectedNode()
+        {
+            //default null
+            Node returnNode = null;
+            List<Node> unvisitedList = new List<Node>();
+
+            //make list of unvisited nodes from connected nodelist
+            foreach (Node node in connectedNodeList)
+            {
+                if (node.visited == false)
+                {
+                    unvisitedList.Add(node);
+                }
+            }
+            //if there are any, select a random unvisited node
+            if (unvisitedList.Count > 0)
+            {
+                int r = rng.Next(unvisitedList.Count);
+                returnNode = unvisitedList[r];
+            }
+            //return null, or a random unvisited node
+            return returnNode;
+        }
+
+
     }
 }

@@ -19,6 +19,8 @@ namespace Models
         {
             _xMax = x;
             _zMax = z;
+            nodeList = new List<Node>();
+            connectionList = new List<Connection>();
             nodeList = MakeNodes();
             connectionList = MakeConnections();
         }
@@ -32,7 +34,7 @@ namespace Models
                 for (int j = 1; j <= zMax; j++)
                 {
                     Node newNode = new Node(i, 0 , j);
-                    nodeList.Add(newNode);
+                    returnList.Add(newNode);
                 }
             }
 
@@ -50,9 +52,13 @@ namespace Models
                 {
                     //Using list.Find method to get the right nodes  
                     //Connection between the current node and the one to the right
-                    Node n1 = nodeList.Find(match => match.x == i && match.z == j);
-                    Node n2 = nodeList.Find(match => match.x == i && match.z+1 == j);
+                    Node n1 = nodeList.Find(match => (match.x == i && match.z == j));
+                    Node n2 = nodeList.Find(match => (match.x == i && match.z == j+1));
                     Connection newConnection = new Connection(n1, n2);
+                    //For RemoveWalls()
+                    n1.connectedNodeList.Add(n2);
+                    n2.connectedNodeList.Add(n1);
+
                     returnList.Add(newConnection);
                 }
             }
@@ -65,8 +71,11 @@ namespace Models
                     //Using list.Find method to get the right nodes  
                     //Connection between the current node and the one above
                     Node n1 = nodeList.Find(match => match.x == i && match.z == j);
-                    Node n2 = nodeList.Find(match => match.x == i && match.z + 1 == j);
+                    Node n2 = nodeList.Find(match => match.x == i+1 && match.z == j);
                     Connection newConnection = new Connection(n1, n2);
+                    //For RemoveWalls()
+                    n1.connectedNodeList.Add(n2);
+                    n2.connectedNodeList.Add(n1);
                     returnList.Add(newConnection);
                 }
             }
