@@ -40,13 +40,16 @@ namespace Models
         public void RemoveWalls()
         {
             stack.Clear();
+            //set starting node to visited
             currentNode.visited = true;
 
             while (currentNode != null)
             {
+                //find a random unvisited connection and push it to the stack, and remove the wall
                 currentNode = FindNextNode();
                 if (currentNode != null)
                 {
+                    //set the chosen node to visited
                     currentNode.visited = true;
                 }
             }
@@ -61,11 +64,14 @@ namespace Models
             Node nextNode = currentNode.GetConnectedNode();
             if ((nextNode != null))
             {
+                //push the next node into the stack
                 stack.Push(nextNode);
+                //remove the wall in the connection
                 RemoveCurrentWall(currentNode,nextNode);
             }
             else if (!(stack.Count == 0))
             {
+                //backtracking
                 nextNode = stack.Pop();
             }
             else
