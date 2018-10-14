@@ -79,6 +79,8 @@ namespace Models
         public void RemoveCurrentWall(Node current, Node next)
         {
             grid.connectionList.Find(match => (match.nodeList.Contains(current) && match.nodeList.Contains(next))).wall = false;
+            grid.connectionList.Find(match => (match.nodeList.Contains(next) && match.nodeList.Contains(current))).wall = false;
+
         }
         
 

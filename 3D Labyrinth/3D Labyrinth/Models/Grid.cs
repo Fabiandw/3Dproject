@@ -46,7 +46,7 @@ namespace Models
             List<Connection> returnList = new List<Connection>();
             //Make a connection between every z value of x, starting at 1, stopping at the last.
             //These are all vertical connections that have to be made.
-            for (int i = 1; i < xMax; i++)
+            for (int i = 1; i <= xMax; i++)
             {
                 for (int j = 1; j < zMax; j++)
                 {
@@ -64,14 +64,14 @@ namespace Models
             }
 
             //For horizontal connections, notice zMax and xMax are switched.
-            for (int i = 1; i < zMax; i++)
+            for (int i = 1; i <= zMax; i++)
             {
                 for (int j = 1; j < xMax; j++)
                 {
                     //Using list.Find method to get the right nodes  
                     //Connection between the current node and the one above
-                    Node n1 = nodeList.Find(match => match.x == i && match.z == j);
-                    Node n2 = nodeList.Find(match => match.x == i+1 && match.z == j);
+                    Node n1 = nodeList.Find(match => match.x == j && match.z == i);
+                    Node n2 = nodeList.Find(match => match.x == j+1 && match.z == i);
                     Connection newConnection = new Connection(n1, n2);
                     //For RemoveWalls()
                     n1.connectedNodeList.Add(n2);
