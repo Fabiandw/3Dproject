@@ -20,7 +20,6 @@ namespace Models
         public double y { get { return _y; } }
         public double z { get { return _z; } }
         public bool visited { get; set; }
-        public Stack<Node> Stack { get; set; }
         //For RemoveWalls()
         public List<Node> connectedNodeList { get; set; }
         //Praise RNGsus
@@ -37,13 +36,6 @@ namespace Models
             visited = false;
             guid = Guid.NewGuid();
         }
-
-        // Worksn't
-
-        //public void AddConnectedNode(Node connected)
-        //{
-        //    connectedNodeList.Add(connected);
-        //}
 
         public Node GetConnectedNode()
         {

@@ -54,7 +54,7 @@ namespace Models
                     //Connection between the current node and the one to the right
                     Node n1 = nodeList.Find(match => (match.x == i && match.z == j));
                     Node n2 = nodeList.Find(match => (match.x == i && match.z == j+1));
-                    Connection newConnection = new Connection(n1, n2);
+                    Connection newConnection = new Connection(n1, n2, false);
                     //For RemoveWalls()
                     n1.connectedNodeList.Add(n2);
                     n2.connectedNodeList.Add(n1);
@@ -72,7 +72,7 @@ namespace Models
                     //Connection between the current node and the one above
                     Node n1 = nodeList.Find(match => match.x == j && match.z == i);
                     Node n2 = nodeList.Find(match => match.x == j+1 && match.z == i);
-                    Connection newConnection = new Connection(n1, n2);
+                    Connection newConnection = new Connection(n1, n2, true);
                     //For RemoveWalls()
                     n1.connectedNodeList.Add(n2);
                     n2.connectedNodeList.Add(n1);

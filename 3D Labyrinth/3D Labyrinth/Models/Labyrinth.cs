@@ -16,7 +16,6 @@ namespace Models
         public List<Connection.Wall> walls { get; set; }
         public Node currentNode { get; set; }
         public Node endNode { get; set; }
-        public int counter { get; set; }
         public Stack<Node> stack = new Stack<Node>();
 
         //Constructor
@@ -26,11 +25,7 @@ namespace Models
             grid = thisGrid;
             guid = Guid.NewGuid();
             walls = MakeWalls(grid.connectionList, 1, 1, 1);
-            endNode = grid.nodeList.Find(match => match.x == grid.xMax && match.z == grid.zMax);
             stack = new Stack<Node>();
-            //Count how many nodes still need to be visited (this might change due to start, end and puzzle nodes)
-            //Default will be all nodes
-            counter = 0;
             //For debugging
             currentNode = grid.nodeList.First();
             RemoveWalls();
