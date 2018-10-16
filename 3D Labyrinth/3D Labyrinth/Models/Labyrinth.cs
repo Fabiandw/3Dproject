@@ -13,7 +13,7 @@ namespace Models
     {
         public Guid guid { get; set; }
         public Grid grid { get; set; }
-        public List<Connection.Wall> walls { get; set; }
+        public List<Wall> walls { get; set; }
         public Node currentNode { get; set; }
         public Node endNode { get; set; }
         public int counter { get; set; }
@@ -85,15 +85,15 @@ namespace Models
         
 
         //Wall maker, needs a list of connections and the dimensions for the walls
-        public List<Connection.Wall> MakeWalls(List<Connection> list, double length, double width, double height)
+        public List<Wall> MakeWalls(List<Connection> list, double length, double width, double height)
         {
             //Initiating return list
-            List<Connection.Wall> returnList = new List<Connection.Wall>();
+            List<Wall> returnList = new List<Wall>();
             
             //For each connection in the given list where wall == true, make a wall using the connection and the given dimensions and then add it to the return list
             foreach (Connection connection in list.Where(i => i.wall == true))
             {
-                Connection.Wall wall = new Connection.Wall(connection, length, width, height);
+                Wall wall = new Wall(connection, length, width, height);
                 returnList.Add(wall);
             }
 
