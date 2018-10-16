@@ -15,11 +15,12 @@
         }
 
         var exampleSocket;
+        
 
         window.onload = function () {
             var camera, scene, renderer;
             var cameraControls;
-
+            var textLoader = new THREE.TextureLoader();
             var worldObjects = {};
 
             function init() {
@@ -38,8 +39,9 @@
 
                 window.addEventListener('resize', onWindowResize, false);
 
-                var geometry = new THREE.PlaneGeometry(30, 30, 32);
-                var material = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide });
+                var geometry = new THREE.PlaneGeometry(150, 100, 32);
+                var texture = textLoader.load('textures/asphalt.jpg');
+                var material = new THREE.MeshLambertMaterial({ map : texture, side: THREE.DoubleSide });
                 var plane = new THREE.Mesh(geometry, material);
                 plane.rotation.x = Math.PI / 2.0;
                 plane.position.x = 15;

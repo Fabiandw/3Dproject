@@ -12,3 +12,17 @@ C:\Users\fabia\Documents\GitHub\3Dproject\3D Labyrinth\3D Labyrinth\obj\Debug\ne
 C:\Users\fabia\Documents\GitHub\3Dproject\3D Labyrinth\3D Labyrinth\obj\Debug\netcoreapp2.1\3D Labyrinth.RazorTargetAssemblyInfo.cache
 C:\Users\fabia\Documents\GitHub\3Dproject\3D Labyrinth\3D Labyrinth\obj\Debug\netcoreapp2.1\3D Labyrinth.dll
 C:\Users\fabia\Documents\GitHub\3Dproject\3D Labyrinth\3D Labyrinth\obj\Debug\netcoreapp2.1\3D Labyrinth.pdb
+D:\OneDrive - NHL Stenden Hogeschool\School\Jaar 2\Graphics_OOP\3Dproject\3D Labyrinth\3D Labyrinth\bin\Debug\netcoreapp2.1\3D Labyrinth.deps.json
+D:\OneDrive - NHL Stenden Hogeschool\School\Jaar 2\Graphics_OOP\3Dproject\3D Labyrinth\3D Labyrinth\bin\Debug\netcoreapp2.1\3D Labyrinth.runtimeconfig.json
+D:\OneDrive - NHL Stenden Hogeschool\School\Jaar 2\Graphics_OOP\3Dproject\3D Labyrinth\3D Labyrinth\bin\Debug\netcoreapp2.1\3D Labyrinth.runtimeconfig.dev.json
+D:\OneDrive - NHL Stenden Hogeschool\School\Jaar 2\Graphics_OOP\3Dproject\3D Labyrinth\3D Labyrinth\bin\Debug\netcoreapp2.1\3D Labyrinth.dll
+D:\OneDrive - NHL Stenden Hogeschool\School\Jaar 2\Graphics_OOP\3Dproject\3D Labyrinth\3D Labyrinth\bin\Debug\netcoreapp2.1\3D Labyrinth.pdb
+D:\OneDrive - NHL Stenden Hogeschool\School\Jaar 2\Graphics_OOP\3Dproject\3D Labyrinth\3D Labyrinth\obj\Debug\netcoreapp2.1\3D Labyrinth.csprojAssemblyReference.cache
+D:\OneDrive - NHL Stenden Hogeschool\School\Jaar 2\Graphics_OOP\3Dproject\3D Labyrinth\3D Labyrinth\obj\Debug\netcoreapp2.1\3D Labyrinth.csproj.CoreCompileInputs.cache
+D:\OneDrive - NHL Stenden Hogeschool\School\Jaar 2\Graphics_OOP\3Dproject\3D Labyrinth\3D Labyrinth\obj\Debug\netcoreapp2.1\3D Labyrinth.RazorAssemblyInfo.cache
+D:\OneDrive - NHL Stenden Hogeschool\School\Jaar 2\Graphics_OOP\3Dproject\3D Labyrinth\3D Labyrinth\obj\Debug\netcoreapp2.1\3D Labyrinth.RazorAssemblyInfo.cs
+D:\OneDrive - NHL Stenden Hogeschool\School\Jaar 2\Graphics_OOP\3Dproject\3D Labyrinth\3D Labyrinth\obj\Debug\netcoreapp2.1\3D Labyrinth.AssemblyInfoInputs.cache
+D:\OneDrive - NHL Stenden Hogeschool\School\Jaar 2\Graphics_OOP\3Dproject\3D Labyrinth\3D Labyrinth\obj\Debug\netcoreapp2.1\3D Labyrinth.AssemblyInfo.cs
+D:\OneDrive - NHL Stenden Hogeschool\School\Jaar 2\Graphics_OOP\3Dproject\3D Labyrinth\3D Labyrinth\obj\Debug\netcoreapp2.1\3D Labyrinth.RazorTargetAssemblyInfo.cache
+D:\OneDrive - NHL Stenden Hogeschool\School\Jaar 2\Graphics_OOP\3Dproject\3D Labyrinth\3D Labyrinth\obj\Debug\netcoreapp2.1\3D Labyrinth.dll
+D:\OneDrive - NHL Stenden Hogeschool\School\Jaar 2\Graphics_OOP\3Dproject\3D Labyrinth\3D Labyrinth\obj\Debug\netcoreapp2.1\3D Labyrinth.pdb
