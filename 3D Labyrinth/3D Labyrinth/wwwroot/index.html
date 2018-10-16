@@ -46,6 +46,11 @@
                 plane.position.z = 15;
                 scene.add(plane);
 
+                var sphericalSkyboxGeometry = new THREE.SphereGeometry(100, 32, 32);
+                var sphericalSkyboxMaterial = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/skybox/cave.jpg"), side: THREE.DoubleSide });
+                var sphericalSkybox = new THREE.Mesh(sphericalSkyboxGeometry, sphericalSkyboxMaterial);
+                scene.add(sphericalSkybox);
+
                 var light = new THREE.AmbientLight(0x404040);
                 light.intensity = 4;
                 scene.add(light);
