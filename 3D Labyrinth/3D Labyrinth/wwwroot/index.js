@@ -81,4 +81,82 @@ function keyUp(event){
 window.addEventListener('keydown', keyDown);
 window.addEventListener('keyup', keyUp);
 
+           /**
+            * Load an OBJ model from the server
+            * @param {string} modelPath
+            * @param {string} modelName
+            * @param {string} texturePath
+            * @param {string} textureName
+            * @param {function(THREE.Mesh): void} onload
+            * @return {void}
+            */
+            function loadOBJModel(modelPath, modelName, texturePath, textureName, onload) {
+                new THREE.MTLLoader()
+                    .setPath(texturePath)
+                    .load(textureName, function (materials) {
+
+                        materials.preload();
+
+                        new THREE.OBJLoader()
+                            .setPath(modelPath)
+                            .setMaterials(materials)
+                            .load(modelName, function (object) {
+                                onload(object);
+                            }, function () { }, function (e) { console.log("Error loading model"); console.log(e); });
+                    });
+            }
+
+            exampleSocket = new WebSocket("ws://" + window.location.hostname + ":" + window.location.port + "/connect_client");
+            exampleSocket.onmessage = function (event) {
+                var command = parseCommand(event.data);
+
+                if (command.command == "update") {
+                    if (Object.keys(worldObjects).indexOf(command.parameters.guid) < 0) {
+                        if (command.parameters.type == "player") {
+
+                        }
+                        else if (command.parameters.type == "wall") {
+                            //Position and Dimensions need to be optained from the object, but idk if this works
+                            var geometry = new THREE.PlaneGeometry(command.parameters.length, command.parameters.width, command.parameters.height);
+                            var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/wall.png"), side: THREE.DoubleSide });
+                            var wall = new THREE.Mesh(geometry, material);
+
+                            var walls = new THREE.Group();
+                            walls.add(wall);
+
+                            scene.add(walls);
+                            worldObjects[command.parameters.guid] = walls;
+                        }
+                        else if (command.parameters.type == "decoration") {
+                            var decorations = new THREE.Group();
+                            worldObjects[command.parameters.guid] = decorations;
+
+                            //Examples of decoration types
+                            if (command.parameters.decoType == "tree") {
+                                loadOBJModel("models/tree/", "tree.obj", "models/tree/", "tree.mtl", (mesh) => {
+                                    decorations.add(mesh);
+                                    scene.add(decorations);
+                                });
+                            }
+                            else if (command.parameters.decoType == "torch") {
+                                loadOBJModel("models/torch/", "torch.obj", "models/torch/", "torch.mtl", (mesh) => {
+                                    decorations.add(mesh);
+                                    scene.add(decorations);
+                                });
+                            }
+                        }
+                    }
+
+                    var object = worldObjects[command.parameters.guid];
+
+                    object.position.x = command.parameters.x;
+                    object.position.y = command.parameters.y;
+                    object.position.z = command.parameters.z;
+
+                    object.rotation.x = command.parameters.rotationX;
+                    object.rotation.y = command.parameters.rotationY;
+                    object.rotation.z = command.parameters.rotationZ;
+                }
+            }
+
 window.onload = init;
