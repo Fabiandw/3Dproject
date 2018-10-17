@@ -26,3 +26,17 @@ D:\OneDrive - NHL Stenden Hogeschool\School\Jaar 2\Graphics_OOP\3Dproject\3D Lab
 D:\OneDrive - NHL Stenden Hogeschool\School\Jaar 2\Graphics_OOP\3Dproject\3D Labyrinth\3D Labyrinth\obj\Debug\netcoreapp2.1\3D Labyrinth.RazorTargetAssemblyInfo.cache
 D:\OneDrive - NHL Stenden Hogeschool\School\Jaar 2\Graphics_OOP\3Dproject\3D Labyrinth\3D Labyrinth\obj\Debug\netcoreapp2.1\3D Labyrinth.dll
 D:\OneDrive - NHL Stenden Hogeschool\School\Jaar 2\Graphics_OOP\3Dproject\3D Labyrinth\3D Labyrinth\obj\Debug\netcoreapp2.1\3D Labyrinth.pdb
+D:\Documents\VS Studio Projects\C#\OOP 1\3D project\3D Labyrinth\3D Labyrinth\bin\Debug\netcoreapp2.1\3D Labyrinth.deps.json
+D:\Documents\VS Studio Projects\C#\OOP 1\3D project\3D Labyrinth\3D Labyrinth\bin\Debug\netcoreapp2.1\3D Labyrinth.runtimeconfig.json
+D:\Documents\VS Studio Projects\C#\OOP 1\3D project\3D Labyrinth\3D Labyrinth\bin\Debug\netcoreapp2.1\3D Labyrinth.runtimeconfig.dev.json
+D:\Documents\VS Studio Projects\C#\OOP 1\3D project\3D Labyrinth\3D Labyrinth\bin\Debug\netcoreapp2.1\3D Labyrinth.dll
+D:\Documents\VS Studio Projects\C#\OOP 1\3D project\3D Labyrinth\3D Labyrinth\bin\Debug\netcoreapp2.1\3D Labyrinth.pdb
+D:\Documents\VS Studio Projects\C#\OOP 1\3D project\3D Labyrinth\3D Labyrinth\obj\Debug\netcoreapp2.1\3D Labyrinth.csprojAssemblyReference.cache
+D:\Documents\VS Studio Projects\C#\OOP 1\3D project\3D Labyrinth\3D Labyrinth\obj\Debug\netcoreapp2.1\3D Labyrinth.csproj.CoreCompileInputs.cache
+D:\Documents\VS Studio Projects\C#\OOP 1\3D project\3D Labyrinth\3D Labyrinth\obj\Debug\netcoreapp2.1\3D Labyrinth.RazorAssemblyInfo.cache
+D:\Documents\VS Studio Projects\C#\OOP 1\3D project\3D Labyrinth\3D Labyrinth\obj\Debug\netcoreapp2.1\3D Labyrinth.RazorAssemblyInfo.cs
+D:\Documents\VS Studio Projects\C#\OOP 1\3D project\3D Labyrinth\3D Labyrinth\obj\Debug\netcoreapp2.1\3D Labyrinth.AssemblyInfoInputs.cache
+D:\Documents\VS Studio Projects\C#\OOP 1\3D project\3D Labyrinth\3D Labyrinth\obj\Debug\netcoreapp2.1\3D Labyrinth.AssemblyInfo.cs
+D:\Documents\VS Studio Projects\C#\OOP 1\3D project\3D Labyrinth\3D Labyrinth\obj\Debug\netcoreapp2.1\3D Labyrinth.RazorTargetAssemblyInfo.cache
+D:\Documents\VS Studio Projects\C#\OOP 1\3D project\3D Labyrinth\3D Labyrinth\obj\Debug\netcoreapp2.1\3D Labyrinth.dll
+D:\Documents\VS Studio Projects\C#\OOP 1\3D project\3D Labyrinth\3D Labyrinth\obj\Debug\netcoreapp2.1\3D Labyrinth.pdb

@@ -15,8 +15,8 @@ namespace Models
 
             //DEBUG TEST
             int counter = 0;
-            Grid newGrid = new Grid(5, 5);
-            Labyrinth newLab = new Labyrinth(newGrid);
+            Grid newGrid = new Grid(50, 50);
+            Labyrinth newLab = new Labyrinth(newGrid, 0);
             List<Connection> resultList = new List<Connection>();
             foreach (Connection connection in newLab.grid.connectionList)
             {

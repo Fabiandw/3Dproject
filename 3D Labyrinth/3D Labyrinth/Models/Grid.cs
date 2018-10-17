@@ -7,27 +7,28 @@ namespace Models
 {
     public class Grid
     {
-        private double _xMax;
-        private double _zMax;
-        public double xMax { get { return _xMax; } }
-        public double zMax { get { return _zMax; } }
+        private int _xMax;
+        private int _zMax;
+
+        public int xMax { get { return _xMax; } }
+        public int zMax { get { return _zMax; } }
         public List<Node> nodeList { get; set; }
         public List<Connection> connectionList { get; set; }
 
         //Constructor
-        public Grid(double x, double z)
+        public Grid(int x, int z)
         {
             _xMax = x;
             _zMax = z;
-            nodeList = new List<Node>();
-            connectionList = new List<Connection>();
             nodeList = MakeNodes();
             connectionList = MakeConnections();
         }
 
+        //Node maker
         private List<Node> MakeNodes()
         {
             List<Node> returnList = new List<Node>();
+
             //Makes all nodes with the given x and z maximum values
             for (int i = 1; i <= xMax; i++)
             {
@@ -38,12 +39,15 @@ namespace Models
                 }
             }
 
+            //Return list of nodes
             return returnList;
         }
 
+        //Connection maker
         private List<Connection> MakeConnections()
         {
             List<Connection> returnList = new List<Connection>();
+
             //Make a connection between every z value of x, starting at 1, stopping at the last.
             //These are all vertical connections that have to be made.
             for (int i = 1; i <= xMax; i++)
@@ -58,7 +62,6 @@ namespace Models
                     //For RemoveWalls()
                     n1.connectedNodeList.Add(n2);
                     n2.connectedNodeList.Add(n1);
-
                     returnList.Add(newConnection);
                 }
             }
@@ -80,6 +83,7 @@ namespace Models
                 }
             }
 
+            //Return list of connections
             return returnList;
         }
     }

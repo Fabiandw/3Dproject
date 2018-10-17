@@ -8,33 +8,39 @@ using System.Drawing;
 
 namespace Models
 {
-    //Class redundant? Use Grid instead?
     public class Labyrinth
     {
-        public Guid guid { get; set; }
-        public Grid grid { get; set; }
-        public List<Wall> walls { get; set; }
-        public Node currentNode { get; set; }
-        public Node endNode { get; set; }
-        public Stack<Node> stack = new Stack<Node>();
+        private Node currentNode;
+        private Stack<Node> currentPath = new Stack<Node>();
+
+        public Grid grid { get; }
+        public Guid guid { get; }
+        public List<BigRoom> bigRooms { get; }
+        public List<Wall> walls { get; }
+
+        //Praise RNGsus
+        private static Random rng = new Random();
 
         //Constructor
-        public Labyrinth(Grid thisGrid)
+        public Labyrinth(Grid grid, int amountOfPuzzleRooms)
         {
-            //Use nodeList and connectionList from the Grid
-            grid = thisGrid;
-            guid = Guid.NewGuid();
-            walls = MakeWalls(grid.connectionList, 1, 1, 1);
-            stack = new Stack<Node>();
-            //For debugging
             currentNode = grid.nodeList.First();
+            currentPath = new Stack<Node>();
+
+            this.grid = grid;
+            guid = Guid.NewGuid();
+            bigRooms = MakeBigRooms(amountOfPuzzleRooms);
+
+            //Removes walls to create a maze of paths
             RemoveWalls();
+
+            //After having removed some walls we make the models for the walls
+            walls = MakeWalls(grid.connectionList);
         }
 
         //Labyrinth maker
-        public void RemoveWalls()
+        private void RemoveWalls()
         {
-            stack.Clear();
             //set starting node to visited
             currentNode.visited = true;
 
@@ -48,53 +54,132 @@ namespace Models
                     currentNode.visited = true;
                 }
             }
-            stack.Clear();
-        
         }
 
-        //oke ik heb hoofdpijn
-        //maar volgens mij moet dit werken
-        public Node FindNextNode()
+        //Find next node for the current path
+        private Node FindNextNode()
         {
+            //Find a random node that is connected to this node
             Node nextNode = currentNode.GetConnectedNode();
-            if ((nextNode != null))
+            //If the node we found is not null the node is pushed to the stack and the wall between the current and next node is removed
+            if (nextNode != null)
             {
-                //push the next node into the stack
-                stack.Push(nextNode);
-                //remove the wall in the connection
-                RemoveCurrentWall(currentNode,nextNode);
+                currentPath.Push(nextNode);
+                RemoveCurrentWall(currentNode, nextNode);
             }
-            else if (!(stack.Count == 0))
+            //If the current path contains an element the next node will be set to the last node in the current path
+            else if (currentPath.Count != 0)
             {
-                //backtracking
-                nextNode = stack.Pop();
+                nextNode = currentPath.Pop();
             }
+            //Else return null
             else
             {
                 return null;
             }
+
+            //Return the next node
             return nextNode;
         }
 
         //The current node and chosen random next node's connection wall boolean will be set to false
-        public void RemoveCurrentWall(Node current, Node next)
+        private void RemoveCurrentWall(Node current, Node next)
         {
             grid.connectionList.Find(match => (match.nodeList.Contains(current) && match.nodeList.Contains(next))).wall = false;
             grid.connectionList.Find(match => (match.nodeList.Contains(next) && match.nodeList.Contains(current))).wall = false;
-
         }
-        
 
+        //Makes the big rooms, given value is the max amount of puzzle rooms
+        private List<BigRoom> MakeBigRooms(int max)
+        {
+            //Initiating return list
+            List<BigRoom> returnList = new List<BigRoom>();
+
+            //Genereates the amount of puzzle rooms (max minus either 0, 1 or 2)
+            int amount = max - rng.Next(3);
+            //If the max is smaller than 3 then the amount is set to the max overwriting the max that was randomly reduced
+            if (max < 3)
+            {
+                amount = max;
+            }
+
+            //Gets a random node to make a big room on
+            Node rndNode = GetRandomNode();
+            //Make the starting room and add it to the return list
+            BigRoom start = new BigRoom(grid, rndNode, "start");
+            returnList.Add(start);
+
+            //While the difference between the start and the random node in the x OR z axis is smaller than 8 keep generating a new random node 
+            while(Math.Abs(start.centre.x - rndNode.x) < 8 || Math.Abs(start.centre.z - rndNode.z) < 8)
+            {
+                rndNode = GetRandomNode();
+            }
+
+            //Make the end room and add it to the return list
+            BigRoom end = new BigRoom(grid, rndNode, "end");
+            returnList.Add(end);
+
+            //Making the puzzle rooms
+            for (int i = 1; i < amount; i++)
+            {
+                //While the difference between the start and the random node AND the end and the random node in the x OR z axis is smaller than 5 keep generating a new random node
+                while (Math.Abs(start.centre.x - rndNode.x) < 5 || Math.Abs(start.centre.z - rndNode.z) < 5 && Math.Abs(end.centre.x - rndNode.x) < 5 || Math.Abs(end.centre.z - rndNode.z) < 5)
+                {
+                    rndNode = GetRandomNode();
+
+                    //Initiating flag
+                    bool flag = false;
+                    //For each puzzle room that has been made so far do...
+                    foreach (BigRoom room in returnList.Where(index => index.type == "puzzle"))
+                    {
+                        //If the difference between the puzzle room and the random node in the x OR z axis is smaller than 5, break
+                        if (Math.Abs(room.centre.x - rndNode.x) < 5 || Math.Abs(room.centre.z - rndNode.z) < 5)
+                        {
+                            //Flag is set to true to indicate that the for each loop was broken, then break
+                            flag = true;
+                            break;
+                        }
+                    }
+
+                    //If the for each loop was broken, continue (continue is the opposite of break and forces the loop to run again)
+                    if (flag) continue;
+                }
+
+                //Makes a puzzle room
+                BigRoom puzzle = new BigRoom(grid, rndNode, "puzzle");
+                returnList.Add(puzzle);
+            }
+
+            //Return list of big rooms
+            return returnList;
+        }
+
+        //Gets a random node on the existing grid
+        private Node GetRandomNode()
+        {
+            //Generate random x and z values between 2 and max - 1 (the max value in rng.Next cannot actually be picked as a number, example if max = 50 then the rng will select a number between 2 and 49)
+            int rndX = rng.Next(2, grid.xMax);
+            int rndZ = rng.Next(2, grid.zMax);
+
+            //Find the node corresponding to these 2 values
+            Node returnNode = grid.nodeList.Find(i => i.x == rndX && i.z == rndZ);
+
+            //Return node
+            return returnNode;
+        } 
+        
         //Wall maker, needs a list of connections and the dimensions for the walls
-        public List<Wall> MakeWalls(List<Connection> list, double length, double width, double height)
+        private List<Wall> MakeWalls(List<Connection> list)
         {
             //Initiating return list
             List<Wall> returnList = new List<Wall>();
+
+            //Make outer wall here
             
             //For each connection in the given list where wall == true, make a wall using the connection and the given dimensions and then add it to the return list
             foreach (Connection connection in list.Where(i => i.wall == true))
             {
-                Wall wall = new Wall(connection, length, width, height);
+                Wall wall = new Wall(connection, connection.northSouthWall);
                 returnList.Add(wall);
             }
 
