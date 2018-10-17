@@ -40,7 +40,7 @@ function init(){
 	renderer.shadowMap.type = THREE.BasicShadowMap;
 	
 	document.body.appendChild(renderer.domElement);
-	var sphericalSkyboxGeometry = new THREE.SphereGeometry(100, 32, 32);
+	var sphericalSkyboxGeometry = new THREE.SphereGeometry(200, 32, 32);
                 var sphericalSkyboxMaterial = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/skybox/cave.jpg"), side: THREE.DoubleSide });
                 var sphericalSkybox = new THREE.Mesh(sphericalSkyboxGeometry, sphericalSkyboxMaterial);
                 scene.add(sphericalSkybox);
