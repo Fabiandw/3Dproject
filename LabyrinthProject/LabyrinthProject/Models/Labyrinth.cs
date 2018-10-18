@@ -26,8 +26,8 @@ namespace LabyrinthProject.Models
 
             this.grid = grid;
             guid = Guid.NewGuid();
-            bigRooms = MakeBigRooms(amountOfPuzzleRooms);
 
+            bigRooms = MakeBigRooms(amountOfPuzzleRooms);
             //Removes walls to create a maze of paths
             RemoveWalls();
 
@@ -172,7 +172,16 @@ namespace LabyrinthProject.Models
             List<Wall> returnList = new List<Wall>();
 
             //Make outer wall here
-
+            for (int i = 1; i <= grid.xMax; i++)
+            {
+                returnList.Add(new Wall(i, 0.5, false));
+                returnList.Add(new Wall(i, grid.zMax + 0.5, false));
+            }
+            for (int j = 1; j <= grid.zMax; j++)
+            {
+                returnList.Add(new Wall(0.5, j, true));
+                returnList.Add(new Wall(grid.xMax + 0.5, j, true));
+            }
             //For each connection in the given list where wall == true, make a wall using the connection and the given dimensions and then add it to the return list
             foreach (Connection connection in list.Where(i => i.wall == true))
             {

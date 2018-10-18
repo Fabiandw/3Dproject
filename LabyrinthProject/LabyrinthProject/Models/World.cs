@@ -16,7 +16,7 @@ namespace LabyrinthProject.Models
 
             //DEBUG TEST
             int counter = 0;
-            Grid newGrid = new Grid(50, 50);
+            Grid newGrid = new Grid(20, 20);
             Labyrinth newLab = new Labyrinth(newGrid, 0);
             worldObjects.AddRange(newLab.walls);
             foreach (Wall wall in worldObjects)

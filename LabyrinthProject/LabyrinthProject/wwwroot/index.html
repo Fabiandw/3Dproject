@@ -14,7 +14,7 @@
         var meshFloor, ambientLight, light;
         var crate, crateTexture, crateNormalMap, crateBumpMap;
         var keyboard = {};
-        var player = { height: 1.8, speed: 0.2, turnSpeed: Math.PI * 0.02 };
+        var player = { height: 0, speed: 0.05, turnSpeed: Math.PI * 0.02 };
         var USE_WIREFRAME = false;
 
         window.onload = function () {
@@ -132,8 +132,8 @@
                             case "wall":
                                 {
                                     //Position and Dimensions need to be optained from the object, but idk if this works
-                                    var geometry = new THREE.PlaneGeometry(1,1,1,1);
-                                    var material = new THREE.MeshBasicMaterial({ color: 0xCDCDCD, side: THREE.DoubleSide });
+                                    var geometry = new THREE.PlaneGeometry(1, 1, 1);
+                                    var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/wolla.jpg"), side: THREE.DoubleSide });
                                     var wall = new THREE.Mesh(geometry, material);
                                     var walls = new THREE.Group();
                                     walls.add(wall);

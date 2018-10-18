@@ -56,7 +56,7 @@ namespace LabyrinthProject.Models
                     //Remove wall between found node and the node connected to this node
                     RemoveCurrentWall(node, nextNode);
                     //If the node connected to the found node is NOT on the same x OR z axis as the centre then it is visited (makes sure the boxes that are visited are a 3x3 grid and not a star shape) 
-                    if (nextNode.x != x || nextNode.z != z)
+                    if (nextNode.x != x && nextNode.z != z)
                     {
                         nextNode.visited = true;
                     }
