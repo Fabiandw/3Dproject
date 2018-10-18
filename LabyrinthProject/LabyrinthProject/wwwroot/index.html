@@ -41,18 +41,13 @@
                 scene.add(sphericalSkybox);
 
                 // Plane
-                //var geometry = new THREE.CircleGeometry(15, 35, 10);
-                //var material = new THREE.MeshStandardMaterial({ color: 0xCDCDCD, side: THREE.DoubleSide });
-                //var plane = new THREE.Mesh(geometry, material);
-                //plane.rotation.x = 90 *(Math.PI/180);
-                //plane.position.x = 5;
-                //plane.position.y = 0;
-                //plane.position.z = 5;
-                //plane.receiveShadow = true;
-                //scene.add(plane);
+                var planeGeometry = new THREE.PlaneGeometry(400, 400, 32);
+                var planeMaterial = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/moonsurface.jpg"), side: THREE.DoubleSide });
+                var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+                plane.rotation.x = Math.PI / 2;
+                scene.add(plane);
 
                 // Ambient Light
-
                 ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
                 scene.add(ambientLight);
 
