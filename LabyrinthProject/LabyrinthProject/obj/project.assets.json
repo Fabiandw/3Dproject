@@ -12683,11 +12683,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\fabia\\source\\repos\\LabyrinthProject\\LabyrinthProject\\LabyrinthProject.csproj",
+      "projectUniqueName": "C:\\Users\\fabia\\Documents\\GitHub\\3Dproject\\LabyrinthProject\\LabyrinthProject\\LabyrinthProject.csproj",
       "projectName": "LabyrinthProject",
-      "projectPath": "C:\\Users\\fabia\\source\\repos\\LabyrinthProject\\LabyrinthProject\\LabyrinthProject.csproj",
+      "projectPath": "C:\\Users\\fabia\\Documents\\GitHub\\3Dproject\\LabyrinthProject\\LabyrinthProject\\LabyrinthProject.csproj",
       "packagesPath": "C:\\Users\\fabia\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\fabia\\source\\repos\\LabyrinthProject\\LabyrinthProject\\obj\\",
+      "outputPath": "C:\\Users\\fabia\\Documents\\GitHub\\3Dproject\\LabyrinthProject\\LabyrinthProject\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

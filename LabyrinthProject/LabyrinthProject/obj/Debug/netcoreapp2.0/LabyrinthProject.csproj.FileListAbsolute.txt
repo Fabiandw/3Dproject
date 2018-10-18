@@ -9,3 +9,14 @@ C:\Users\fabia\source\repos\LabyrinthProject\LabyrinthProject\obj\Debug\netcorea
 C:\Users\fabia\source\repos\LabyrinthProject\LabyrinthProject\obj\Debug\netcoreapp2.0\LabyrinthProject.AssemblyInfo.cs
 C:\Users\fabia\source\repos\LabyrinthProject\LabyrinthProject\obj\Debug\netcoreapp2.0\LabyrinthProject.dll
 C:\Users\fabia\source\repos\LabyrinthProject\LabyrinthProject\obj\Debug\netcoreapp2.0\LabyrinthProject.pdb
+C:\Users\fabia\Documents\GitHub\3Dproject\LabyrinthProject\LabyrinthProject\bin\Debug\netcoreapp2.0\LabyrinthProject.deps.json
+C:\Users\fabia\Documents\GitHub\3Dproject\LabyrinthProject\LabyrinthProject\bin\Debug\netcoreapp2.0\LabyrinthProject.runtimeconfig.json
+C:\Users\fabia\Documents\GitHub\3Dproject\LabyrinthProject\LabyrinthProject\bin\Debug\netcoreapp2.0\LabyrinthProject.runtimeconfig.dev.json
+C:\Users\fabia\Documents\GitHub\3Dproject\LabyrinthProject\LabyrinthProject\bin\Debug\netcoreapp2.0\LabyrinthProject.dll
+C:\Users\fabia\Documents\GitHub\3Dproject\LabyrinthProject\LabyrinthProject\bin\Debug\netcoreapp2.0\LabyrinthProject.pdb
+C:\Users\fabia\Documents\GitHub\3Dproject\LabyrinthProject\LabyrinthProject\obj\Debug\netcoreapp2.0\LabyrinthProject.csprojAssemblyReference.cache
+C:\Users\fabia\Documents\GitHub\3Dproject\LabyrinthProject\LabyrinthProject\obj\Debug\netcoreapp2.0\LabyrinthProject.csproj.CoreCompileInputs.cache
+C:\Users\fabia\Documents\GitHub\3Dproject\LabyrinthProject\LabyrinthProject\obj\Debug\netcoreapp2.0\LabyrinthProject.AssemblyInfoInputs.cache
+C:\Users\fabia\Documents\GitHub\3Dproject\LabyrinthProject\LabyrinthProject\obj\Debug\netcoreapp2.0\LabyrinthProject.AssemblyInfo.cs
+C:\Users\fabia\Documents\GitHub\3Dproject\LabyrinthProject\LabyrinthProject\obj\Debug\netcoreapp2.0\LabyrinthProject.dll
+C:\Users\fabia\Documents\GitHub\3Dproject\LabyrinthProject\LabyrinthProject\obj\Debug\netcoreapp2.0\LabyrinthProject.pdb
