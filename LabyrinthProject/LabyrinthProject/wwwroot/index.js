@@ -26,7 +26,16 @@ function init(){
 	plane.position.z = 15;
 	scene.add(plane);
 
+    var wallGeometry = new THREE.CubeGeometry(2, 3, 1.1, 1, 1, 1);
+    var wallMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    var wireMaterial = new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true });
 
+    var wall = new THREE.Mesh(wallGeometry, wallMaterial);
+    wall.position.set(0, 1.5, 0);
+    scene.add(wall);
+    var wall = new THREE.Mesh(wallGeometry, wireMaterial);
+    wall.position.set(0, 1.5, 0);
+    scene.add(wall);
 	
 	
 	camera.position.set(0, player.height, -5);
