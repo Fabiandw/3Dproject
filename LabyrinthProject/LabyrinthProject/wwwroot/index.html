@@ -19,7 +19,7 @@
 
         window.onload = function () {
             var scene, camera, renderer;
-
+            var cameraControls;
             var exampleSocket;
 
             var worldObjects = {};
@@ -27,14 +27,24 @@
 
             function init() {
                 // Camera
+                
                 scene = new THREE.Scene();
                 camera = new THREE.PerspectiveCamera(90, 1280 / 720, 0.1, 1000);
-                camera.position.set(0, player.height, -5);
+                cameraControls = new THREE.OrbitControls(camera);
+                camera.position.x = 50;
+                camera.position.y = 30;
+                camera.position.z = 50;
+                cameraControls.update();
+                /*camera.position.set(0, player.height, -5);
                 camera.lookAt(new THREE.Vector3(0, player.height, 0));
                 window.addEventListener('resize', onWindowResize, false);
                 window.addEventListener('keydown', keyDown);
+<<<<<<< HEAD
+                window.addEventListener('keyup', keyUp);*/
+=======
                 window.addEventListener('keyup', keyUp);
 
+>>>>>>> Leander
                 // Skybox
                 var sphericalSkyboxGeometry = new THREE.SphereGeometry(200, 32, 32);
                 var sphericalSkyboxMaterial = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/skybox/cave.jpg"), side: THREE.DoubleSide });
@@ -70,7 +80,7 @@
             // Animate [Function]
             function animate() {
                 requestAnimationFrame(animate);
-                if (keyboard[87]) { // W key
+                /*if (keyboard[87]) { // W key
                     camera.position.x -= Math.sin(camera.rotation.y) * player.speed;
                     camera.position.z -= -Math.cos(camera.rotation.y) * player.speed;
                 }
@@ -98,7 +108,7 @@
                 else if (keyboard[39]) { // right arrow key
                     camera.rotation.y += player.turnSpeed;
                 }
-
+                */
                 renderer.render(scene, camera);
 
             }
@@ -141,7 +151,7 @@
                             case "wall":
                                 {
                                     //Position and Dimensions need to be optained from the object, but idk if this works
-                                    var geometry = new THREE.PlaneGeometry(1, 1, 1);
+                                    var geometry = new THREE.BoxGeometry(1.05, 1, 0.05);
                                     var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/wolla.jpg"), side: THREE.DoubleSide });
                                     var wall = new THREE.Mesh(geometry, material);
                                     var walls = new THREE.Group();
