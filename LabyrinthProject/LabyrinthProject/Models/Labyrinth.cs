@@ -21,7 +21,7 @@ namespace LabyrinthProject.Models
         //Constructor
         public Labyrinth(Grid grid, int amountOfPuzzleRooms)
         {
-            currentNode = grid.nodeList.First();
+            currentNode = grid.nodeList.Where(i => i.visited == false).First();
             currentPath = new Stack<Node>();
 
             this.grid = grid;
