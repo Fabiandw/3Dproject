@@ -16,6 +16,7 @@
         var keyboard = {};
         var player = { height: 0, speed: 0.05, turnSpeed: Math.PI * 0.02 };
         var USE_WIREFRAME = false;
+        var RESOURCES_LOADED = false;
 
         window.onload = function () {
             var scene, camera, renderer;
@@ -27,16 +28,16 @@
 
             function init() {
                 // Camera
-                
+
                 scene = new THREE.Scene();
-                camera = new THREE.PerspectiveCamera(90, 1280 / 720, 0.1, 1000);
+                camera = new THREE.PerspectiveCamera(70, 1280 / 720, 0.1, 1000);
                 cameraControls = new THREE.OrbitControls(camera);
                 camera.position.x = 50;
                 camera.position.y = 30;
                 camera.position.z = 50;
                 cameraControls.update();
-                /*camera.position.set(0, player.height, -5);
-                camera.lookAt(new THREE.Vector3(0, player.height, 0));
+                /*camera.position.set(1, player.height, 1);
+                camera.lookAt(new THREE.Vector3(2, player.height, 2));
                 window.addEventListener('resize', onWindowResize, false);
                 window.addEventListener('keydown', keyDown);
                 window.addEventListener('keyup', keyUp);*/
@@ -50,6 +51,7 @@
                 var planeGeometry = new THREE.PlaneGeometry(400, 400, 32);
                 var planeMaterial = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/moonsurface.jpg"), side: THREE.DoubleSide });
                 var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+                plane.position.y = -0.5;
                 plane.rotation.x = Math.PI / 2;
                 scene.add(plane);
 
@@ -59,13 +61,17 @@
 
 
                 // Render
+
                 renderer = new THREE.WebGLRenderer();
                 renderer.setPixelRatio(window.devicePixelRatio);
                 renderer.setSize(window.innerWidth, window.innerHeight + 5);
                 renderer.shadowMap.enabled = true;
                 renderer.shadowMap.type = THREE.BasicShadowMap;
                 document.body.appendChild(renderer.domElement);
+
             }
+
+
 
             // WindowResize [Function]
             function onWindowResize() {
@@ -141,14 +147,27 @@
                             //    }
                             case "wall":
                                 {
-                                    //Position and Dimensions need to be optained from the object, but idk if this works
-                                    var geometry = new THREE.BoxGeometry(1.05, 1, 0.05);
+                                    //Position and Dimensions need to be obtained from the object, but idk if this works
+                                    var geometry = new THREE.BoxGeometry(1, 1, 0.05);
                                     var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/wolla.jpg"), side: THREE.DoubleSide });
                                     var wall = new THREE.Mesh(geometry, material);
                                     var walls = new THREE.Group();
                                     walls.add(wall);
                                     scene.add(walls);
                                     worldObjects[command.parameters.guid] = walls;
+                                }
+                                break;
+
+                            case "room":
+                                {
+                                    alert("Papito0");
+                                    var Eh = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+                                    var Mat = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/wolla.jpg"), side: THREE.DoubleSide });
+                                    var room = new THREE.Mesh(Eh, Mat);
+                                    var rooms = new THREE.Group();
+                                    rooms.add(room);
+                                    scene.add(rooms);
+                                    worldObjects[command.parameters.guid] = rooms;
                                 }
                                 break;
 

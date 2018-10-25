@@ -5,33 +5,38 @@ using System.Threading.Tasks;
 
 namespace LabyrinthProject.Models
 {
-    public class BigRoom
+    public class BigRoom : Model3D
     {
         private Grid grid;
-        private double _x;
-        private double _y;
-        private double _z;
+        //private double _x;
+        //private double _y;
+        //private double _z;
 
-        public Guid guid { get; set; }
+        //public Guid guid { get; set; }
         public Node centre { get; set; }
-        public double x { get { return _x; } }
-        public double y { get { return _y; } }
-        public double z { get { return _z; } }
-        public string type;
+        //public double x { get { return _x; } }
+        //public double y { get { return _y; } }
+        //public double z { get { return _z; } }
+        public string roomType;
 
         //Constructor
-        public BigRoom(Grid grid, Node node, string type)
+        public BigRoom(Grid grid, Node node, string roomType)
         {
             //Vertex variables for location and identification
             _x = node.x;
             _y = node.y;
             _z = node.z;
+            _rZ = 0;
+            _rX = 0;
+            _rY = 0;
 
-            this.grid = grid;
             guid = Guid.NewGuid();
+            type = "room";
+            this.roomType = roomType;
+
+            this.grid = grid; 
             centre = node;
 
-            this.type = type;
 
             //Destroys all the walls in a 3x3 grid to create an open space (big room) and makes an exit/entrance to this room
             RemoveWalls();
@@ -70,5 +75,6 @@ namespace LabyrinthProject.Models
             grid.connectionList.Find(match => (match.nodeList.Contains(current) && match.nodeList.Contains(next))).wall = false;
             grid.connectionList.Find(match => (match.nodeList.Contains(next) && match.nodeList.Contains(current))).wall = false;
         }
+
     }
 }
