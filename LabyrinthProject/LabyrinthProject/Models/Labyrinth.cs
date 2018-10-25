@@ -93,11 +93,15 @@ namespace LabyrinthProject.Models
             List<BigRoom> returnList = new List<BigRoom>();
 
             //Genereates the amount of puzzle rooms (max minus either 0, 1 or 2)
-            int amount = max - rng.Next(3);
             //If the max is smaller than 3 then the amount is set to the max overwriting the max that was randomly reduced
+            int amount = 0;
             if (max < 3)
             {
                 amount = max;
+            }
+            else if (max >= 3)
+            {
+                amount = max - rng.Next(3);
             }
 
             //Gets a random node to make a big room on
@@ -105,6 +109,7 @@ namespace LabyrinthProject.Models
             //Make the starting room and add it to the return list
             BigRoom start = new BigRoom(grid, rndNode, "start");
             returnList.Add(start);
+
 
             //While the difference between the start and the random node in the x OR z axis is smaller than 8 keep generating a new random node 
             while (Math.Abs(start.centre.x - rndNode.x) < 8 || Math.Abs(start.centre.z - rndNode.z) < 8)
@@ -116,35 +121,49 @@ namespace LabyrinthProject.Models
             BigRoom end = new BigRoom(grid, rndNode, "end");
             returnList.Add(end);
 
-            //Making the puzzle rooms
-            for (int i = 1; i < amount; i++)
+
+            //Initiating making bool
+            bool makingPuzzleRooms = true;
+
+            //While making puzzle rooms is true, continue
+            while (makingPuzzleRooms)
             {
-                //While the difference between the start and the random node AND the end and the random node in the x OR z axis is smaller than 5 keep generating a new random node
-                while (Math.Abs(start.centre.x - rndNode.x) < 5 || Math.Abs(start.centre.z - rndNode.z) < 5 && Math.Abs(end.centre.x - rndNode.x) < 5 || Math.Abs(end.centre.z - rndNode.z) < 5)
+                //Gets random node
+                rndNode = GetRandomNode();
+
+                //Initiating flag
+                bool flag = false;
+
+                //For each big room in the return list we check if the rnd node is not too close to it
+                foreach (BigRoom room in returnList)
                 {
-                    rndNode = GetRandomNode();
-
-                    //Initiating flag
-                    bool flag = false;
-                    //For each puzzle room that has been made so far do...
-                    foreach (BigRoom room in returnList.Where(index => index.type == "puzzle"))
+                    //If the node is too close to the rooms centre, break the for each loop
+                    if (Math.Abs(room.centre.x - rndNode.x) < 5 && Math.Abs(room.centre.z - rndNode.z) < 5)
                     {
-                        //If the difference between the puzzle room and the random node in the x OR z axis is smaller than 5, break
-                        if (Math.Abs(room.centre.x - rndNode.x) < 5 || Math.Abs(room.centre.z - rndNode.z) < 5)
-                        {
-                            //Flag is set to true to indicate that the for each loop was broken, then break
-                            flag = true;
-                            break;
-                        }
+                        //Flag is set to true to indicate that the for each loop was broken, then break
+                        flag = true;
+                        break;
                     }
-
-                    //If the for each loop was broken, continue (continue is the opposite of break and forces the loop to run again)
-                    if (flag) continue;
                 }
 
-                //Makes a puzzle room
-                BigRoom puzzle = new BigRoom(grid, rndNode, "puzzle");
-                returnList.Add(puzzle);
+                //If the for each loop was broken, continue (continue is the opposite of break and forces the while loop to run again)
+                if (flag)
+                {
+                    continue;
+                }
+                //If the flag is false the code will continue here
+                else if (!flag)
+                {
+                    //Makes a puzzle room
+                    BigRoom puzzle = new BigRoom(grid, rndNode, "puzzle");
+                    returnList.Add(puzzle);
+
+                    //If the total amount of rooms is equal to the start and end + the amount of puzzle rooms that had to be made we set the making bool to false and exit the while loop
+                    if (returnList.Count == 2 + amount)
+                    {
+                        makingPuzzleRooms = false;
+                    }
+                }
             }
 
             //Return list of big rooms
