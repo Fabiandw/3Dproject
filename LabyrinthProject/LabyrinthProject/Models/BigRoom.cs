@@ -23,19 +23,21 @@ namespace LabyrinthProject.Models
         public BigRoom(Grid grid, Node node, string roomType)
         {
             //Vertex variables for location and identification
-            _x = node.x;
-            _y = node.y;
+            centre = node;
+            _x = centre.x;
+            _y = 0;
             _z = node.z;
             _rZ = 0;
             _rX = 0;
             _rY = 0;
 
             guid = Guid.NewGuid();
-            type = "room";
+            this.type = "room";
             this.roomType = roomType;
 
-            this.grid = grid; 
-            centre = node;
+            //needsUpdate = true;
+            this.grid = grid;
+            //centre = node;
 
 
             //Destroys all the walls in a 3x3 grid to create an open space (big room) and makes an exit/entrance to this room
@@ -47,26 +49,26 @@ namespace LabyrinthProject.Models
         {
             //Make centre visited
             centre.visited = true;
-
-            //For each node connected to centre do...
-            foreach (Node node in centre.connectedNodeList)
-            {
-                //Remove wall between centre and found node and set found node to visited
-                RemoveCurrentWall(centre, node);
-                node.visited = true;
-
-                //For each node connected to the node that is connected to the centre do...
-                foreach (Node nextNode in node.connectedNodeList)
+                //For each node connected to centre do...
+                foreach (Node node in centre.connectedNodeList)
                 {
-                    //Remove wall between found node and the node connected to this node
-                    RemoveCurrentWall(node, nextNode);
-                    //If the node connected to the found node is NOT on the same x OR z axis as the centre then it is visited (makes sure the boxes that are visited are a 3x3 grid and not a star shape) 
-                    if (nextNode.x != x && nextNode.z != z)
+                    //Remove wall between centre and found node and set found node to visited
+                    RemoveCurrentWall(centre, node);
+                    node.visited = true;
+
+                    //For each node connected to the node that is connected to the centre do...
+                    foreach (Node nextNode in node.connectedNodeList)
                     {
-                        nextNode.visited = true;
+                        //Remove wall between found node and the node connected to this node
+                        RemoveCurrentWall(node, nextNode);
+                        //If the node connected to the found node is NOT on the same x OR z axis as the centre then it is visited (makes sure the boxes that are visited are a 3x3 grid and not a star shape) 
+                        if (nextNode.x != x && nextNode.z != z)
+                        {
+                            nextNode.visited = true;
+                        }
                     }
                 }
-            }
+            
         }
 
         //The current node and chosen random next node's connection wall boolean will be set to false
@@ -75,6 +77,8 @@ namespace LabyrinthProject.Models
             grid.connectionList.Find(match => (match.nodeList.Contains(current) && match.nodeList.Contains(next))).wall = false;
             grid.connectionList.Find(match => (match.nodeList.Contains(next) && match.nodeList.Contains(current))).wall = false;
         }
+
+        
 
     }
 }

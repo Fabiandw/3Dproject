@@ -28,29 +28,26 @@
 
 
             function init() {
-<<<<<<< HEAD
                 // Camera
 
                 scene = new THREE.Scene();
                 camera = new THREE.PerspectiveCamera(70, 1280 / 720, 0.1, 1000);
-=======
+
                 // Camera               
                 scene = new THREE.Scene();
                 camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
 
->>>>>>> master
                 cameraControls = new THREE.OrbitControls(camera);
                 camera.position.x = -50;
                 camera.position.y = 30;
                 camera.position.z = -50;;
                 cameraControls.update();
-<<<<<<< HEAD
+
                 /*camera.position.set(1, player.height, 1);
                 camera.lookAt(new THREE.Vector3(2, player.height, 2));
                 window.addEventListener('resize', onWindowResize, false);
                 window.addEventListener('keydown', keyDown);
                 window.addEventListener('keyup', keyUp);*/
-=======
 
                 //camera.position.set(1, player.height, 1);
                 //camera.lookAt(new THREE.Vector3(2, player.height, 2));
@@ -58,7 +55,6 @@
                 //window.addEventListener('keydown', keyDown);
                 //window.addEventListener('keyup', keyUp);
 
->>>>>>> master
                 // Skybox
                 var sphericalSkyboxGeometry = new THREE.SphereGeometry(200, 32, 32);
                 var sphericalSkyboxMaterial = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/skybox/cave.jpg"), side: THREE.DoubleSide });
@@ -195,11 +191,10 @@
                         switch (command.parameters.type) {
                             case "wall":
                                 {
-<<<<<<< HEAD
+
                                     //Position and Dimensions need to be obtained from the object, but idk if this works
-=======
+
                                     //Position and Dimensions need to be optained from the object, but idk if this works
->>>>>>> master
                                     var geometry = new THREE.BoxGeometry(1, 1, 0.05);
                                     var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/wolla.jpg"), side: THREE.DoubleSide });
                                     var wall = new THREE.Mesh(geometry, material);
@@ -213,13 +208,13 @@
                             case "room":
                                 {
                                     alert("Papito0");
-                                    var Eh = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-                                    var Mat = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/wolla.jpg"), side: THREE.DoubleSide });
-                                    var room = new THREE.Mesh(Eh, Mat);
-                                    var rooms = new THREE.Group();
-                                    rooms.add(room);
-                                    scene.add(rooms);
-                                    worldObjects[command.parameters.guid] = rooms;
+                                    var geo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+                                    var mat = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/wolla.jpg"), side: THREE.DoubleSide });
+                                    var bigRooms = new THREE.Mesh(geo, mat);
+                                    var bigRooms = new THREE.Group();
+                                    bigRooms.add(room);
+                                    scene.add(bigRooms);
+                                    worldObjects[command.parameters.guid] = bigRooms;
                                 }
                                 break;
 
