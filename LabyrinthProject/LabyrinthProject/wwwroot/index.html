@@ -15,6 +15,7 @@
         var crate, crateTexture, crateNormalMap, crateBumpMap;
         var keyboard = {};
         var player = { height: 0, speed: 0.05, turnSpeed: Math.PI * 0.02 };
+        var playerHitbox;
         var USE_WIREFRAME = false;
         var RESOURCES_LOADED = false;
 
@@ -27,20 +28,37 @@
 
 
             function init() {
+<<<<<<< HEAD
                 // Camera
 
                 scene = new THREE.Scene();
                 camera = new THREE.PerspectiveCamera(70, 1280 / 720, 0.1, 1000);
+=======
+                // Camera               
+                scene = new THREE.Scene();
+                camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+>>>>>>> master
                 cameraControls = new THREE.OrbitControls(camera);
-                camera.position.x = 50;
+                camera.position.x = -50;
                 camera.position.y = 30;
-                camera.position.z = 50;
+                camera.position.z = -50;;
                 cameraControls.update();
+<<<<<<< HEAD
                 /*camera.position.set(1, player.height, 1);
                 camera.lookAt(new THREE.Vector3(2, player.height, 2));
                 window.addEventListener('resize', onWindowResize, false);
                 window.addEventListener('keydown', keyDown);
                 window.addEventListener('keyup', keyUp);*/
+=======
+
+                //camera.position.set(1, player.height, 1);
+                //camera.lookAt(new THREE.Vector3(2, player.height, 2));
+                //window.addEventListener('resize', onWindowResize, false);
+                //window.addEventListener('keydown', keyDown);
+                //window.addEventListener('keyup', keyUp);
+
+>>>>>>> master
                 // Skybox
                 var sphericalSkyboxGeometry = new THREE.SphereGeometry(200, 32, 32);
                 var sphericalSkyboxMaterial = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/skybox/cave.jpg"), side: THREE.DoubleSide });
@@ -53,12 +71,20 @@
                 var plane = new THREE.Mesh(planeGeometry, planeMaterial);
                 plane.position.y = -0.5;
                 plane.rotation.x = Math.PI / 2;
+                plane.position.y = -0.5
                 scene.add(plane);
+
+                // Player
+                var cubeGeometry = new THREE.CubeGeometry(0.4, 0.5, 0.2);
+                var wireMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true });
+                playerHitbox = new THREE.Mesh(cubeGeometry, wireMaterial);
+                playerHitbox.position.set(1, -0.25, 1);
+                playerHitbox.rotation.y = -camera.rotation.y;
+                scene.add(playerHitbox);
 
                 // Ambient Light
                 ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
                 scene.add(ambientLight);
-
 
                 // Render
 
@@ -82,30 +108,56 @@
             // Animate [Function]
             function animate() {
                 requestAnimationFrame(animate);
-                /*if (keyboard[87]) { // W key
+
+                if (keyboard[87]) { // W key
                     camera.position.x -= Math.sin(camera.rotation.y) * player.speed;
                     camera.position.z -= -Math.cos(camera.rotation.y) * player.speed;
+
+                    playerHitbox.position.x = camera.position.x;
+                    playerHitbox.position.z = camera.position.z;
                 }
                 if (keyboard[83]) { // S key
                     camera.position.x += Math.sin(camera.rotation.y) * player.speed;
                     camera.position.z += -Math.cos(camera.rotation.y) * player.speed;
+
+                    playerHitbox.position.x = camera.position.x;
+                    playerHitbox.position.z = camera.position.z;
                 }
                 if (keyboard[65]) { // A key
                     camera.position.x += Math.sin(camera.rotation.y + Math.PI / 2) * player.speed;
                     camera.position.z += -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed;
+
+                    playerHitbox.position.x = camera.position.x;
+                    playerHitbox.position.z = camera.position.z;
                 }
                 if (keyboard[68]) { // D key
                     camera.position.x += Math.sin(camera.rotation.y - Math.PI / 2) * player.speed;
                     camera.position.z += -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed;
+
+                    playerHitbox.position.x = camera.position.x;
+                    playerHitbox.position.z = camera.position.z;
+                }                
+                if (keyboard[81]) { // Q key
+                    camera.rotation.y -= player.turnSpeed;
+
+                    playerHitbox.rotation.y += player.turnSpeed;
+                }
+                else if (keyboard[37]) { // Left arrow key
+                    camera.rotation.y -= player.turnSpeed;
+
+                    playerHitbox.rotation.y += player.turnSpeed;
+                }
+                if (keyboard[69]) { // E key
+                    camera.rotation.y += player.turnSpeed;
+
+                    playerHitbox.rotation.y -= player.turnSpeed;
+                }
+                else if (keyboard[39]) { // Right arrow key
+                    camera.rotation.y += player.turnSpeed;
+
+                    playerHitbox.rotation.y -= player.turnSpeed;
                 }
 
-                if (keyboard[37]) { // left arrow key
-                    camera.rotation.y -= player.turnSpeed;
-                }
-                if (keyboard[39]) { // right arrow key
-                    camera.rotation.y += player.turnSpeed;
-                }
-                */
                 renderer.render(scene, camera);
 
             }
@@ -141,13 +193,13 @@
                 if (command.command === "update") {
                     if (Object.keys(worldObjects).indexOf(command.parameters.guid) < 0) {
                         switch (command.parameters.type) {
-                            //case "player":
-                            //    {
-                            //        break;
-                            //    }
                             case "wall":
                                 {
+<<<<<<< HEAD
                                     //Position and Dimensions need to be obtained from the object, but idk if this works
+=======
+                                    //Position and Dimensions need to be optained from the object, but idk if this works
+>>>>>>> master
                                     var geometry = new THREE.BoxGeometry(1, 1, 0.05);
                                     var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/wolla.jpg"), side: THREE.DoubleSide });
                                     var wall = new THREE.Mesh(geometry, material);
