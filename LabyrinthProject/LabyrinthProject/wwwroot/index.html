@@ -42,17 +42,17 @@
                 scene = new THREE.Scene();
                 camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-                //cameraControls = new THREE.OrbitControls(camera);
-                //camera.position.x = -50;
-                //camera.position.y = 30;
-                //camera.position.z = -50;;
-                //cameraControls.update();
+                cameraControls = new THREE.OrbitControls(camera);
+                camera.position.x = -50;
+                camera.position.y = 30;
+                camera.position.z = -50;;
+                cameraControls.update();
 
-                camera.position.set(1, player.height, 1);
-                camera.lookAt(new THREE.Vector3(2, player.height, 2));
-                window.addEventListener('resize', onWindowResize, false);
-                window.addEventListener('keydown', keyDown);
-                window.addEventListener('keyup', keyUp);
+                //camera.position.set(1, player.height, 1);
+                //camera.lookAt(new THREE.Vector3(2, player.height, 2));
+                //window.addEventListener('resize', onWindowResize, false);
+                //window.addEventListener('keydown', keyDown);
+                //window.addEventListener('keyup', keyUp);
 
                 /*camera.position.set(1, player.height, 1);
                 camera.lookAt(new THREE.Vector3(2, player.height, 2));
