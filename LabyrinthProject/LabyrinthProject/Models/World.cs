@@ -27,9 +27,9 @@ namespace LabyrinthProject.Models
             {
                 worldObjects.Add(room);
             }*/
-            
-            worldObjects.AddRange(newLab.walls);
             worldObjects.AddRange(newLab.bigRooms);
+            worldObjects.AddRange(newLab.walls);
+            
             /*foreach (Wall wall in worldObjects)
             {
                 wall.needsUpdate = true;

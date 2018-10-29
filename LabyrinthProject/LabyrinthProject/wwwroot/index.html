@@ -256,10 +256,10 @@
                                 {
                                     alert("Papito0");
                                     var geo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-                                    var mat = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/wolla.jpg"), side: THREE.DoubleSide });
-                                    var bigRooms = new THREE.Mesh(geo, mat);
+                                    var mat = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/diccbud.bmp"), side: THREE.DoubleSide });
+                                    var puzzle = new THREE.Mesh(geo, mat);
                                     var bigRooms = new THREE.Group();
-                                    bigRooms.add(room);
+                                    bigRooms.add(puzzle);
                                     scene.add(bigRooms);
                                     worldObjects[command.parameters.guid] = bigRooms;
                                 }
