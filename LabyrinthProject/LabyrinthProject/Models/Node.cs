@@ -23,8 +23,8 @@ namespace LabyrinthProject.Models
         public bool visited { get; set; }
 
         //For RemoveWalls()
-        public List<Node> connectedNodeList { get; set; }
-
+        //public List<Node> connectedNodeList = new List<Node>();
+       public List<Node> connectedNodeList { get; set; }
         //Praise RNGsus
         private static Random rng = new Random();
 
@@ -35,10 +35,10 @@ namespace LabyrinthProject.Models
             _x = x;
             _y = y;
             _z = z;
-            connectedNodeList = new List<Node>();
             //Default false for the RemoveWalls method
             visited = false;
             guid = Guid.NewGuid();
+            connectedNodeList = new List<Node>();
         }
 
         //Gets a random node that is connected to this node

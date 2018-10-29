@@ -22,26 +22,32 @@
             var scene, camera, renderer;
             var cameraControls;
             var exampleSocket;
-
+            var raycaster = new THREE.Raycaster();
+            var mouse = new THREE.Vector2(), INTERSECTED;
+            var radius = 100, theta = 0;
             var worldObjects = {};
 
 
+
             function init() {
-                // Camera               
+                // Camera
                 scene = new THREE.Scene();
                 camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-                cameraControls = new THREE.OrbitControls(camera);
-                camera.position.x = -50;
-                camera.position.y = 30;
-                camera.position.z = -50;;
-                cameraControls.update();
+                //cameraControls = new THREE.OrbitControls(camera);
+                //camera.position.x = -50;
+                //camera.position.y = 30;
+                //camera.position.z = -50;;
+                //cameraControls.update();
 
-                //camera.position.set(1, player.height, 1);
-                //camera.lookAt(new THREE.Vector3(2, player.height, 2));
-                //window.addEventListener('resize', onWindowResize, false);
-                //window.addEventListener('keydown', keyDown);
-                //window.addEventListener('keyup', keyUp);
+                camera.position.set(1, player.height, 1);
+                camera.lookAt(new THREE.Vector3(2, player.height, 2));
+                window.addEventListener('resize', onWindowResize, false);
+                window.addEventListener('keydown', keyDown);
+                window.addEventListener('keyup', keyUp);
+
+                // Interaction
+                window.addEventListener('mousemove', onMouseMove, false);
 
                 // Skybox
                 var sphericalSkyboxGeometry = new THREE.SphereGeometry(200, 32, 32);
@@ -63,7 +69,7 @@
                 playerHitbox = new THREE.Mesh(cubeGeometry, wireMaterial);
                 playerHitbox.position.set(1, -0.25, 1);
                 playerHitbox.rotation.y = -camera.rotation.y;
-                scene.add(playerHitbox);
+                //scene.add(playerHitbox);
 
                 // Ambient Light
                 ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
@@ -87,6 +93,32 @@
             // Animate [Function]
             function animate() {
                 requestAnimationFrame(animate);
+
+                // update the picking ray with the camera and mouse position
+                raycaster.setFromCamera(mouse, camera);
+
+                // calculate objects intersecting the picking ray
+                var intersects = raycaster.intersectObjects(scene.children);
+
+                if (intersects.length >  0) {
+
+                    //intersects[0].object.material.color.set(0xff0000);
+
+                
+
+                if (INTERSECTED != intersects[0].object) {
+                    if (INTERSECTED) INTERSECTED.material.color.set(INTERSECTED.currentColor);
+                    INTERSECTED = intersects[0].object;
+                    INTERSECTED.currentColor =  INTERSECTED.material.color.getHex();
+                    INTERSECTED.material.color.set(0xff0000);
+                }
+            } else {
+                if (INTERSECTED) INTERSECTED.material.color.set(INTERSECTED.currentColor);
+                INTERSECTED = null;
+            }
+
+
+
 
                 if (keyboard[87]) { // W key
                     camera.position.x -= Math.sin(camera.rotation.y) * player.speed;
@@ -115,7 +147,7 @@
 
                     playerHitbox.position.x = camera.position.x;
                     playerHitbox.position.z = camera.position.z;
-                }                
+                }
                 if (keyboard[81]) { // Q key
                     camera.rotation.y -= player.turnSpeed;
 
@@ -148,6 +180,15 @@
                 keyboard[event.keyCode] = false;
             }
 
+            function onMouseMove(event) {
+
+                // calculate mouse position in normalized device coordinates
+                // (-1 to +1) for both components
+                event.preventDefault();
+                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+
+            }
             // Model Loader [Function]
             function loadOBJModel(modelPath, modelName, texturePath, textureName, onload) {
                 new THREE.MTLLoader()
@@ -177,9 +218,7 @@
                                     //Position and Dimensions need to be optained from the object, but idk if this works
                                     var geometry = new THREE.BoxGeometry(1, 1, 0.05);
                                     var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/wolla.jpg"), side: THREE.DoubleSide });
-                                    var wall = new THREE.Mesh(geometry, material);
-                                    var walls = new THREE.Group();
-                                    walls.add(wall);
+                                    var walls = new THREE.Mesh(geometry, material);
                                     scene.add(walls);
                                     worldObjects[command.parameters.guid] = walls;
                                 }
@@ -227,6 +266,7 @@
     <script src="MTLLoader.js"></script>
     <script src="OBJLoader.js"></script>
     <script src="LightShadow.js"></script>
+    <script src="material.js"></script>
 </body>
 
 </html>
