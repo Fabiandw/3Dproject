@@ -26,7 +26,7 @@ namespace LabyrinthProject.Models
 
 
             _x = (parent.nodeList[0].x + parent.nodeList[1].x) / 2;
-            _y = 0.5;
+            _y = 0;
             _z = (parent.nodeList[0].z + parent.nodeList[1].z) / 2;
             _rZ = 0;
             _rX = 0;
@@ -56,7 +56,7 @@ namespace LabyrinthProject.Models
             this.height = height;
 
             _x = x;
-            _y = 0.5;
+            _y = 0;
             _z = z;
             _rZ = 0;
             _rX = 0;
