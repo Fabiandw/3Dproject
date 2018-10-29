@@ -17,27 +17,22 @@ namespace LabyrinthProject.Models
         //public double x { get { return _x; } }
         //public double y { get { return _y; } }
         //public double z { get { return _z; } }
-        public string roomType;
+        //public string type;
 
         //Constructor
-        public BigRoom(Grid grid, Node node, string roomType)
+        public BigRoom(Grid grid, Node node, string type)
         {
             //Vertex variables for location and identification
             centre = node;
-            _x = centre.x;
+            _x = node.x;
             _y = 0;
             _z = node.z;
-            _rZ = 0;
-            _rX = 0;
-            _rY = 0;
+            
 
             guid = Guid.NewGuid();
-            this.type = "room";
-            this.roomType = roomType;
-
-            //needsUpdate = true;
+            this.type = type;
             this.grid = grid;
-            //centre = node;
+            
 
 
             //Destroys all the walls in a 3x3 grid to create an open space (big room) and makes an exit/entrance to this room

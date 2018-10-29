@@ -22,14 +22,14 @@ namespace LabyrinthProject.Models
             /*foreach (Wall wall in newLab.walls)
             {
                 worldObjects.Add(wall);
-            }*/
-            /*foreach (BigRoom room in newLab.bigRooms)
+            }
+            foreach (BigRoom room in newLab.bigRooms)
             {
                 worldObjects.Add(room);
             }*/
-            worldObjects.AddRange(newLab.bigRooms);
-            worldObjects.AddRange(newLab.walls);
             
+            worldObjects.AddRange(newLab.walls);
+            worldObjects.AddRange(newLab.bigRooms);
             /*foreach (Wall wall in worldObjects)
             {
                 wall.needsUpdate = true;
