@@ -32,14 +32,13 @@
 
             function init() {
                 // Camera
-<<<<<<< HEAD
+
 
                 scene = new THREE.Scene();
                 camera = new THREE.PerspectiveCamera(70, 1280 / 720, 0.1, 1000);
 
                 // Camera               
-=======
->>>>>>> Fabian
+
                 scene = new THREE.Scene();
                 camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
 
@@ -55,7 +54,6 @@
                 window.addEventListener('keydown', keyDown);
                 window.addEventListener('keyup', keyUp);
 
-<<<<<<< HEAD
                 /*camera.position.set(1, player.height, 1);
                 camera.lookAt(new THREE.Vector3(2, player.height, 2));
                 window.addEventListener('resize', onWindowResize, false);
@@ -67,10 +65,9 @@
                 //window.addEventListener('resize', onWindowResize, false);
                 //window.addEventListener('keydown', keyDown);
                 //window.addEventListener('keyup', keyUp);
-=======
+
                 // Interaction
                 window.addEventListener('mousemove', onMouseMove, false);
->>>>>>> Fabian
 
                 // Skybox
                 var sphericalSkyboxGeometry = new THREE.SphereGeometry(200, 32, 32);
