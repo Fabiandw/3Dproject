@@ -209,8 +209,8 @@ namespace LabyrinthProject.Models
                 tempWall.Add(new Wall(i, grid.zMax + 0.5, false));
                 if (i%2.5 == 0)
                 {
-                    tempDeco.Add(new Decoration("torch", i, 0.3, grid.zMax, 0, Math.PI/2, 0));
-                    tempDeco.Add(new Decoration("torch", i, 0.3, 0.5, 0, -Math.PI/2, 0));
+                    tempDeco.Add(new Decoration("torch", i + 0.25, 0.3, grid.zMax + 0.25, 0, 0, 0));
+                    tempDeco.Add(new Decoration("torch", i + 0.25, 0.3, 0.75, 0, Math.PI, 0));
                 }
             }
             for (int j = 1; j <= grid.zMax; j++)
@@ -220,8 +220,8 @@ namespace LabyrinthProject.Models
 
                 if (j % 2.5 == 0)
                 {
-                   tempDeco.Add(new Decoration("torch", grid.xMax, 0.3, j, 0, Math.PI, 0));
-                   tempDeco.Add(new Decoration("torch", 0.5, 0.3, j, 0, 0, 0));
+                   tempDeco.Add(new Decoration("torch", grid.xMax + 0.25, 0.3, j +0.25, 0, Math.PI / 2, 0));
+                   tempDeco.Add(new Decoration("torch", 0.75, 0.3, j +0.25, 0, -Math.PI / 2, 0));
                 }
             }
             //For each connection in the given list where wall == true, make a wall using the connection and the given dimensions and then add it to the return list

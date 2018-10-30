@@ -80,7 +80,12 @@
                 // Plane
                 var planeGeometry = new THREE.PlaneGeometry(400, 400, 32);
                 var planeMaterial = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/moonsurface.jpg"), side: THREE.DoubleSide });
+                var texture = new THREE.TextureLoader().load("textures/.jpg");
+                texture.wrapS = THREE.RepeatWrapping;
+                texture.wrapT = THREE.RepeatWrapping;
+                texture.repeat.set(4, 4);
                 var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+                
                 plane.position.y = -0.5;
                 plane.rotation.x = Math.PI / 2;
                 plane.position.y = -0.5
@@ -250,7 +255,7 @@
                                     //Position and Dimensions need to be obtained from the object, but idk if this works
 
                                     //Position and Dimensions need to be optained from the object, but idk if this works
-                                    var geometry = new THREE.BoxGeometry(1, 1, 0.05);
+                                    var geometry = new THREE.BoxGeometry(1, 1, 0.07);
                                     var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/wolla.jpg"), side: THREE.DoubleSide });
                                     var wall = new THREE.Mesh(geometry, material);
                                     var walls = new THREE.Group();
@@ -279,10 +284,11 @@
                                     switch (command.parameters.decoType) {
                                         case "torch":
                                             {
+                                               
                                                 var torches = new THREE.Group();
                                                 worldObjects[command.parameters.guid] = torches;
-                                                loadOBJModel("textures/Decoration/", "model.obj", "textures/Decoration/", "materials.mtl", (mesh) => {
-                                                    mesh.scale.set(0.2, 0.2, 0.2);
+                                                loadOBJModel("textures/Decoration/", "walltorch.obj", "textures/Decoration/", "walltorch.mtl", (mesh) => {
+                                                    mesh.scale.set(1, 1, 1);
                                                     torches.add(mesh);
                                                     scene.add(torches);
                                                 });
