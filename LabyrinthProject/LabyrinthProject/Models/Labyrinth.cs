@@ -123,7 +123,15 @@ namespace LabyrinthProject.Models
 
 
             //Initiating making bool
-            bool makingPuzzleRooms = true;
+            bool makingPuzzleRooms;
+            if (amount == 0)
+            {
+                makingPuzzleRooms = false;
+            }
+            else
+            {
+                makingPuzzleRooms = true;
+            }
 
             //While making puzzle rooms is true, continue
             while (makingPuzzleRooms)

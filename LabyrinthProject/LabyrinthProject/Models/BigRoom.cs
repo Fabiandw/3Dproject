@@ -17,25 +17,22 @@ namespace LabyrinthProject.Models
         //public double x { get { return _x; } }
         //public double y { get { return _y; } }
         //public double z { get { return _z; } }
-        public string roomType;
+        //public string type;
 
         //Constructor
-        public BigRoom(Grid grid, Node node, string roomType)
+        public BigRoom(Grid grid, Node node, string type)
         {
             //Vertex variables for location and identification
+            centre = node;
             _x = node.x;
-            _y = node.y;
+            _y = 0;
             _z = node.z;
-            _rZ = 0;
-            _rX = 0;
-            _rY = 0;
+
 
             guid = Guid.NewGuid();
-            type = "room";
-            this.roomType = roomType;
+            this.type = type;
+            this.grid = grid;
 
-            this.grid = grid; 
-            centre = node;
 
 
             //Destroys all the walls in a 3x3 grid to create an open space (big room) and makes an exit/entrance to this room
@@ -47,7 +44,6 @@ namespace LabyrinthProject.Models
         {
             //Make centre visited
             centre.visited = true;
-
             //For each node connected to centre do...
             foreach (Node node in centre.connectedNodeList)
             {
@@ -64,9 +60,12 @@ namespace LabyrinthProject.Models
                     if (nextNode.x != x && nextNode.z != z)
                     {
                         nextNode.visited = true;
+                        
                     }
                 }
             }
+            // Clears the list of 4 connected nodes to the centre node, otherwise creating an infinite loop of sadness
+                centre.connectedNodeList.Clear();
         }
 
         //The current node and chosen random next node's connection wall boolean will be set to false
@@ -75,6 +74,8 @@ namespace LabyrinthProject.Models
             grid.connectionList.Find(match => (match.nodeList.Contains(current) && match.nodeList.Contains(next))).wall = false;
             grid.connectionList.Find(match => (match.nodeList.Contains(next) && match.nodeList.Contains(current))).wall = false;
         }
+
+
 
     }
 }

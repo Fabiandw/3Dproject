@@ -66,5 +66,6 @@ namespace LabyrinthProject.Models
             //Return null, or a random unvisited node
             return returnNode;
         }
+    
     }
 }
