@@ -12,8 +12,10 @@ namespace LabyrinthProject.Models
 
         public Grid grid { get; }
         public Guid guid { get; }
-        public List<BigRoom> bigRooms { get; }
-        public List<Wall> walls { get; }
+        public List<BigRoom> bigRooms { get; set; }
+        public List<Wall> walls { get; set; }
+        public List<Decoration> decoList { get; set; }
+
 
         //Praise RNGsus
         private static Random rng = new Random();
@@ -32,7 +34,7 @@ namespace LabyrinthProject.Models
             RemoveWalls();
 
             //After having removed some walls we make the models for the walls
-            walls = MakeWalls(grid.connectionList);
+             MakeWalls(grid.connectionList);
         }
 
         //Labyrinth maker
@@ -193,40 +195,46 @@ namespace LabyrinthProject.Models
         }
 
         //Wall maker, needs a list of connections and the dimensions for the walls
-        private List<Wall> MakeWalls(List<Connection> list)
+        private void MakeWalls(List<Connection> list)
         {
             //Initiating return list
-            List<Wall> returnList = new List<Wall>();
-
+            //List<Wall> returnList = new List<Wall>();
+            //List<Decoration> decoList = new List<Decoration>();
+            List<Wall> tempWall = new List<Wall>();
+            List<Decoration> tempDeco = new List<Decoration>();
             //Make outer wall here
             for (int i = 1; i <= grid.xMax; i++)
             {
-                returnList.Add(new Wall(i, 0.5, false));
-                returnList.Add(new Wall(i, grid.zMax + 0.5, false));
-                if (i%5 == 0)
+                tempWall.Add(new Wall(i, 0.5, false));
+                tempWall.Add(new Wall(i, grid.zMax + 0.5, false));
+                if (i%2.5 == 0)
                 {
-                    Decoration torch = new Decoration("torch", i, 1, grid.zMax, 0, 0, 0);
+                    tempDeco.Add(new Decoration("torch", i, 0.3, grid.zMax, 0, Math.PI/2, 0));
+                    tempDeco.Add(new Decoration("torch", i, 0.3, 0.5, 0, -Math.PI/2, 0));
                 }
             }
             for (int j = 1; j <= grid.zMax; j++)
             {
-                returnList.Add(new Wall(0.5, j, true));
-                returnList.Add(new Wall(grid.xMax + 0.5, j, true));
+                tempWall.Add(new Wall(0.5, j, true));
+                tempWall.Add(new Wall(grid.xMax + 0.5, j, true));
 
-                if (j % 5 == 0)
+                if (j % 2.5 == 0)
                 {
-                    Decoration torch = new Decoration("torch", j, 1, grid.zMax, 0, 0, 0);
+                   tempDeco.Add(new Decoration("torch", grid.xMax, 0.3, j, 0, Math.PI, 0));
+                   tempDeco.Add(new Decoration("torch", 0.5, 0.3, j, 0, 0, 0));
                 }
             }
             //For each connection in the given list where wall == true, make a wall using the connection and the given dimensions and then add it to the return list
             foreach (Connection connection in list.Where(i => i.wall == true))
             {
                 Wall wall = new Wall(connection, connection.northSouthWall);
-                returnList.Add(wall);
+                tempWall.Add(wall);
             }
+            decoList = tempDeco;
+            walls = tempWall;
 
-            //Return list
-            return returnList;
+            ////Return list
+            //return returnList;
         }
     }
 }

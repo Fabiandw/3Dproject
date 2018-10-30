@@ -274,15 +274,17 @@
 
                             case "decoration":
                                 {
-                                    var decorations = new THREE.Group();
-                                    worldObjects[command.parameters.guid] = decorations;
-
-                                    switch (comman.parameters.decoType) {
+                                    //var decorations = new THREE.Group();
+                                    //worldObjects[command.parameters.guid] = decorations;
+                                    switch (command.parameters.decoType) {
                                         case "torch":
                                             {
+                                                var torches = new THREE.Group();
+                                                worldObjects[command.parameters.guid] = torches;
                                                 loadOBJModel("textures/Decoration/", "torchLit.obj", "textures/Decoration/", "torchLit.mtl", (mesh) => {
-                                                    decorations.add(mesh);
-                                                    scene.add(decorations);
+                                                    mesh.scale.set(0.2, 0.2, 0.2);
+                                                    torches.add(mesh);
+                                                    scene.add(torches);
                                                 });
                                             }
 
