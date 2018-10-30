@@ -281,7 +281,7 @@
                                             {
                                                 var torches = new THREE.Group();
                                                 worldObjects[command.parameters.guid] = torches;
-                                                loadOBJModel("textures/Decoration/", "torchLit.obj", "textures/Decoration/", "torchLit.mtl", (mesh) => {
+                                                loadOBJModel("textures/Decoration/", "model.obj", "textures/Decoration/", "materials.mtl", (mesh) => {
                                                     mesh.scale.set(0.2, 0.2, 0.2);
                                                     torches.add(mesh);
                                                     scene.add(torches);
