@@ -203,11 +203,20 @@ namespace LabyrinthProject.Models
             {
                 returnList.Add(new Wall(i, 0.5, false));
                 returnList.Add(new Wall(i, grid.zMax + 0.5, false));
+                if (i%5 == 0)
+                {
+                    Decoration torch = new Decoration("torch", i, 1, grid.zMax, 0, 0, 0);
+                }
             }
             for (int j = 1; j <= grid.zMax; j++)
             {
                 returnList.Add(new Wall(0.5, j, true));
                 returnList.Add(new Wall(grid.xMax + 0.5, j, true));
+
+                if (j % 5 == 0)
+                {
+                    Decoration torch = new Decoration("torch", j, 1, grid.zMax, 0, 0, 0);
+                }
             }
             //For each connection in the given list where wall == true, make a wall using the connection and the given dimensions and then add it to the return list
             foreach (Connection connection in list.Where(i => i.wall == true))

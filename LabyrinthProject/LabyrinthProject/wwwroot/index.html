@@ -278,19 +278,30 @@
                                     var decorations = new THREE.Group();
                                     worldObjects[command.parameters.guid] = decorations;
 
-                                    //Examples of decoration types
-                                    if (command.parameters.decoType === "tree") {
-                                        loadOBJModel("models/tree/", "tree.obj", "models/tree/", "tree.mtl", (mesh) => {
-                                            decorations.add(mesh);
-                                            scene.add(decorations);
-                                        });
+                                    switch (comman.parameters.decoType) {
+                                        case "torch":
+                                            {
+                                                loadOBJModel("textures/Decoration/", "torchLit.obj", "textures/Decoration/", "torchLit.mtl", (mesh) => {
+                                                    decorations.add(mesh);
+                                                    scene.add(decorations);
+                                                });
+                                            }
+
+                                            break;
                                     }
-                                    else if (command.parameters.decoType === "torch") {
-                                        loadOBJModel("models/torch/", "torch.obj", "models/torch/", "torch.mtl", (mesh) => {
-                                            decorations.add(mesh);
-                                            scene.add(decorations);
-                                        });
-                                    }
+                                    ////Examples of decoration types
+                                    //if (command.parameters.decoType === "tree") {
+                                    //    loadOBJModel("models/tree/", "tree.obj", "models/tree/", "tree.mtl", (mesh) => {
+                                    //        decorations.add(mesh);
+                                    //        scene.add(decorations);
+                                    //    });
+                                    //}
+                                    //else if (command.parameters.decoType === "torch") {
+                                    //    loadOBJModel("models/torch/", "torch.obj", "models/torch/", "torch.mtl", (mesh) => {
+                                    //        decorations.add(mesh);
+                                    //        scene.add(decorations);
+                                    //    });
+                                    //}
 
                                 }
                                 break;
