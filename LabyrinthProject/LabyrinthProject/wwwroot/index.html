@@ -80,7 +80,12 @@
                 // Plane
                 var planeGeometry = new THREE.PlaneGeometry(400, 400, 32);
                 var planeMaterial = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/moonsurface.jpg"), side: THREE.DoubleSide });
+                var texture = new THREE.TextureLoader().load("textures/.jpg");
+                texture.wrapS = THREE.RepeatWrapping;
+                texture.wrapT = THREE.RepeatWrapping;
+                texture.repeat.set(4, 4);
                 var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+                
                 plane.position.y = -0.5;
                 plane.rotation.x = Math.PI / 2;
                 plane.position.y = -0.5
@@ -250,7 +255,7 @@
                                     //Position and Dimensions need to be obtained from the object, but idk if this works
 
                                     //Position and Dimensions need to be optained from the object, but idk if this works
-                                    var geometry = new THREE.BoxGeometry(1, 1, 0.05);
+                                    var geometry = new THREE.BoxGeometry(1, 1, 0.07);
                                     var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/wolla.jpg"), side: THREE.DoubleSide });
                                     var wall = new THREE.Mesh(geometry, material);
                                     var walls = new THREE.Group();
@@ -262,7 +267,6 @@
 
                             case "puzzle":
                                 {
-                                    alert("Papito0");
                                     var geo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
                                     var mat = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/diccbud.bmp"), side: THREE.DoubleSide });
                                     var puzzle = new THREE.Mesh(geo, mat);
@@ -275,22 +279,36 @@
 
                             case "decoration":
                                 {
-                                    var decorations = new THREE.Group();
-                                    worldObjects[command.parameters.guid] = decorations;
+                                    //var decorations = new THREE.Group();
+                                    //worldObjects[command.parameters.guid] = decorations;
+                                    switch (command.parameters.decoType) {
+                                        case "torch":
+                                            {
+                                               
+                                                var torches = new THREE.Group();
+                                                worldObjects[command.parameters.guid] = torches;
+                                                loadOBJModel("textures/Decoration/", "walltorch.obj", "textures/Decoration/", "walltorch.mtl", (mesh) => {
+                                                    mesh.scale.set(1, 1, 1);
+                                                    torches.add(mesh);
+                                                    scene.add(torches);
+                                                });
+                                            }
 
-                                    //Examples of decoration types
-                                    if (command.parameters.decoType === "tree") {
-                                        loadOBJModel("models/tree/", "tree.obj", "models/tree/", "tree.mtl", (mesh) => {
-                                            decorations.add(mesh);
-                                            scene.add(decorations);
-                                        });
+                                            break;
                                     }
-                                    else if (command.parameters.decoType === "torch") {
-                                        loadOBJModel("models/torch/", "torch.obj", "models/torch/", "torch.mtl", (mesh) => {
-                                            decorations.add(mesh);
-                                            scene.add(decorations);
-                                        });
-                                    }
+                                    ////Examples of decoration types
+                                    //if (command.parameters.decoType === "tree") {
+                                    //    loadOBJModel("models/tree/", "tree.obj", "models/tree/", "tree.mtl", (mesh) => {
+                                    //        decorations.add(mesh);
+                                    //        scene.add(decorations);
+                                    //    });
+                                    //}
+                                    //else if (command.parameters.decoType === "torch") {
+                                    //    loadOBJModel("models/torch/", "torch.obj", "models/torch/", "torch.mtl", (mesh) => {
+                                    //        decorations.add(mesh);
+                                    //        scene.add(decorations);
+                                    //    });
+                                    //}
 
                                 }
                                 break;
