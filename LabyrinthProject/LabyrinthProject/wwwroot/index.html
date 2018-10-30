@@ -1,0 +1,332 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Labyrinth</title>
+</head>
+
+<body style="margin:0px;padding:0px;overflow:hidden;">
+    <script>
+        function parseCommand(input = "") {
+            return JSON.parse(input);
+        }
+        var meshFloor, ambientLight, light;
+        var crate, crateTexture, crateNormalMap, crateBumpMap;
+        var keyboard = {};
+        var player = { height: 0, speed: 0.05, turnSpeed: Math.PI * 0.02 };
+        var playerHitbox;
+        var USE_WIREFRAME = false;
+        var RESOURCES_LOADED = false;
+
+        window.onload = function () {
+            var scene, camera, renderer;
+            var cameraControls;
+            var exampleSocket;
+            var raycaster = new THREE.Raycaster();
+            var mouse = new THREE.Vector2(), INTERSECTED;
+            var radius = 100, theta = 0;
+            var worldObjects = {};
+
+
+
+            function init() {
+                // Camera
+
+
+                scene = new THREE.Scene();
+                camera = new THREE.PerspectiveCamera(70, 1280 / 720, 0.1, 1000);
+
+                // Camera               
+
+                scene = new THREE.Scene();
+                camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+                //cameraControls = new THREE.OrbitControls(camera);
+                //camera.position.x = -50;
+                //camera.position.y = 30;
+                //camera.position.z = -50;;
+                //cameraControls.update();
+
+                camera.position.set(1, player.height, 1);
+                camera.lookAt(new THREE.Vector3(2, player.height, 2));
+                window.addEventListener('resize', onWindowResize, false);
+                window.addEventListener('keydown', keyDown);
+                window.addEventListener('keyup', keyUp);
+
+                /*camera.position.set(1, player.height, 1);
+                camera.lookAt(new THREE.Vector3(2, player.height, 2));
+                window.addEventListener('resize', onWindowResize, false);
+                window.addEventListener('keydown', keyDown);
+                window.addEventListener('keyup', keyUp);*/
+
+                //camera.position.set(1, player.height, 1);
+                //camera.lookAt(new THREE.Vector3(2, player.height, 2));
+                //window.addEventListener('resize', onWindowResize, false);
+                //window.addEventListener('keydown', keyDown);
+                //window.addEventListener('keyup', keyUp);
+
+                // Interaction
+                window.addEventListener('mousemove', onMouseMove, false);
+
+                // Skybox
+                var sphericalSkyboxGeometry = new THREE.SphereGeometry(200, 32, 32);
+                var sphericalSkyboxMaterial = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/skybox/cave.jpg"), side: THREE.DoubleSide });
+                var sphericalSkybox = new THREE.Mesh(sphericalSkyboxGeometry, sphericalSkyboxMaterial);
+                var SS = new THREE.Group();
+                SS.add(sphericalSkybox);
+                scene.add(SS);
+
+                // Plane
+                var planeGeometry = new THREE.PlaneGeometry(400, 400, 32);
+                var planeMaterial = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/moonsurface.jpg"), side: THREE.DoubleSide });
+                var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+                plane.position.y = -0.5;
+                plane.rotation.x = Math.PI / 2;
+                plane.position.y = -0.5
+                grpPlane = new THREE.Group();
+                grpPlane.add(plane);
+                scene.add(grpPlane);
+
+                // Player
+                var cubeGeometry = new THREE.CubeGeometry(0.4, 0.5, 0.2);
+                var wireMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true });
+                playerHitbox = new THREE.Mesh(cubeGeometry, wireMaterial);
+                playerHitbox.position.set(1, -0.25, 1);
+                playerHitbox.rotation.y = -camera.rotation.y;
+                grpPlayerHitbox = new THREE.Group();
+                grpPlayerHitbox.add(playerHitbox);
+                scene.add(grpPlayerHitbox);
+
+                // Ambient Light
+                ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+                scene.add(ambientLight);
+
+                // Render
+
+                renderer = new THREE.WebGLRenderer();
+                renderer.setPixelRatio(window.devicePixelRatio);
+                renderer.setSize(window.innerWidth, window.innerHeight + 5);
+                renderer.shadowMap.enabled = true;
+                renderer.shadowMap.type = THREE.BasicShadowMap;
+                document.body.appendChild(renderer.domElement);
+
+            }
+
+
+
+            // WindowResize [Function]
+            function onWindowResize() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+            // Animate [Function]
+            function animate() {
+                requestAnimationFrame(animate);
+
+                // update the picking ray with the camera and mouse position
+                raycaster.setFromCamera(mouse, camera);
+
+                // calculate objects intersecting the picking ray
+                var intersects = raycaster.intersectObjects(scene.children);
+
+                if (intersects.length >  0) {
+
+                    //intersects[0].object.material.color.set(0xff0000);
+
+                
+
+                if (INTERSECTED != intersects[0].object) {
+                    if (INTERSECTED) INTERSECTED.material.color.set(INTERSECTED.currentColor);
+                    INTERSECTED = intersects[0].object;
+                    INTERSECTED.currentColor =  INTERSECTED.material.color.getHex();
+                    INTERSECTED.material.color.set(0xff0000);
+                }
+            } else {
+                if (INTERSECTED) INTERSECTED.material.color.set(INTERSECTED.currentColor);
+                INTERSECTED = null;
+            }
+
+
+
+
+                if (keyboard[87]) { // W key
+                    camera.position.x -= Math.sin(camera.rotation.y) * player.speed;
+                    camera.position.z -= -Math.cos(camera.rotation.y) * player.speed;
+
+                    playerHitbox.position.x = camera.position.x;
+                    playerHitbox.position.z = camera.position.z;
+                }
+                if (keyboard[83]) { // S key
+                    camera.position.x += Math.sin(camera.rotation.y) * player.speed;
+                    camera.position.z += -Math.cos(camera.rotation.y) * player.speed;
+
+                    playerHitbox.position.x = camera.position.x;
+                    playerHitbox.position.z = camera.position.z;
+                }
+                if (keyboard[65]) { // A key
+                    camera.position.x += Math.sin(camera.rotation.y + Math.PI / 2) * player.speed;
+                    camera.position.z += -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed;
+
+                    playerHitbox.position.x = camera.position.x;
+                    playerHitbox.position.z = camera.position.z;
+                }
+                if (keyboard[68]) { // D key
+                    camera.position.x += Math.sin(camera.rotation.y - Math.PI / 2) * player.speed;
+                    camera.position.z += -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed;
+
+                    playerHitbox.position.x = camera.position.x;
+                    playerHitbox.position.z = camera.position.z;
+                }
+                if (keyboard[81]) { // Q key
+                    camera.rotation.y -= player.turnSpeed;
+
+                    playerHitbox.rotation.y += player.turnSpeed;
+                }
+                else if (keyboard[37]) { // Left arrow key
+                    camera.rotation.y -= player.turnSpeed;
+
+                    playerHitbox.rotation.y += player.turnSpeed;
+                }
+                if (keyboard[69]) { // E key
+                    camera.rotation.y += player.turnSpeed;
+
+                    playerHitbox.rotation.y -= player.turnSpeed;
+                }
+                else if (keyboard[39]) { // Right arrow key
+                    camera.rotation.y += player.turnSpeed;
+
+                    playerHitbox.rotation.y -= player.turnSpeed;
+                }
+
+                renderer.render(scene, camera);
+
+            }
+            function keyDown(event) {
+                keyboard[event.keyCode] = true;
+            }
+
+            function keyUp(event) {
+                keyboard[event.keyCode] = false;
+            }
+
+            function onMouseMove(event) {
+
+                // calculate mouse position in normalized device coordinates
+                // (-1 to +1) for both components
+                event.preventDefault();
+                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+
+            }
+            // Model Loader [Function]
+            function loadOBJModel(modelPath, modelName, texturePath, textureName, onload) {
+                new THREE.MTLLoader()
+                    .setPath(texturePath)
+                    .load(textureName, function (materials) {
+
+                        materials.preload();
+
+                        new THREE.OBJLoader()
+                            .setPath(modelPath)
+                            .setMaterials(materials)
+                            .load(modelName, function (object) {
+                                onload(object);
+                            }, function () { }, function (e) { console.log("Error loading model"); console.log(e); });
+                    });
+            }
+            // Model Deployer [Server]
+            exampleSocket = new WebSocket("ws://" + window.location.hostname + ":" + window.location.port + "/connect_client");
+            exampleSocket.onmessage = function (event) {
+                var command = parseCommand(event.data);
+                console.log(command);
+                if (command.command === "update") {
+                    if (Object.keys(worldObjects).indexOf(command.parameters.guid) < 0) {
+                        switch (command.parameters.type) {
+                            case "wall":
+                                {
+
+                                    //Position and Dimensions need to be obtained from the object, but idk if this works
+
+                                    //Position and Dimensions need to be optained from the object, but idk if this works
+                                    var geometry = new THREE.BoxGeometry(1, 1, 0.05);
+                                    var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/wolla.jpg"), side: THREE.DoubleSide });
+                                    var wall = new THREE.Mesh(geometry, material);
+                                    var walls = new THREE.Group();
+                                    walls.add(wall);
+                                    scene.add(walls);
+                                    worldObjects[command.parameters.guid] = walls;
+                                }
+                                break;
+
+                            case "puzzle":
+                                {
+                                    alert("Papito0");
+                                    var geo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+                                    var mat = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/diccbud.bmp"), side: THREE.DoubleSide });
+                                    var puzzle = new THREE.Mesh(geo, mat);
+                                    //var bigRooms = new THREE.Group();
+                                    //bigRooms.add(puzzle);
+                                    scene.add(puzzle);
+                                    worldObjects[command.parameters.guid] = puzzle;
+                                }
+                                break;
+
+                            case "decoration":
+                                {
+                                    var decorations = new THREE.Group();
+                                    worldObjects[command.parameters.guid] = decorations;
+
+                                    switch (comman.parameters.decoType) {
+                                        case "torch":
+                                            {
+                                                loadOBJModel("textures/Decoration/", "torchLit.obj", "textures/Decoration/", "torchLit.mtl", (mesh) => {
+                                                    decorations.add(mesh);
+                                                    scene.add(decorations);
+                                                });
+                                            }
+
+                                            break;
+                                    }
+                                    ////Examples of decoration types
+                                    //if (command.parameters.decoType === "tree") {
+                                    //    loadOBJModel("models/tree/", "tree.obj", "models/tree/", "tree.mtl", (mesh) => {
+                                    //        decorations.add(mesh);
+                                    //        scene.add(decorations);
+                                    //    });
+                                    //}
+                                    //else if (command.parameters.decoType === "torch") {
+                                    //    loadOBJModel("models/torch/", "torch.obj", "models/torch/", "torch.mtl", (mesh) => {
+                                    //        decorations.add(mesh);
+                                    //        scene.add(decorations);
+                                    //    });
+                                    //}
+
+                                }
+                                break;
+                        }
+                    }
+                    // Object Parameters
+                    var object = worldObjects[command.parameters.guid];
+                    object.position.x = command.parameters.x;
+                    object.position.y = command.parameters.y;
+                    object.position.z = command.parameters.z;
+                    object.rotation.x = command.parameters.rotationX;
+                    object.rotation.y = command.parameters.rotationY;
+                    object.rotation.z = command.parameters.rotationZ;
+                }
+            };
+            init();
+            animate();
+        };
+    </script>
+    <script src="three.min.js"></script>
+    <script src="OrbitControls.js"></script>
+    <script src="MTLLoader.js"></script>
+    <script src="OBJLoader.js"></script>
+    <script src="LightShadow.js"></script>
+    <script src="material.js"></script>
+</body>
+
+</html>
