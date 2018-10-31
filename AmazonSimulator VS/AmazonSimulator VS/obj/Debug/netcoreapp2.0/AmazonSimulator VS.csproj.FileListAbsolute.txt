@@ -1,0 +1,22 @@
+C:\Users\Wouter Nauta\source\repos\NHL\AmazonSimulator VS\AmazonSimulator VS\obj\Debug\netcoreapp2.0\AmazonSimulator VS.csprojAssemblyReference.cache
+C:\Users\Wouter Nauta\source\repos\NHL\AmazonSimulator VS\AmazonSimulator VS\obj\Debug\netcoreapp2.0\AmazonSimulator VS.csproj.CoreCompileInputs.cache
+C:\Users\Wouter Nauta\source\repos\NHL\AmazonSimulator VS\AmazonSimulator VS\obj\Debug\netcoreapp2.0\AmazonSimulator VS.AssemblyInfoInputs.cache
+C:\Users\Wouter Nauta\source\repos\NHL\AmazonSimulator VS\AmazonSimulator VS\obj\Debug\netcoreapp2.0\AmazonSimulator VS.AssemblyInfo.cs
+C:\Users\Wouter Nauta\source\repos\NHL\AmazonSimulator VS\AmazonSimulator VS\bin\Debug\netcoreapp2.0\AmazonSimulator VS.deps.json
+C:\Users\Wouter Nauta\source\repos\NHL\AmazonSimulator VS\AmazonSimulator VS\bin\Debug\netcoreapp2.0\AmazonSimulator VS.runtimeconfig.json
+C:\Users\Wouter Nauta\source\repos\NHL\AmazonSimulator VS\AmazonSimulator VS\bin\Debug\netcoreapp2.0\AmazonSimulator VS.runtimeconfig.dev.json
+C:\Users\Wouter Nauta\source\repos\NHL\AmazonSimulator VS\AmazonSimulator VS\bin\Debug\netcoreapp2.0\AmazonSimulator VS.dll
+C:\Users\Wouter Nauta\source\repos\NHL\AmazonSimulator VS\AmazonSimulator VS\bin\Debug\netcoreapp2.0\AmazonSimulator VS.pdb
+C:\Users\Wouter Nauta\source\repos\NHL\AmazonSimulator VS\AmazonSimulator VS\obj\Debug\netcoreapp2.0\AmazonSimulator VS.dll
+C:\Users\Wouter Nauta\source\repos\NHL\AmazonSimulator VS\AmazonSimulator VS\obj\Debug\netcoreapp2.0\AmazonSimulator VS.pdb
+C:\Users\Cobain\Documents\Prive\AmazonSimulator VS\AmazonSimulator VS\bin\Debug\netcoreapp2.0\AmazonSimulator VS.deps.json
+C:\Users\Cobain\Documents\Prive\AmazonSimulator VS\AmazonSimulator VS\bin\Debug\netcoreapp2.0\AmazonSimulator VS.runtimeconfig.json
+C:\Users\Cobain\Documents\Prive\AmazonSimulator VS\AmazonSimulator VS\bin\Debug\netcoreapp2.0\AmazonSimulator VS.runtimeconfig.dev.json
+C:\Users\Cobain\Documents\Prive\AmazonSimulator VS\AmazonSimulator VS\bin\Debug\netcoreapp2.0\AmazonSimulator VS.dll
+C:\Users\Cobain\Documents\Prive\AmazonSimulator VS\AmazonSimulator VS\bin\Debug\netcoreapp2.0\AmazonSimulator VS.pdb
+C:\Users\Cobain\Documents\Prive\AmazonSimulator VS\AmazonSimulator VS\obj\Debug\netcoreapp2.0\AmazonSimulator VS.csprojAssemblyReference.cache
+C:\Users\Cobain\Documents\Prive\AmazonSimulator VS\AmazonSimulator VS\obj\Debug\netcoreapp2.0\AmazonSimulator VS.csproj.CoreCompileInputs.cache
+C:\Users\Cobain\Documents\Prive\AmazonSimulator VS\AmazonSimulator VS\obj\Debug\netcoreapp2.0\AmazonSimulator VS.AssemblyInfoInputs.cache
+C:\Users\Cobain\Documents\Prive\AmazonSimulator VS\AmazonSimulator VS\obj\Debug\netcoreapp2.0\AmazonSimulator VS.AssemblyInfo.cs
+C:\Users\Cobain\Documents\Prive\AmazonSimulator VS\AmazonSimulator VS\obj\Debug\netcoreapp2.0\AmazonSimulator VS.dll
+C:\Users\Cobain\Documents\Prive\AmazonSimulator VS\AmazonSimulator VS\obj\Debug\netcoreapp2.0\AmazonSimulator VS.pdb
