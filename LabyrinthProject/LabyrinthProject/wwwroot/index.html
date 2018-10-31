@@ -192,9 +192,9 @@
                     playerHitbox.rotation.y += player.turnSpeed;
                 }
                 if (keyboard[69]) { // E key
-                    if (touchdic == true) {
-                        alert("Dick is getoucht!");
-                    }
+                    camera.rotation.y += player.turnSpeed;
+
+                    playerHitbox.rotation.y -= player.turnSpeed;
                 }
                 else if (keyboard[39]) { // Right arrow key
                     camera.rotation.y += player.turnSpeed;
