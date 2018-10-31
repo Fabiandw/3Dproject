@@ -42,30 +42,18 @@
                 scene = new THREE.Scene();
                 camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-                cameraControls = new THREE.OrbitControls(camera);
-                camera.position.x = -50;
-                camera.position.y = 30;
-                camera.position.z = -50;;
-                cameraControls.update();
+                //cameraControls = new THREE.OrbitControls(camera);
+                //camera.position.x = -50;
+                //camera.position.y = 30;
+                //camera.position.z = -50;;
+                //cameraControls.update();
 
-                //camera.position.set(1, player.height, 1);
-                //camera.lookAt(new THREE.Vector3(2, player.height, 2));
-                //window.addEventListener('resize', onWindowResize, false);
-                //window.addEventListener('keydown', keyDown);
-                //window.addEventListener('keyup', keyUp);
-
-                /*camera.position.set(1, player.height, 1);
+                camera.position.set(1, player.height, 1);
                 camera.lookAt(new THREE.Vector3(2, player.height, 2));
                 window.addEventListener('resize', onWindowResize, false);
                 window.addEventListener('keydown', keyDown);
-                window.addEventListener('keyup', keyUp);*/
-
-                //camera.position.set(1, player.height, 1);
-                //camera.lookAt(new THREE.Vector3(2, player.height, 2));
-                //window.addEventListener('resize', onWindowResize, false);
-                //window.addEventListener('keydown', keyDown);
-                //window.addEventListener('keyup', keyUp);
-
+                window.addEventListener('keyup', keyUp);
+                
                 // Interaction
                 window.addEventListener('mousemove', onMouseMove, false);
 
@@ -150,22 +138,15 @@
 
                 // update the picking ray with the camera and mouse position
                 raycaster.setFromCamera(mouse, camera);
-
                 // calculate objects intersecting the picking ray
                 var intersects = raycaster.intersectObjects(scene.children);
 
                 if (intersects.length > 0 && intersects.length < 2) {
-                    //intersects[0].object.material.color.set(0xff0000);
-
-                    if (INTERSECTED != intersects[0].object) {
-                        if (INTERSECTED) INTERSECTED.material.color.set(INTERSECTED.currentColor);
-                        INTERSECTED = intersects[0].object;
-                        INTERSECTED.currentColor = INTERSECTED.material.color.getHex();
-                        INTERSECTED.material.color.set(0xff0000);
-                        touchdic = true;
-                    }
-                } else {
-                    
+                    touchdic = true;
+                    alert("key");
+                    scene.remove(intersects[0].object)
+                }
+                else {
                     INTERSECTED = null;
                 }
 
@@ -284,7 +265,7 @@
                             case "puzzle":
                                 {
                                     var geo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-                                    var mat = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/diccbud.bmp"), side: THREE.DoubleSide });
+                                    var mat = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/sleutel.png"), side: THREE.DoubleSide });
                                     var puzzle = new THREE.Mesh(geo, mat);
                                     //var bigRooms = new THREE.Group();
                                     //bigRooms.add(puzzle);
