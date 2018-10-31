@@ -19,7 +19,7 @@ namespace LabyrinthProject.Models
             this.parent = parent;
             guid = Guid.NewGuid();
             type = "wall";
-            needsUpdate = true;
+            //needsUpdate = true;
             this.length = length;
             this.width = width;
             this.height = height;
@@ -50,7 +50,7 @@ namespace LabyrinthProject.Models
         {
             guid = Guid.NewGuid();
             type = "wall";
-            needsUpdate = true;
+            //needsUpdate = true;
             this.length = length;
             this.width = width;
             this.height = height;

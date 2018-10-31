@@ -17,12 +17,27 @@ namespace LabyrinthProject.Models
             //DEBUG TEST
             int counter = 0;
             Grid newGrid = new Grid(20, 20);
-            Labyrinth newLab = new Labyrinth(newGrid, 0);
+            Labyrinth newLab = new Labyrinth(newGrid, 2);
+            
+            /*foreach (Wall wall in newLab.walls)
+            {
+                worldObjects.Add(wall);
+            }
+            foreach (BigRoom room in newLab.bigRooms)
+            {
+                worldObjects.Add(room);
+            }*/
+            worldObjects.AddRange(newLab.bigRooms);
             worldObjects.AddRange(newLab.walls);
-            foreach (Wall wall in worldObjects)
+            
+            /*foreach (Wall wall in worldObjects)
             {
                 wall.needsUpdate = true;
             }
+            foreach (BigRoom room in worldObjects)
+            {
+                room.needsUpdate = true;
+            }*/
             List<Connection> resultList = new List<Connection>();
             foreach (Connection connection in newLab.grid.connectionList)
             {
@@ -50,6 +65,7 @@ namespace LabyrinthProject.Models
                 observers.Add(observer);
 
                 SendCreationCommandsToObserver(observer);
+               
             }
             return new Unsubscriber<Command>(observers, observer);
         }
@@ -83,6 +99,8 @@ namespace LabyrinthProject.Models
                     if (needsCommand)
                     {
                         SendCommandToObservers(new UpdateModel3DCommand(u));
+                        // Verify all Updatable objects in WorldObjects - DEBUG purposes
+                        Console.WriteLine(u.type + " x" + u.x + " y" + u.y + " z" + u.z);
                     }
                 }
             }
