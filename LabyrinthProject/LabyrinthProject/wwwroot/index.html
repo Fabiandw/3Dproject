@@ -27,7 +27,7 @@
             var mouse = new THREE.Vector2(), INTERSECTED;
             var radius = 100, theta = 0;
             var worldObjects = {};
-
+            var touchdic = false;
 
 
             function init() {
@@ -37,7 +37,7 @@
                 scene = new THREE.Scene();
                 camera = new THREE.PerspectiveCamera(70, 1280 / 720, 0.1, 1000);
 
-                // Camera               
+                // Camera
 
                 scene = new THREE.Scene();
                 camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -82,10 +82,10 @@
                 light.position.set(0.4, 0.4, 0.4);
                 scene.add(light);
 
-                // Plane
-                var floorTexture = new THREE.ImageUtils.loadTexture('textures/floor.jpg');
+                // floor
+                var floorTexture = new THREE.ImageUtils.loadTexture('textures/wolla.jpg');
                 floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
-                floorTexture.repeat.set(500, 500);
+                floorTexture.repeat.set(2000, 2000);
                 var floorMaterial = new THREE.MeshBasicMaterial({ map: floorTexture, side: THREE.DoubleSide });
                 var floorGeometry = new THREE.PlaneGeometry(1000, 1000, 10, 10);
                 var floor = new THREE.Mesh(floorGeometry, floorMaterial);
@@ -95,6 +95,21 @@
                 floortje = new THREE.Group();
                 floortje.add(floor);
                 scene.add(floortje);
+
+                // roof
+
+                var roofTexture = new THREE.ImageUtils.loadTexture('textures/roof.jpg');
+                roofTexture.wrapS = roofTexture.wrapT = THREE.RepeatWrapping;
+                roofTexture.repeat.set(1200, 1200);
+                var roofMaterial = new THREE.MeshBasicMaterial({ map: roofTexture, side: THREE.DoubleSide });
+                var roofGeometry = new THREE.PlaneGeometry(1000, 1000, 10, 10);
+                var roof = new THREE.Mesh(roofGeometry, roofMaterial);
+                roof.position.y = 0.5;
+                roof.rotation.x = Math.PI / 2;
+                scene.add(roof);
+                roofje = new THREE.Group();
+                roofje.add(roof);
+                scene.add(roofje);
 
                 // Player
                 var cubeGeometry = new THREE.CubeGeometry(0.4, 0.5, 0.2);
@@ -107,7 +122,7 @@
                 scene.add(grpPlayerHitbox);
 
                 // Ambient Light
-                ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+                ambientLight = new THREE.AmbientLight(0xffffff, 0.05);
                 scene.add(ambientLight);
 
                 // Render
@@ -139,22 +154,20 @@
                 // calculate objects intersecting the picking ray
                 var intersects = raycaster.intersectObjects(scene.children);
 
-                if (intersects.length >  0) {
-
+                if (intersects.length > 0 && intersects.length < 2) {
                     //intersects[0].object.material.color.set(0xff0000);
 
-                
-
-                if (INTERSECTED != intersects[0].object) {
-                    if (INTERSECTED) INTERSECTED.material.color.set(INTERSECTED.currentColor);
-                    INTERSECTED = intersects[0].object;
-                    INTERSECTED.currentColor =  INTERSECTED.material.color.getHex();
-                    INTERSECTED.material.color.set(0xff0000);
+                    if (INTERSECTED != intersects[0].object) {
+                        if (INTERSECTED) INTERSECTED.material.color.set(INTERSECTED.currentColor);
+                        INTERSECTED = intersects[0].object;
+                        INTERSECTED.currentColor = INTERSECTED.material.color.getHex();
+                        INTERSECTED.material.color.set(0xff0000);
+                        touchdic = true;
+                    }
+                } else {
+                    
+                    INTERSECTED = null;
                 }
-            } else {
-                if (INTERSECTED) INTERSECTED.material.color.set(INTERSECTED.currentColor);
-                INTERSECTED = null;
-            }
 
 
 
@@ -198,9 +211,9 @@
                     playerHitbox.rotation.y += player.turnSpeed;
                 }
                 if (keyboard[69]) { // E key
-                    camera.rotation.y += player.turnSpeed;
-
-                    playerHitbox.rotation.y -= player.turnSpeed;
+                    if (touchdic == true) {
+                        alert("Dick is getoucht!");
+                    }
                 }
                 else if (keyboard[39]) { // Right arrow key
                     camera.rotation.y += player.turnSpeed;
@@ -259,7 +272,7 @@
 
                                     //Position and Dimensions need to be optained from the object, but idk if this works
                                     var geometry = new THREE.BoxGeometry(1, 1, 0.07);
-                                    var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/wolla.jpg"), side: THREE.DoubleSide });
+                                    var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/floor.jpg"), side: THREE.DoubleSide });
                                     var wall = new THREE.Mesh(geometry, material);
                                     var walls = new THREE.Group();
                                     walls.add(wall);
@@ -287,7 +300,7 @@
                                     switch (command.parameters.decoType) {
                                         case "torch":
                                             {
-                                               
+
                                                 var torches = new THREE.Group();
                                                 worldObjects[command.parameters.guid] = torches;
                                                 loadOBJModel("textures/Decoration/", "walltorch.obj", "textures/Decoration/", "walltorch.mtl", (mesh) => {
