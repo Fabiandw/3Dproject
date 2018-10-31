@@ -262,6 +262,19 @@
                                 }
                                 break;
 
+                            case "start":
+                                {
+                                    camera.position.set(command.parameters.x, command.parameters.y, command.parameters.z);
+                                    var geo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+                                    var mat = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/start.jpg"), side: THREE.DoubleSide });
+                                    var puzzle = new THREE.Mesh(geo, mat);
+                                    var Start = new THREE.Group();
+                                    Start.add(puzzle);
+                                    scene.add(Start);
+                                    worldObjects[command.parameters.guid] = Start;
+                                }
+                                break;
+
                             case "puzzle":
                                 {
                                     var geo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
