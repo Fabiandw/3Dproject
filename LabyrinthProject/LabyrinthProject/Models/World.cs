@@ -13,7 +13,8 @@ namespace LabyrinthProject.Models
 
         public World()
         {
-
+            Decoration testDecoration = new Decoration("torch", 1, 2, 1, 0, 0, 0);
+            worldObjects.Add(testDecoration);
             //DEBUG TEST
             int counter = 0;
             Grid newGrid = new Grid(20, 20);
@@ -29,6 +30,7 @@ namespace LabyrinthProject.Models
             }*/
             worldObjects.AddRange(newLab.bigRooms);
             worldObjects.AddRange(newLab.walls);
+            worldObjects.AddRange(newLab.decoList);
             
             /*foreach (Wall wall in worldObjects)
             {
