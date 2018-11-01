@@ -1,12 +1,35 @@
 ﻿<!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
-    <title>Labyrinth</title>
+    <title>SimulationView</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
 </head>
 
 <body style="margin:0px;padding:0px;overflow:hidden;">
+
+
+    <div id="info">3D Labyrinth</div>
+    <div id="help">
+
+        <button class="level" id="level">Level: 1</button>
+        <div id="Paragraph">
+            <div id="topspan">
+                <img class="keys" src="textures/keyBlack.png" alt="key" id="test1" width="50" height="50" />
+                <img class="keys" src="textures/keyBlack.png" alt="key" id="test2" width="50" height="50" />
+              
+
+            </div>
+        </div>
+        <div id="controls">
+            <span id="date"></span>
+            <span class="wasd">W &emsp; A &emsp; S &emsp; D</span>
+        </div>
+
+    </div>
+
+
+
     <script>
         function parseCommand(input = "") {
             return JSON.parse(input);
@@ -28,8 +51,29 @@
             var radius = 100, theta = 0;
             var worldObjects = {};
             var touchdic = false;
+            var keyAmount = 0;
+
+            function updateTime() {
+
+                var dt = new Date();
+                document.getElementById("date").innerHTML = dt.toLocaleTimeString();
+            }
+            setInterval(updateTime, 1000);
+
+            var button = document.getElementById("level"),
+                count = 0;
+            button.onclick = function () {
+                count += 1;
+                button.innerHTML = "Level: " + count;
+            };
+            function keyUpper() {
+                if (keyAmount == 1)
+                    {
+
+                }
 
 
+            }
             function init() {
                 // Camera
 
@@ -53,7 +97,7 @@
                 window.addEventListener('resize', onWindowResize, false);
                 window.addEventListener('keydown', keyDown);
                 window.addEventListener('keyup', keyUp);
-                
+
                 // Interaction
                 window.addEventListener('mousemove', onMouseMove, false);
 
@@ -142,12 +186,19 @@
                 var intersects = raycaster.intersectObjects(scene.children);
 
                 if (intersects.length > 0 && intersects.length < 2) {
-                    touchdic = true;
-                    alert("key");
+                    keyAmount = keyAmount + 1;
                     scene.remove(intersects[0].object)
+                    if (keyAmount === 1) {
+                        document.getElementById("test1").src = "textures/keyYellow.png";
+                    }
+                    if (keyAmount === 2) {
+                        document.getElementById("test2").src = "textures/keyYellow.png";
+                    }
+
                 }
                 else {
                     INTERSECTED = null;
+                    
                 }
 
 

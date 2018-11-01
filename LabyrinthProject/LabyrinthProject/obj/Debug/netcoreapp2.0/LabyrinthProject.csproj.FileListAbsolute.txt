@@ -31,3 +31,14 @@ D:\OneDrive - NHL Stenden Hogeschool\School\Jaar 2\Graphics_OOP\3Dproject\Labyri
 D:\OneDrive - NHL Stenden Hogeschool\School\Jaar 2\Graphics_OOP\3Dproject\LabyrinthProject\LabyrinthProject\obj\Debug\netcoreapp2.0\LabyrinthProject.AssemblyInfo.cs
 D:\OneDrive - NHL Stenden Hogeschool\School\Jaar 2\Graphics_OOP\3Dproject\LabyrinthProject\LabyrinthProject\obj\Debug\netcoreapp2.0\LabyrinthProject.dll
 D:\OneDrive - NHL Stenden Hogeschool\School\Jaar 2\Graphics_OOP\3Dproject\LabyrinthProject\LabyrinthProject\obj\Debug\netcoreapp2.0\LabyrinthProject.pdb
+D:\NHL HBO ICT\Jaar 2\3D Game Project\Werkmap\3Dproject\LabyrinthProject\LabyrinthProject\bin\Debug\netcoreapp2.0\LabyrinthProject.deps.json
+D:\NHL HBO ICT\Jaar 2\3D Game Project\Werkmap\3Dproject\LabyrinthProject\LabyrinthProject\bin\Debug\netcoreapp2.0\LabyrinthProject.runtimeconfig.json
+D:\NHL HBO ICT\Jaar 2\3D Game Project\Werkmap\3Dproject\LabyrinthProject\LabyrinthProject\bin\Debug\netcoreapp2.0\LabyrinthProject.runtimeconfig.dev.json
+D:\NHL HBO ICT\Jaar 2\3D Game Project\Werkmap\3Dproject\LabyrinthProject\LabyrinthProject\bin\Debug\netcoreapp2.0\LabyrinthProject.dll
+D:\NHL HBO ICT\Jaar 2\3D Game Project\Werkmap\3Dproject\LabyrinthProject\LabyrinthProject\bin\Debug\netcoreapp2.0\LabyrinthProject.pdb
+D:\NHL HBO ICT\Jaar 2\3D Game Project\Werkmap\3Dproject\LabyrinthProject\LabyrinthProject\obj\Debug\netcoreapp2.0\LabyrinthProject.csprojAssemblyReference.cache
+D:\NHL HBO ICT\Jaar 2\3D Game Project\Werkmap\3Dproject\LabyrinthProject\LabyrinthProject\obj\Debug\netcoreapp2.0\LabyrinthProject.csproj.CoreCompileInputs.cache
+D:\NHL HBO ICT\Jaar 2\3D Game Project\Werkmap\3Dproject\LabyrinthProject\LabyrinthProject\obj\Debug\netcoreapp2.0\LabyrinthProject.AssemblyInfoInputs.cache
+D:\NHL HBO ICT\Jaar 2\3D Game Project\Werkmap\3Dproject\LabyrinthProject\LabyrinthProject\obj\Debug\netcoreapp2.0\LabyrinthProject.AssemblyInfo.cs
+D:\NHL HBO ICT\Jaar 2\3D Game Project\Werkmap\3Dproject\LabyrinthProject\LabyrinthProject\obj\Debug\netcoreapp2.0\LabyrinthProject.dll
+D:\NHL HBO ICT\Jaar 2\3D Game Project\Werkmap\3Dproject\LabyrinthProject\LabyrinthProject\obj\Debug\netcoreapp2.0\LabyrinthProject.pdb
