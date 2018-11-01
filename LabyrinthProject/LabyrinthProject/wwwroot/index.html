@@ -16,6 +16,7 @@
         var keyboard = {};
         var player = { height: 0, speed: 0.05, turnSpeed: Math.PI * 0.02 };
         var playerHitbox;
+        var objLoaded = 0;
         var USE_WIREFRAME = false;
         var RESOURCES_LOADED = false;
 
@@ -31,34 +32,19 @@
 
 
             function init() {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 1efd231be5ff36fdba506e7bc16c55c33639506c
                 // Camera
 
-
-                scene = new THREE.Scene();
-                camera = new THREE.PerspectiveCamera(70, 1280 / 720, 0.1, 1000);
-<<<<<<< HEAD
-=======
-=======
-
->>>>>>> 1efd231be5ff36fdba506e7bc16c55c33639506c
-                // Camera               
-
+                loadScene = new THREE.Scene();
+                loadCamera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
                 scene = new THREE.Scene();
                 camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-<<<<<<< HEAD
->>>>>>> master
                 cameraControls = new THREE.OrbitControls(camera);
                 camera.position.x = -50;
                 camera.position.y = 30;
                 camera.position.z = -50;;
                 cameraControls.update();
-<<<<<<< HEAD
-=======
+
                 //cameraControls = new THREE.OrbitControls(camera);
                 //camera.position.x = -50;
                 //camera.position.y = 30;
@@ -71,16 +57,11 @@
                 window.addEventListener('keydown', keyDown);
                 window.addEventListener('keyup', keyUp);
 
->>>>>>> 1efd231be5ff36fdba506e7bc16c55c33639506c
                 /*camera.position.set(1, player.height, 1);
                 camera.lookAt(new THREE.Vector3(2, player.height, 2));
                 window.addEventListener('resize', onWindowResize, false);
                 window.addEventListener('keydown', keyDown);
                 window.addEventListener('keyup', keyUp);*/
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 1efd231be5ff36fdba506e7bc16c55c33639506c
 
                 //camera.position.set(1, player.height, 1);
                 //camera.lookAt(new THREE.Vector3(2, player.height, 2));
@@ -88,13 +69,9 @@
                 //window.addEventListener('keydown', keyDown);
                 //window.addEventListener('keyup', keyUp);
 
-<<<<<<< HEAD
->>>>>>> master
-=======
                 // Interaction
                 window.addEventListener('mousemove', onMouseMove, false);
 
->>>>>>> 1efd231be5ff36fdba506e7bc16c55c33639506c
                 // Skybox
                 var sphericalSkyboxGeometry = new THREE.SphereGeometry(200, 32, 32);
                 var sphericalSkyboxMaterial = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/skybox/cave.jpg"), side: THREE.DoubleSide });
@@ -151,31 +128,30 @@
             function animate() {
                 requestAnimationFrame(animate);
 
+                if (objLoaded >= 400) {
+                    RESOURCES_LOADED = true;
+                }
+
                 // update the picking ray with the camera and mouse position
                 raycaster.setFromCamera(mouse, camera);
 
                 // calculate objects intersecting the picking ray
                 var intersects = raycaster.intersectObjects(scene.children);
 
-                if (intersects.length >  0) {
+                if (intersects.length > 0) {
 
                     //intersects[0].object.material.color.set(0xff0000);
 
-                
-
-                if (INTERSECTED != intersects[0].object) {
+                    if (INTERSECTED != intersects[0].object) {
+                        if (INTERSECTED) INTERSECTED.material.color.set(INTERSECTED.currentColor);
+                        INTERSECTED = intersects[0].object;
+                        INTERSECTED.currentColor = INTERSECTED.material.color.getHex();
+                        INTERSECTED.material.color.set(0xff0000);
+                    }
+                } else {
                     if (INTERSECTED) INTERSECTED.material.color.set(INTERSECTED.currentColor);
-                    INTERSECTED = intersects[0].object;
-                    INTERSECTED.currentColor =  INTERSECTED.material.color.getHex();
-                    INTERSECTED.material.color.set(0xff0000);
+                    INTERSECTED = null;
                 }
-            } else {
-                if (INTERSECTED) INTERSECTED.material.color.set(INTERSECTED.currentColor);
-                INTERSECTED = null;
-            }
-
-
-
 
                 if (keyboard[87]) { // W key
                     camera.position.x -= Math.sin(camera.rotation.y) * player.speed;
@@ -226,7 +202,13 @@
                     playerHitbox.rotation.y -= player.turnSpeed;
                 }
 
-                renderer.render(scene, camera);
+                if (RESOURCES_LOADED === false) {
+                    renderer.render(loadScene, loadCamera);
+                }
+
+                if (RESOURCES_LOADED === true) {
+                    renderer.render(scene, camera);
+                }
 
             }
             function keyDown(event) {
@@ -272,18 +254,8 @@
                         switch (command.parameters.type) {
                             case "wall":
                                 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                    //Position and Dimensions need to be obtained from the object, but idk if this works
-=======
-                                    //Position and Dimensions need to be optained from the object, but idk if this works
->>>>>>> master
-=======
-
                                     //Position and Dimensions need to be obtained from the object, but idk if this works
 
-                                    //Position and Dimensions need to be optained from the object, but idk if this works
->>>>>>> 1efd231be5ff36fdba506e7bc16c55c33639506c
                                     var geometry = new THREE.BoxGeometry(1, 1, 0.05);
                                     var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/wolla.jpg"), side: THREE.DoubleSide });
                                     var wall = new THREE.Mesh(geometry, material);
@@ -291,12 +263,13 @@
                                     walls.add(wall);
                                     scene.add(walls);
                                     worldObjects[command.parameters.guid] = walls;
+                                    objLoaded++;
                                 }
                                 break;
 
                             case "puzzle":
                                 {
-                                    alert("Papito0");
+                                    //alert("Papito0");
                                     var geo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
                                     var mat = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/diccbud.bmp"), side: THREE.DoubleSide });
                                     var puzzle = new THREE.Mesh(geo, mat);
@@ -304,6 +277,7 @@
                                     //bigRooms.add(puzzle);
                                     scene.add(puzzle);
                                     worldObjects[command.parameters.guid] = puzzle;
+                                    objLoaded++;
                                 }
                                 break;
 
