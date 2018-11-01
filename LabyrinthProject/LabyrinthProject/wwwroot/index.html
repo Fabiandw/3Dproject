@@ -16,6 +16,8 @@
         var keyboard = {};
         var player = { height: 0, speed: 0.05, turnSpeed: Math.PI * 0.02 };
         var playerHitbox;
+        var keyAmount = 0;
+        var reqKeys = 2;
         var USE_WIREFRAME = false;
         var RESOURCES_LOADED = false;
 
@@ -54,28 +56,28 @@
                 window.addEventListener('mousemove', onMouseMove, false);
 
                 // Skybox
-                var sphericalSkyboxGeometry = new THREE.SphereGeometry(200, 32, 32);
-                var sphericalSkyboxMaterial = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/skybox/cave.jpg"), side: THREE.DoubleSide });
-                var sphericalSkybox = new THREE.Mesh(sphericalSkyboxGeometry, sphericalSkyboxMaterial);
-                var SS = new THREE.Group();
-                SS.add(sphericalSkybox);
-                scene.add(SS);
+                //var sphericalSkyboxGeometry = new THREE.SphereGeometry(200, 32, 32);
+                //var sphericalSkyboxMaterial = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/skybox/cave.jpg"), side: THREE.DoubleSide });
+                //var sphericalSkybox = new THREE.Mesh(sphericalSkyboxGeometry, sphericalSkyboxMaterial);
+                //var SS = new THREE.Group();
+                //SS.add(sphericalSkybox);
+                //scene.add(SS);
 
                 //Test Point Light
-                var light = new THREE.PointLight(0xff0000, 1, 100);
-                light.position.set(0.4, 0.4, 0.4);
-                scene.add(light);
+                //var light = new THREE.PointLight(0xff0000, 1, 100);
+                //light.position.set(0.4, 0.4, 0.4);
+                //scene.add(light);
 
                 // floor
                 var floorTexture = new THREE.ImageUtils.loadTexture('textures/floor.jpg');
                 floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
                 floorTexture.repeat.set(2000, 2000);
-                var floorMaterial = new THREE.MeshBasicMaterial({ map: floorTexture, side: THREE.DoubleSide });
+                var floorMaterial = new THREE.MeshLambertMaterial({ map: floorTexture, side: THREE.DoubleSide });
                 var floorGeometry = new THREE.PlaneGeometry(1000, 1000, 10, 10);
                 var floor = new THREE.Mesh(floorGeometry, floorMaterial);
                 floor.position.y = -0.5;
                 floor.rotation.x = Math.PI / 2;
-                scene.add(floor);
+                //scene.add(floor);
                 floortje = new THREE.Group();
                 floortje.add(floor);
                 scene.add(floortje);
@@ -84,7 +86,7 @@
                 var roofTexture = new THREE.ImageUtils.loadTexture('textures/roof.jpg');
                 roofTexture.wrapS = roofTexture.wrapT = THREE.RepeatWrapping;
                 roofTexture.repeat.set(1200, 1200);
-                var roofMaterial = new THREE.MeshBasicMaterial({ map: roofTexture, side: THREE.DoubleSide });
+                var roofMaterial = new THREE.MeshLambertMaterial({ map: roofTexture, side: THREE.DoubleSide });
                 var roofGeometry = new THREE.PlaneGeometry(1000, 1000, 10, 10);
                 var roof = new THREE.Mesh(roofGeometry, roofMaterial);
                 roof.position.y = 0.5;
@@ -94,26 +96,29 @@
                 roofje.add(roof);
                 scene.add(roofje);
 
+                var playerLight = new THREE.PointLight(0xffffff, 1, 5, 2);
+                torchLight.castShadow = true;
+                torchLight.shadow.radius = 1.5;
+
                 // Player
                 var cubeGeometry = new THREE.CubeGeometry(0.4, 0.5, 0.2);
                 var wireMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true });
                 playerHitbox = new THREE.Mesh(cubeGeometry, wireMaterial);
                 playerHitbox.position.set(1, -0.25, 1);
                 playerHitbox.rotation.y = -camera.rotation.y;
-                grpPlayerHitbox = new THREE.Group();
-                grpPlayerHitbox.add(playerHitbox);
-                scene.add(grpPlayerHitbox);
-
-                // Ambient Light
-                ambientLight = new THREE.AmbientLight(0xffffff, 0.05);
-                scene.add(ambientLight);
+                playerHitbox.add(playerLight);
+                scene.add(playerHitbox);
 
                 // Render
                 renderer = new THREE.WebGLRenderer();
+                renderer.physicallyCorrectLights = true;
+                renderer.gammaInput = true;
+                renderer.gammaOutput = true;
+                renderer.shadowMap.enabled = true;
+                renderer.shadowMap.bias = 0.0001;
+                renderer.shadowMap.type = THREE.PCFSoftShadowMap;
                 renderer.setPixelRatio(window.devicePixelRatio);
                 renderer.setSize(window.innerWidth, window.innerHeight + 5);
-                renderer.shadowMap.enabled = true;
-                renderer.shadowMap.type = THREE.BasicShadowMap;
                 document.body.appendChild(renderer.domElement);
 
             }
@@ -137,8 +142,21 @@
 
                 if (intersects.length > 0 && intersects.length < 2) {
                     touchdic = true;
-                    alert("key");
-                    scene.remove(intersects[0].object)
+                    switch (intersects[0].object.type) {
+                        case 'key':
+                            alert("Key");
+                            keyAmount++;
+                            scene.remove(intersects[0].object)
+                            break;
+                        case 'end':
+                            if (keyAmount === reqKeys) {
+                                alert("End");
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
                 }
                 else {
                     INTERSECTED = null;
@@ -235,6 +253,15 @@
                             }, function () { }, function (e) { console.log("Error loading model"); console.log(e); });
                     });
             }
+
+            function createLight(x, y, z) {
+                var torchLight = new THREE.PointLight(0xffffff, 1, 5, 2);
+                torchLight.castShadow = true;
+                torchLight.shadow.radius = 1.5;
+                torchLight.position.set(x, y, z);
+                return torchLight;
+            }
+
             // Model Deployer [Server]
             exampleSocket = new WebSocket("ws://" + window.location.hostname + ":" + window.location.port + "/connect_client");
             exampleSocket.onmessage = function (event) {
@@ -247,13 +274,12 @@
                                 {
                                     //Position and Dimensions need to be optained from the object, but idk if this works
                                     var geometry = new THREE.BoxGeometry(1, 1, 0.07);
-                                    var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/wall.jpg"), side: THREE.DoubleSide });
+                                    var material = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("textures/wall.jpg"), side: THREE.DoubleSide });
                                     var wall = new THREE.Mesh(geometry, material);
                                     var walls = new THREE.Group();
                                     walls.add(wall);
                                     scene.add(walls);
                                     worldObjects[command.parameters.guid] = walls;
-
                                 }
                                 break;
 
@@ -270,14 +296,26 @@
                                 }
                                 break;
 
+                            case "end":
+                                {
+                                    var geo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+                                    var mat = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/diccbud.jpg"), side: THREE.DoubleSide });
+                                    var end = new THREE.Mesh(geo, mat);
+                                    end.type = "end";
+                                    scene.add(end);
+                                    worldObjects[command.parameters.guid] = end;
+                                }
+                                break;
+
                             case "puzzle":
                                 {
                                     var geo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-                                    var mat = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/sleutel.png"), side: THREE.DoubleSide });
+                                    var mat = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("textures/sleutel.png"), side: THREE.DoubleSide });
                                     var puzzle = new THREE.Mesh(geo, mat);
                                     scene.add(puzzle);
+                                    puzzle.type = "key";
                                     worldObjects[command.parameters.guid] = puzzle;
-
+                                    createLight(puzzle.position.x, puzzle.position.y, puzzle.position.z);
                                 }
                                 break;
 
@@ -288,14 +326,16 @@
                                     switch (command.parameters.decoType) {
                                         case "torch":
                                             {
-
                                                 var torches = new THREE.Group();
                                                 worldObjects[command.parameters.guid] = torches;
                                                 loadOBJModel("textures/Decoration/", "walltorch.obj", "textures/Decoration/", "walltorch.mtl", (mesh) => {
                                                     mesh.scale.set(1, 1, 1);
+                                                    mesh.add.light;
                                                     torches.add(mesh);
                                                     scene.add(torches);
+
                                                 });
+
                                             }
                                             break;
 
@@ -322,6 +362,7 @@
                                 break;
                         }
                     }
+
                     // Object Parameters
                     var object = worldObjects[command.parameters.guid];
                     object.position.x = command.parameters.x;
