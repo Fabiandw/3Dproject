@@ -259,7 +259,6 @@
                                     walls.add(wall);
                                     scene.add(walls);
                                     worldObjects[command.parameters.guid] = walls;
-                                    objLoaded++;
                                 }
                                 break;
 
@@ -278,10 +277,6 @@
 
                             case "puzzle":
                                 {
-<<<<<<< HEAD
-=======
-                                    //alert("Papito0");
->>>>>>> DanielOfzoEndan
                                     var geo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
                                     var mat = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/sleutel.png"), side: THREE.DoubleSide });
                                     var puzzle = new THREE.Mesh(geo, mat);
@@ -289,7 +284,6 @@
                                     //bigRooms.add(puzzle);
                                     scene.add(puzzle);
                                     worldObjects[command.parameters.guid] = puzzle;
-                                    objLoaded++;
                                 }
                                 break;
 
