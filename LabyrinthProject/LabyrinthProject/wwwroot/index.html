@@ -16,6 +16,7 @@
         var keyboard = {};
         var player = { height: 0, speed: 0.05, turnSpeed: Math.PI * 0.02 };
         var playerHitbox;
+        var objLoaded = 0;
         var USE_WIREFRAME = false;
         var RESOURCES_LOADED = false;
 
@@ -33,14 +34,25 @@
             function init() {
                 // Camera
 
+<<<<<<< HEAD
 
                 scene = new THREE.Scene();
                 camera = new THREE.PerspectiveCamera(70, 1280 / 720, 0.1, 1000);
 
                 // Camera
 
+=======
+                loadScene = new THREE.Scene();
+                loadCamera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
+>>>>>>> DanielOfzoEndan
                 scene = new THREE.Scene();
                 camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+                cameraControls = new THREE.OrbitControls(camera);
+                camera.position.x = -50;
+                camera.position.y = 30;
+                camera.position.z = -50;;
+                cameraControls.update();
 
                 //cameraControls = new THREE.OrbitControls(camera);
                 //camera.position.x = -50;
@@ -136,11 +148,16 @@
             function animate() {
                 requestAnimationFrame(animate);
 
+                if (objLoaded >= 400) {
+                    RESOURCES_LOADED = true;
+                }
+
                 // update the picking ray with the camera and mouse position
                 raycaster.setFromCamera(mouse, camera);
                 // calculate objects intersecting the picking ray
                 var intersects = raycaster.intersectObjects(scene.children);
 
+<<<<<<< HEAD
                 if (intersects.length > 0 && intersects.length < 2) {
                     touchdic = true;
                     alert("key");
@@ -152,6 +169,22 @@
 
 
 
+=======
+                if (intersects.length > 0) {
+
+                    //intersects[0].object.material.color.set(0xff0000);
+
+                    if (INTERSECTED != intersects[0].object) {
+                        if (INTERSECTED) INTERSECTED.material.color.set(INTERSECTED.currentColor);
+                        INTERSECTED = intersects[0].object;
+                        INTERSECTED.currentColor = INTERSECTED.material.color.getHex();
+                        INTERSECTED.material.color.set(0xff0000);
+                    }
+                } else {
+                    if (INTERSECTED) INTERSECTED.material.color.set(INTERSECTED.currentColor);
+                    INTERSECTED = null;
+                }
+>>>>>>> DanielOfzoEndan
 
                 if (keyboard[87]) { // W key
                     camera.position.x -= Math.sin(camera.rotation.y) * player.speed;
@@ -202,7 +235,13 @@
                     playerHitbox.rotation.y -= player.turnSpeed;
                 }
 
-                renderer.render(scene, camera);
+                if (RESOURCES_LOADED === false) {
+                    renderer.render(loadScene, loadCamera);
+                }
+
+                if (RESOURCES_LOADED === true) {
+                    renderer.render(scene, camera);
+                }
 
             }
             function keyDown(event) {
@@ -248,12 +287,16 @@
                         switch (command.parameters.type) {
                             case "wall":
                                 {
-
                                     //Position and Dimensions need to be obtained from the object, but idk if this works
 
+<<<<<<< HEAD
                                     //Position and Dimensions need to be optained from the object, but idk if this works
                                     var geometry = new THREE.BoxGeometry(1, 1, 0.07);
                                     var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/floor.jpg"), side: THREE.DoubleSide });
+=======
+                                    var geometry = new THREE.BoxGeometry(1, 1, 0.05);
+                                    var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/wolla.jpg"), side: THREE.DoubleSide });
+>>>>>>> DanielOfzoEndan
                                     var wall = new THREE.Mesh(geometry, material);
                                     var walls = new THREE.Group();
                                     walls.add(wall);
