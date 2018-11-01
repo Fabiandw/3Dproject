@@ -1,0 +1,90 @@
+﻿body, alt{
+    font-family: 'Courier New';
+    color: yellow;
+}
+
+button{
+    border: none;
+    background: none;
+    font-family: 'Courier New';
+    color: yellow;
+}
+
+
+#mycanvas {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    background-color: grey;
+    z-index: 5;
+    
+}
+
+#bg{
+    position: absolute;
+    z-index: 10;
+    background-image: url(../wwwroot/textures/maze.png);
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#info{
+    position: absolute;
+    width: 100%;
+    padding: 5px;
+    color: yellow;
+    text-align: center;
+    margin: 0;
+}
+
+#help{
+    position: absolute;
+    width: 100%;
+    margin-top: 5%;
+}
+
+#topspan{
+    margin-left: 1%;
+}
+
+.keys {
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    border: solid yellow 1px;
+    display: inline-block;
+}
+
+.level{
+    margin-left: 85%;
+    font-size: 25px;
+}
+
+#controls {
+    position: absolute;
+    width: 100%;
+    font-size: 20px;
+    margin-top: 28%;
+}
+
+#date {
+    margin-left: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    border-color: rgba(0, 0, 0, 0.5);
+    width: 10%;
+    padding: 5px;
+}
+
+.wasd {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0 10px 1px 10px;
+    border-color: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    width: 10%;
+    margin-left: 75%;
+}
+
