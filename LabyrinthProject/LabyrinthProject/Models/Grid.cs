@@ -21,6 +21,7 @@ namespace LabyrinthProject.Models
             _zMax = z;
             nodeList = MakeNodes();
             connectionList = MakeConnections();
+            MakeFloor();
         }
 
         //Node maker
@@ -85,5 +86,11 @@ namespace LabyrinthProject.Models
             //Return list of connections
             return returnList;
         }
+        public void MakeFloor()
+        {
+            Floor f = new Floor(xMax/2, zMax/2);
+            Roof r = new Roof(xMax / 2, zMax / 2);
+        }
+
     }
 }
