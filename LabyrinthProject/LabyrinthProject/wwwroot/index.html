@@ -52,8 +52,6 @@
             var mouse = new THREE.Vector2(), INTERSECTED;
             var radius = 100, theta = 0;
             var worldObjects = {};
-            var touchdic = false;
-            var end = new THREE.Group();
 
             function updateTime() {
 
@@ -68,16 +66,9 @@
                 count += 1;
                 button.innerHTML = "Level: " + count;
             };
-            function keyUpper() {
-                if (keyAmount == 1) {
 
-                }
-
-
-            }
             function init() {
                 // Camera
-
                 loadScene = new THREE.Scene();
                 loadCamera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 10);
                 scene = new THREE.Scene();
@@ -97,23 +88,6 @@
 
                 // Interaction
                 window.addEventListener('mousemove', onMouseMove, false);
-
-
-
-
-                // Skybox
-                //var sphericalSkyboxGeometry = new THREE.SphereGeometry(200, 32, 32);
-                //var sphericalSkyboxMaterial = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/skybox/cave.jpg"), side: THREE.DoubleSide });
-                //var sphericalSkybox = new THREE.Mesh(sphericalSkyboxGeometry, sphericalSkyboxMaterial);
-                //var SS = new THREE.Group();
-                //SS.add(sphericalSkybox);
-                //scene.add(SS);
-
-                //Test Point Light
-                //var light = new THREE.PointLight(0xff0000, 1, 100);
-                //light.position.set(0.4, 0.4, 0.4);
-                //scene.add(light);
-
 
                 // floor
                 var floorTexture = new THREE.ImageUtils.loadTexture('textures/floor.jpg');
@@ -139,7 +113,6 @@
                 var roofMaterial = new THREE.MeshPhongMaterial({ map: roofTexture, side: THREE.DoubleSide });
                 var roofGeometry = new THREE.PlaneGeometry(50, 50, 10, 10);
 
-
                 var roof = new THREE.Mesh(roofGeometry, roofMaterial);
                 roof.position.y = 0.5;
                 roof.rotation.x = Math.PI / 2;
@@ -147,8 +120,8 @@
                 roofje = new THREE.Group();
                 roofje.add(roof);
                 scene.add(roofje);
-                //Playerlight
 
+                //Playerlight
                 var playerLight = new THREE.PointLight(0xff9933, 0.8, 3.5, 2);
                 playerLight.castShadow = true;
                 playerLight.shadow.radius = 1.05;
@@ -162,15 +135,9 @@
                 playerHitbox.add(playerLight);
                 scene.add(playerHitbox);
 
-                //grpPlayerHitbox = new THREE.Group();
-                //grpPlayerHitbox.add(playerHitbox);
-                //scene.add(grpPlayerHitbox);
-
                 // Ambient Light
-                // var ambientlight = new THREE.AmbientLight(0x666666); // soft hard light
-                // scene.add(ambientlight);
-
-
+                var ambientlight = new THREE.AmbientLight(0x666666); // soft hard light
+                scene.add(ambientlight);
 
                 // Render
                 renderer = new THREE.WebGLRenderer();
@@ -204,28 +171,24 @@
 
                 if (intersects.length > 0 && intersects.length < 2) {
 
-
-
                     touchdic = true;
                     switch (intersects[0].object.type) {
                         case 'key':
-
                             keyAmount++;
-                            scene.remove(intersects[0].object)
+                            scene.remove(intersects[0].object);
                             if (keyAmount === 1) {
                                 document.getElementById("test1").src = "textures/keyYellow.png";
+
                             }
                             if (keyAmount === 2) {
                                 document.getElementById("test2").src = "textures/keyYellow.png";
-                                end.rotation.x = 30;
-                                end.position.y(command.parameters.y + 0.3);
                             }
                             break;
-                        //case 'end':
-                        //    if (keyAmount === reqKeys) {
-                        //        alert("End");
-                        //    }
-                        //    break;
+                        case 'end':
+                            if (keyAmount === reqKeys) {
+                                alert("End");
+                            }
+                            break;
                         default:
                             break;
 
@@ -350,11 +313,9 @@
                         switch (command.parameters.type) {
                             case "wall":
                                 {
-
-
                                     //Position and Dimensions need to be obtained from the object, but idk if this works
                                     var geometry = new THREE.BoxGeometry(1, 1, 0.07);
-                                    var material = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("textures/wall.jpg"), side: THREE.DoubleSide, /*transparent: true, opacity: 0.2*/ });
+                                    var material = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("textures/wall.jpg"), side: THREE.DoubleSide, transparent: true, opacity: 0.2 });
                                     var wall = new THREE.Mesh(geometry, material);
                                     var walls = new THREE.Group();
                                     wall.castShadow = true;
@@ -370,27 +331,26 @@
                                     var geo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
                                     var mat = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("textures/start.png"), side: THREE.DoubleSide });
                                     var start = new THREE.Mesh(geo, mat);
-                                    //var bigRooms = new THREE.Group();
-                                    //bigRooms.add(puzzle);
-
                                     scene.add(start);
                                     worldObjects[command.parameters.guid] = start;
-
                                 }
                                 break;
                             case "end":
 
                                 {
-
+                                    var geo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+                                    var mat = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/diccbud.png"), side: THREE.DoubleSide, transparent: true, opacity: 0 });
+                                    var end = new THREE.Mesh(geo, mat);
+                                    end.type = "end";
+                                    scene.add(end);
                                     worldObjects[command.parameters.guid] = end;
-                                    loadOBJModel("textures/Decoration/", "hatch.obj", "textures/Decoration/", "hatch.mtl", (mesh) => {
-                                        mesh.scale.set(2, 2, 2);
-                                        mesh.position.set(0, -0.4, 0);
-                                        //end.type = "end";
-                                        end.add(mesh);
-                                        scene.add(end);
 
+                                    loadOBJModel("textures/Decoration/", "keyhole.obj", "textures/Decoration/", "keyhole.mtl", (lock) => {
+                                        lock.scale.set(0.07, 0.07, 0.07);
+                                        lock.position.set(command.parameters.x, command.parameters.y - 0.2, command.parameters.z);
+                                        scene.add(lock);
                                     });
+                                    createLight(command.parameters.x, command.parameters.y, command.parameters.z);
                                 }
                                 break;
 
@@ -400,7 +360,7 @@
                                     camera.position.set(command.parameters.x, command.parameters.y, command.parameters.z);
                                     var geo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
                                     var mat = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/start.jpg"), side: THREE.DoubleSide });
-                                    mat.refl
+
                                     var puzzle = new THREE.Mesh(geo, mat);
                                     var Start = new THREE.Group();
                                     Start.add(puzzle);
@@ -412,15 +372,19 @@
 
                             case "puzzle":
                                 {
-                                    var keygeo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-                                    var keymat = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("textures/sleutel.png"), side: THREE.DoubleSide });
-                                    var key = new THREE.Mesh(keygeo, keymat);
-                                    key.position.set(command.parameters.x, command.parameters.y, command.parameters.z);
+                                    var geo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+                                    var mat = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/diccbud.png"), side: THREE.DoubleSide, transparent: true, opacity: 0 });
+                                    var key = new THREE.Mesh(geo, mat);
                                     key.type = "key";
-                                    scene.add(key);
 
+                                    loadOBJModel("textures/Decoration/", "key.obj", "textures/Decoration/", "key.mtl", (oldkey) => {
+                                        oldkey.scale.set(1, 1, 1);
+                                        key.add(oldkey);
+                                        worldObjects[command.parameters.guid] = oldkey;
+                                    });
+                                    scene.add(key);
                                     worldObjects[command.parameters.guid] = key;
-                                    createLight(key.position.x, key.position.y, key.position.z);
+                                    createLight(command.parameters.x, command.parameters.y, command.parameters.z);
                                 }
                                 break;
 
@@ -435,12 +399,10 @@
                                                 worldObjects[command.parameters.guid] = torches;
                                                 loadOBJModel("textures/Decoration/", "walltorch.obj", "textures/Decoration/", "walltorch.mtl", (mesh) => {
                                                     mesh.scale.set(1, 1, 1);
-                                                    //mesh.add.light;
                                                     torches.add(mesh);
                                                     scene.add(torches);
-                                                   
                                                 });
-                                                createLight(command.parameters.x, command.parameters.y-0.15, command.parameters.z);
+                                                createLight(command.parameters.x, command.parameters.y - 0.15, command.parameters.z);
                                             }
                                             break;
 
