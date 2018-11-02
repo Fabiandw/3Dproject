@@ -19,27 +19,14 @@ namespace LabyrinthProject.Models
             int counter = 0;
             Grid newGrid = new Grid(20, 20);
             Labyrinth newLab = new Labyrinth(newGrid, 2);
-            
-            /*foreach (Wall wall in newLab.walls)
-            {
-                worldObjects.Add(wall);
-            }
-            foreach (BigRoom room in newLab.bigRooms)
-            {
-                worldObjects.Add(room);
-            }*/
+            Decoration LastLoad = new Decoration("TESTOBJ", 0, 0, 0, 0, 0, 0);
+           
             worldObjects.AddRange(newLab.bigRooms);
             worldObjects.AddRange(newLab.walls);
             worldObjects.AddRange(newLab.decoList);
+            worldObjects.Add(LastLoad);
             
-            /*foreach (Wall wall in worldObjects)
-            {
-                wall.needsUpdate = true;
-            }
-            foreach (BigRoom room in worldObjects)
-            {
-                room.needsUpdate = true;
-            }*/
+            
             List<Connection> resultList = new List<Connection>();
             foreach (Connection connection in newLab.grid.connectionList)
             {
