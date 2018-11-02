@@ -52,6 +52,7 @@
             var worldObjects = {};
             var touchdic = false;
             var keyAmount = 0;
+            var end = new THREE.Group();
 
             function updateTime() {
 
@@ -172,10 +173,6 @@
             // Animate [Function]
             function animate() {
                 requestAnimationFrame(animate);
-                if (keyAmount === 2) {
-                    end.rotation.x = Math.PI / 2;
-                    keyAmount = 3;
-                }
                 // update the picking ray with the camera and mouse position
                 raycaster.setFromCamera(mouse, camera);
                 // calculate objects intersecting the picking ray
@@ -189,6 +186,9 @@
                     }
                     if (keyAmount === 2) {
                         document.getElementById("test2").src = "textures/keyYellow.png";
+                        end.rotation.x = 30;
+                        end.position.y(command.parameters.y + 0.3);
+                        
                     }
 
                 }
@@ -297,8 +297,6 @@
                                 {
 
                                     //Position and Dimensions need to be obtained from the object, but idk if this works
-
-                                    //Position and Dimensions need to be optained from the object, but idk if this works
                                     var geometry = new THREE.BoxGeometry(1, 1, 0.07);
                                     var material = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("textures/floor.jpg"), side: THREE.DoubleSide, transparent: true, opacity: 0.2 });
                                     var wall = new THREE.Mesh(geometry, material);
@@ -325,13 +323,14 @@
                             case "end":
                             
                                 {
-                                    var end = new THREE.Group();
+                                   
                                     worldObjects[command.parameters.guid] = end;
                                     loadOBJModel("textures/Decoration/", "hatch.obj", "textures/Decoration/", "hatch.mtl", (mesh) => {
                                         mesh.scale.set(2, 2, 2);
                                         mesh.position.set(0, -0.4, 0);
                                         end.add(mesh);
                                         scene.add(end);
+                                        
                                     });
                                 }
                                 break;
