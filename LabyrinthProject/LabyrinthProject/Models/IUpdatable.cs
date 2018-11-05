@@ -9,5 +9,4 @@ namespace LabyrinthProject.Models
     {
         bool Update(int tick);
     }
-
 }

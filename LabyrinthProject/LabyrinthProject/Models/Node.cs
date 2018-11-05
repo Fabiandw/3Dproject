@@ -7,11 +7,6 @@ namespace LabyrinthProject.Models
 {
     public class Node
     {
-        // IMPORTANT
-        // Right now we only use x, y, z as whole numbers increasing linearly +1 in the Grid class.
-        // If we want to scale the grid to be bigger, we should add a variable called "scaler"
-        // Then for every location in the world use for example (Node.x * scaler)
-        // IMPORTANT
         private double _x;
         private double _y;
         private double _z;
@@ -66,5 +61,6 @@ namespace LabyrinthProject.Models
             //Return null, or a random unvisited node
             return returnNode;
         }
+    
     }
 }
