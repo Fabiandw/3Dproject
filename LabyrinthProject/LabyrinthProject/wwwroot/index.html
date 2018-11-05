@@ -107,7 +107,7 @@
             window.addEventListener('keyup', keyUp);
 
             // Interaction
-           // window.addEventListener('mousemove', onMouseMove, false);
+            // window.addEventListener('mousemove', onMouseMove, false);
 
             // floor
 
@@ -189,7 +189,7 @@
         // Animate [Function]
         function animate() {
             requestAnimationFrame(animate);
-            
+
 
             if (RESOURCES_LOADED === false) {
                 renderer.render(loadScene, loadCamera);
@@ -232,7 +232,7 @@
             var sin = Math.sin(playerHitbox.rotation.y);
             var sinPi = Math.sin(playerHitbox.rotation.y + Math.PI / 2);
             var cos = Math.cos(playerHitbox.rotation.y);
-            var cosPi = Math.cos(playerHitbox.rotation.y + Math.PI/2);
+            var cosPi = Math.cos(playerHitbox.rotation.y + Math.PI / 2);
 
             if (keyboard[87]) { // W key
                 if ((sin < 0 && collisionX < 1) || (sin > 0 && collisionX > -1)) {
@@ -251,17 +251,17 @@
 
                 }
                 if ((cos < 0 && collisionZ < 1) || (cos > 0 && collisionZ > -1)) {
-                        playerHitbox.position.z -= cos * player.speed;
+                    playerHitbox.position.z -= cos * player.speed;
                 }
             }
 
             if (keyboard[65]) { // A key
                 if ((sinPi > 0 && collisionX < 1) || (sinPi < 0 && collisionX > -1)) {
-                        playerHitbox.position.x += sinPi * player.speed;
+                    playerHitbox.position.x += sinPi * player.speed;
                 }
 
                 if ((cosPi < 0 && collisionZ < 1) || (cosPi > 0 && collisionZ > -1)) {
-                        playerHitbox.position.z -= cosPi * player.speed;
+                    playerHitbox.position.z -= cosPi * player.speed;
                 }
             }
 
@@ -305,7 +305,7 @@
 
         function keyCheck() {
             // Cast a ray in front of the camera
-            var target = new THREE.Vector3(camera.x, camera.y+0.5, camera.z);
+            var target = new THREE.Vector3(camera.x, camera.y + 0.5, camera.z);
             raycaster.setFromCamera(target, camera);
             // calculate objects intersecting the picking ray
             var intersects = raycaster.intersectObjects(scene.children);
@@ -454,7 +454,7 @@
                             case "puzzle":
                                 {
                                     var geo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-                                    var mat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0  });
+                                    var mat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 });
                                     var key = new THREE.Mesh(geo, mat);
                                     key.type = "key";
 
@@ -512,6 +512,7 @@
         }
         window.onload = init();
     </script>
+    <embed name="GoodEnough" src="/textures/song.mp3" loop="false" hidden="true" autostart="true">
 </body>
 
 </html>
