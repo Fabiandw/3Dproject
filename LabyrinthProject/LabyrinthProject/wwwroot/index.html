@@ -3,24 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Labyrinth</title>
-<<<<<<< HEAD
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+
     <script type="text/javascript" src="three.min.js"></script>
     <script type="text/javascript" src="OrbitControls.js"></script>
     <script type="text/javascript" src="MTLLoader.js"></script>
     <script type="text/javascript" src="OBJLoader.js"></script>
-</head>
-
-<body style="margin:0px;padding:0px;overflow:hidden;">
-    <div id="viewport"></div>
-
-    <script type="text/javascript">
-=======
-    <link rel="stylesheet" type="text/css" href="css/index.css" />
-
-    <script src="three.min.js"></script>
-    <script src="OrbitControls.js"></script>
-    <script src="MTLLoader.js"></script>
-    <script src="OBJLoader.js"></script>
 
     <style>
         #loadingText {
@@ -80,7 +68,6 @@
             font-size: 18px;
         }
     </style>
-
 </head>
 
 <body style="margin:0px;padding:0px;overflow:hidden;">
@@ -109,10 +96,7 @@
         </div>
     </div>
 
-
-
     <script>
->>>>>>> 0dbe6996194354433c01c5bbbd245a848a78ebaa
         function parseCommand(input = "") {
             return JSON.parse(input);
         }
@@ -120,7 +104,6 @@
         var meshFloor, ambientLight, light;
         var crate, crateTexture, crateNormalMap, crateBumpMap;
         var keyboard = {};
-<<<<<<< HEAD
         var collidableMeshList = [];
         var player = { height: 0, speed: 0.05, turnSpeed: Math.PI * 0.02 };
         var playerHitbox;
@@ -129,51 +112,10 @@
         var cameraControls;
         var exampleSocket;
 
-        var rays = [
-            new THREE.Vector3(0, 0, 1), // X = | Z +
-            new THREE.Vector3(1, 0, 1), // X + | Z +
-            new THREE.Vector3(1, 0, 0), // X + | Z =
-            new THREE.Vector3(1, 0, -1), // X + | Z -
-            new THREE.Vector3(0, 0, -1), // X = | Z -
-            new THREE.Vector3(-1, 0, -1), // X - | Z -
-            new THREE.Vector3(-1, 0, 0), // X - | Z =
-            new THREE.Vector3(-1, 0, 1) // X - | Z +
-        ];
-
-        var caster = new THREE.Raycaster();
-        var collisionX;
-        var collisionZ;
-
-        var worldObjects = {};
-
-        function init() {
-            // Renderer
-            renderer = new THREE.WebGLRenderer({ antialias: true });
-            renderer.setSize(window.innerWidth, window.innerHeight + 5);
-            renderer.shadowMap.enabled = true;
-            renderer.shadowMap.type = THREE.BasicShadowMap;
-            document.getElementById('viewport').appendChild(renderer.domElement);
-
-            // Scene
-            scene = new THREE.Scene;
-
-            // Camera
-            camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
-
-            //cameraControls = new THREE.OrbitControls(camera);
-            //camera.position.set(-25, 30, -25);
-=======
         var keyAmount = 0;
         var reqKeys = 2;
-        var USE_WIREFRAME = false;
 
-        var scene, camera, renderer;
-        var loadingManager;
-        var cameraControls;
-        var exampleSocket;
         var raycaster = new THREE.Raycaster();
-        var mouse = new THREE.Vector2(), INTERSECTED;
-        var radius = 100, theta = 0;
         var worldObjects = {};
 
         var rays = [
@@ -189,9 +131,6 @@
         var caster = new THREE.Raycaster();
         var collisionX;
         var collisionZ;
-        var collidableMeshList = [];
-        var player = { height: 0, speed: 0.04, turnSpeed: Math.PI * 0.02 };
-        var playerHitbox;
 
 
         function updateTime() {
@@ -217,6 +156,7 @@
             )
         };
 
+        var loadingManager;
         var RESOURCES_LOADED = false;
 
         function init() {
@@ -237,34 +177,9 @@
             scene = new THREE.Scene();
             camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 4);
 
-            //cameraControls = new THREE.OrbitControls(camera);
-            //camera.position.x = -50;
-            //camera.position.y = 30;
-            //camera.position.z = -50;;
->>>>>>> 0dbe6996194354433c01c5bbbd245a848a78ebaa
-            //cameraControls.update();
-
-            //camera.position.set(1, player.height, 1);
-            //camera.lookAt(new THREE.Vector3(2, player.height, 2));
-<<<<<<< HEAD
-
-=======
->>>>>>> 0dbe6996194354433c01c5bbbd245a848a78ebaa
             window.addEventListener('resize', onWindowResize, false);
             window.addEventListener('keydown', keyDown);
             window.addEventListener('keyup', keyUp);
-
-<<<<<<< HEAD
-            // Plane
-            var planeGeometry = new THREE.PlaneGeometry(100, 100, 32);
-            var planeMaterial = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/moonsurface.jpg"), side: THREE.DoubleSide });
-            var plane = new THREE.Mesh(planeGeometry, planeMaterial);
-            plane.rotation.x = Math.PI / 2;
-            plane.position.y = -0.5
-            scene.add(plane);
-=======
-            // Interaction
-            // window.addEventListener('mousemove', onMouseMove, false);
 
             // Floor
             var floorTexture = new THREE.ImageUtils.loadTexture('textures/floor.jpg');
@@ -277,7 +192,6 @@
             var floor = new THREE.Mesh(floorGeometry, floorMaterial);
             floor.position.y = -0.5;
             floor.rotation.x = Math.PI / 2;
-            //scene.add(floor);
             floortje = new THREE.Group();
             floortje.add(floor);
             scene.add(floortje);
@@ -298,36 +212,21 @@
             roofje.add(roof);
             scene.add(roofje);
 
-            //Playerlight
+            // Playerlight
             var playerLight = new THREE.PointLight(0xff9933, 0.8, 3.5, 2);
             playerLight.castShadow = true;
             playerLight.shadow.radius = 1.05;
->>>>>>> 0dbe6996194354433c01c5bbbd245a848a78ebaa
 
             // Player
             var hitboxGeometery = new THREE.CylinderGeometry(0.25, 0.25, 0.8, 8);
             var hitboxMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
             playerHitbox = new THREE.Mesh(hitboxGeometery, hitboxMaterial);
-<<<<<<< HEAD
             playerHitbox.position.set(1, -0.1, 1);
             playerHitbox.lookAt(new THREE.Vector3(-2, player.height - 0.1, -2));
-=======
-            //playerHitbox.position.set(1, -0.1, 1);
             playerHitbox.lookAt(new THREE.Vector3(-Math.PI, player.height, -Math.PI));
             playerHitbox.add(playerLight);
->>>>>>> 0dbe6996194354433c01c5bbbd245a848a78ebaa
             scene.add(playerHitbox);
             playerHitbox.add(camera);
-
-            // Ambient Light
-<<<<<<< HEAD
-            ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
-            scene.add(ambientLight);
-
-            //Loading in models
-=======
-            //var ambientlight = new THREE.AmbientLight(0x666666); // soft hard light
-            //scene.add(ambientlight);
 
             // Render
             renderer = new THREE.WebGLRenderer();
@@ -342,97 +241,10 @@
             document.body.appendChild(renderer.domElement);
 
             // Loading in models
->>>>>>> 0dbe6996194354433c01c5bbbd245a848a78ebaa
             modelDeployer();
 
             requestAnimationFrame(animate);
         }
-<<<<<<< HEAD
-
-        // WindowResize [Function]
-        function onWindowResize() {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        }
-
-        // Animate [Function]
-        function animate() {
-            rotate();
-            movement();
-            renderer.render(scene, camera);
-            requestAnimationFrame(animate);
-        }
-
-        function keyDown(event) {
-            keyboard[event.keyCode] = true;
-        }
-
-        function keyUp(event) {
-            keyboard[event.keyCode] = false;
-        }
-
-        function collision() {
-            var collisions, i,
-                distance = 0.25,
-                obstacles = collidableMeshList;
-
-            collisionX = 0;
-            collisionZ = 0;
-
-            for (i = 0; i < rays.length; i += 1) {
-                caster.set(playerHitbox.position, rays[i]);
-                collisions = caster.intersectObjects(obstacles);
-
-                if (collisions.length > 0 && collisions[0].distance <= distance) {
-                    if ((i === 1 || i === 2 || i === 3)) {
-                        collisionX = 1;
-                    } else if ((i === 5 || i === 6 || i === 7)) {
-                        collisionX = -1;
-                    }
-                    if ((i === 0 || i === 1 || i === 7)) {
-                        collisionZ = 1;
-                    } else if ((i === 3 || i === 4 || i === 5)) {
-                        collisionZ = -1;
-                    }
-                }
-            }
-        }
-
-        function rotate() {
-            if (!((keyboard[87] || keyboard[83]) && (keyboard[65] || keyboard[68]))) {
-                if (keyboard[81]) { // Q key
-                    playerHitbox.rotation.y -= player.turnSpeed;
-                }
-                else if (keyboard[37]) { // Left arrow key
-                    playerHitbox.rotation.y -= player.turnSpeed;
-                }
-                if (keyboard[69]) { // E key
-                    playerHitbox.rotation.y += player.turnSpeed;
-                }
-                else if (keyboard[39]) { // Right arrow key
-                    playerHitbox.rotation.y += player.turnSpeed;
-                }
-            }
-        }
-
-        function movement() {
-            collision();
-            var position = playerHitbox.position.clone();
-            var moveX;
-            var moveZ;
-
-            if (keyboard[87]) { // W key
-                if (position.x < position.x - Math.sin(playerHitbox.rotation.y) * player.speed) {
-                    if (collisionX !== 1) {
-                        moveX = true;
-                    }
-                }
-                else if (position.x > position.x - Math.sin(playerHitbox.rotation.y) * player.speed) {
-                    if (collisionX !== -1) {
-                        moveX = true;
-                    }
-=======
 
         // WindowResize [Function]
         function onWindowResize() {
@@ -534,85 +346,9 @@
 
                 if ((cosPi < 0 && collisionZ < 1) || (cosPi > 0 && collisionZ > -1)) {
                     playerHitbox.position.z -= cosPi * player.speed;
->>>>>>> 0dbe6996194354433c01c5bbbd245a848a78ebaa
                 }
             }
 
-<<<<<<< HEAD
-                if (position.z < position.z - -Math.cos(playerHitbox.rotation.y) * player.speed) {
-                    if (collisionZ !== 1) {
-                        moveZ = true;
-                    }
-                }
-                else if (position.z > position.z - -Math.cos(playerHitbox.rotation.y) * player.speed) {
-                    if (collisionZ !== -1) {
-                        moveZ = true;
-                    }
-                }
-
-                if (moveX === true && moveZ === true) {
-                    playerHitbox.position.x -= Math.sin(playerHitbox.rotation.y) * player.speed;
-                    playerHitbox.position.z -= -Math.cos(playerHitbox.rotation.y) * player.speed;
-                }
-            }
-
-            if (keyboard[83]) { // S key
-                if (position.x < position.x + Math.sin(playerHitbox.rotation.y) * player.speed) {
-                    if (collisionX !== 1) {
-                        moveX = true;
-                    }
-                }
-                else if (position.x > position.x + Math.sin(playerHitbox.rotation.y) * player.speed) {
-                    if (collisionX !== -1) {
-                        moveX = true;
-                    }
-                }
-
-                if (position.z < position.z + -Math.cos(playerHitbox.rotation.y) * player.speed) {
-                    if (collisionZ !== 1) {
-                        moveZ = true;
-                    }
-                }
-                else if (position.z > position.z + -Math.cos(playerHitbox.rotation.y) * player.speed) {
-                    if (collisionZ !== -1) {
-                        moveZ = true;
-                    }
-                }
-
-                if (moveX === true && moveZ === true) {
-                    playerHitbox.position.x += Math.sin(playerHitbox.rotation.y) * player.speed;
-                    playerHitbox.position.z += -Math.cos(playerHitbox.rotation.y) * player.speed;
-                }
-            }
-
-            if (keyboard[65]) { // A key
-                if (position.x < position.x + Math.sin(playerHitbox.rotation.y + Math.PI / 2) * player.speed) {
-                    if (collisionX !== 1) {
-                        moveX = true;
-                    }
-                }
-                else if (position.x > position.x + Math.sin(playerHitbox.rotation.y + Math.PI / 2) * player.speed) {
-                    if (collisionX !== -1) {
-                        moveX = true;
-                    }
-                }
-
-                if (position.z < position.z + -Math.cos(playerHitbox.rotation.y + Math.PI / 2) * player.speed) {
-                    if (collisionZ !== 1) {
-                        moveZ = true;
-                    }
-                }
-                else if (position.z > position.z + -Math.cos(playerHitbox.rotation.y + Math.PI / 2) * player.speed) {
-                    if (collisionZ !== -1) {
-                        moveZ = true;
-                    }
-                }
-
-                if (moveX === true && moveZ === true) {
-                    playerHitbox.position.x += Math.sin(playerHitbox.rotation.y + Math.PI / 2) * player.speed;
-                    playerHitbox.position.z += -Math.cos(playerHitbox.rotation.y + Math.PI / 2) * player.speed;
-                }
-=======
             if (keyboard[68]) { // D key
                 if ((sinPi < 0 && collisionX < 1) || (sinPi > 0 && collisionX > -1)) {
                     playerHitbox.position.x -= sinPi * player.speed;
@@ -648,7 +384,6 @@
                         collisionZ = -1;
                     }
                 }
->>>>>>> 0dbe6996194354433c01c5bbbd245a848a78ebaa
             }
         }
 
@@ -666,71 +401,36 @@
                         scene.remove(intersects[0].object);
                         if (keyAmount === 1) {
                             document.getElementById("key1").src = "textures/keyYellow.png";
-
-<<<<<<< HEAD
-            if (keyboard[68]) { // D key
-                if (position.x < position.x - Math.sin(playerHitbox.rotation.y + Math.PI / 2) * player.speed) {
-                    if (collisionX !== 1) {
-                        moveX = true;
-                    }
-                }
-                else if (position.x > position.x - Math.sin(playerHitbox.rotation.y + Math.PI / 2) * player.speed) {
-                    if (collisionX !== -1) {
-                        moveX = true;
-                    }
-                }
-
-                if (position.z < position.z - -Math.cos(playerHitbox.rotation.y + Math.PI / 2) * player.speed) {
-                    if (collisionZ !== 1) {
-                        moveZ = true;
-                    }
-                }
-                else if (position.z > position.z - -Math.cos(playerHitbox.rotation.y + Math.PI / 2) * player.speed) {
-                    if (collisionZ !== -1) {
-                        moveZ = true;
-                    }
-                }
-
-                if (moveX === true && moveZ === true) {
-                    playerHitbox.position.x -= Math.sin(playerHitbox.rotation.y + Math.PI / 2) * player.speed;
-                    playerHitbox.position.z -= -Math.cos(playerHitbox.rotation.y + Math.PI / 2) * player.speed;
-=======
                         }
+
                         if (keyAmount === 2) {
                             document.getElementById("key2").src = "textures/keyYellow.png";
                         }
+
                         break;
+
                     case 'end':
                         if (keyAmount === reqKeys) {
                             alert("End");
                         }
+
                         break;
 
                     default:
                         break;
->>>>>>> 0dbe6996194354433c01c5bbbd245a848a78ebaa
                 }
             }
         }
 
-<<<<<<< HEAD
         // Model Loader [Function]
         function loadOBJModel(modelPath, modelName, texturePath, textureName, onload) {
-            new THREE.MTLLoader()
-=======
-        function loadOBJModel(modelPath, modelName, texturePath, textureName, onload) {
             new THREE.MTLLoader(loadingManager)
->>>>>>> 0dbe6996194354433c01c5bbbd245a848a78ebaa
                 .setPath(texturePath)
                 .load(textureName, function (materials) {
 
                     materials.preload();
 
-<<<<<<< HEAD
-                    new THREE.OBJLoader()
-=======
                     new THREE.OBJLoader(loadingManager)
->>>>>>> 0dbe6996194354433c01c5bbbd245a848a78ebaa
                         .setPath(modelPath)
                         .setMaterials(materials)
                         .load(modelName, function (object) {
@@ -739,8 +439,6 @@
                 });
         }
 
-<<<<<<< HEAD
-=======
         function createLight(x, y, z) {
             var torchLight = new THREE.PointLight(0xff9933, 0.65, 1, 2);
             //torchLight.castShadow = true;
@@ -752,7 +450,6 @@
             return torchLight;
         }
 
->>>>>>> 0dbe6996194354433c01c5bbbd245a848a78ebaa
         // Model Deployer [Server]
         function modelDeployer() {
             exampleSocket = new WebSocket("ws://" + window.location.hostname + ":" + window.location.port + "/connect_client");
@@ -763,17 +460,6 @@
                     if (Object.keys(worldObjects).indexOf(command.parameters.guid) < 0) {
                         switch (command.parameters.type) {
                             case "wall":
-<<<<<<< HEAD
-                                {
-                                    //Position and Dimensions need to be optained from the object, but idk if this works
-                                    var geometry = new THREE.BoxGeometry(1, 1, 0.05);
-                                    var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/wolla.jpg"), side: THREE.DoubleSide });
-                                    var wall = new THREE.Mesh(geometry, material);
-                                    scene.add(wall);
-                                    collidableMeshList.push(wall);
-                                    worldObjects[command.parameters.guid] = wall;
-                                }
-=======
                                 //Position and Dimensions need to be obtained from the object, but idk if this works
                                 var geometry = new THREE.BoxGeometry(1, 1, 0.07);
                                 var material = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader(loadingManager).load("textures/wall.jpg"), side: THREE.DoubleSide/*, transparent: true, opacity: 0.2 */ });
@@ -785,7 +471,6 @@
                                 collidableMeshList.push(wall);
                                 worldObjects[command.parameters.guid] = walls;
 
->>>>>>> 0dbe6996194354433c01c5bbbd245a848a78ebaa
                                 break;
 
                             case "room":
@@ -870,17 +555,8 @@
         }
 
         window.onload = init();
-<<<<<<< HEAD
     </script>
-=======
-
-    </script>
-<<<<<<< HEAD
-    <embed name="GoodEnough" src="/textures/song.mp3" loop="false" hidden="true" autostart="true">
->>>>>>> 0dbe6996194354433c01c5bbbd245a848a78ebaa
-=======
     <embed name="GoodEnough" src="/textures/song.mp3" loop="false" hidden autostart="true">
->>>>>>> edb9666b5fb1c026c1600d45e5dda228f068695a
 </body>
 
 </html>

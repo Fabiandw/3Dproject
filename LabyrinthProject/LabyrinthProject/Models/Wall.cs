@@ -33,8 +33,6 @@ namespace LabyrinthProject.Models
             {
                 _rY = 0;
             }
-
-
         }
 
         //Constructor using coordinates
@@ -59,8 +57,6 @@ namespace LabyrinthProject.Models
             {
                 _rY = 0;
             }
-
-
         }
 
         public override bool Update(int tick)
