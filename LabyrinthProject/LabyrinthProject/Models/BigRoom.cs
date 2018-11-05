@@ -8,32 +8,23 @@ namespace LabyrinthProject.Models
     public class BigRoom : Model3D
     {
         private Grid grid;
-        //private double _x;
-        //private double _y;
-        //private double _z;
-
-        //public Guid guid { get; set; }
         public Node centre { get; set; }
-        //public double x { get { return _x; } }
-        //public double y { get { return _y; } }
-        //public double z { get { return _z; } }
-        //public string type;
+        public string roomType;
 
         //Constructor
-        public BigRoom(Grid grid, Node node, string type)
+        public BigRoom(Grid grid, Node node, string roomType)
         {
             //Vertex variables for location and identification
             centre = node;
+            type = "room";
+
             _x = node.x;
             _y = 0;
             _z = node.z;
 
-
             guid = Guid.NewGuid();
-            this.type = type;
+            this.roomType = roomType;
             this.grid = grid;
-
-
 
             //Destroys all the walls in a 3x3 grid to create an open space (big room) and makes an exit/entrance to this room
             RemoveWalls();
@@ -65,7 +56,7 @@ namespace LabyrinthProject.Models
                 }
             }
             // Clears the list of 4 connected nodes to the centre node, otherwise creating an infinite loop of sadness
-                centre.connectedNodeList.Clear();
+            centre.connectedNodeList.Clear();
         }
 
         //The current node and chosen random next node's connection wall boolean will be set to false
@@ -74,8 +65,5 @@ namespace LabyrinthProject.Models
             grid.connectionList.Find(match => (match.nodeList.Contains(current) && match.nodeList.Contains(next))).wall = false;
             grid.connectionList.Find(match => (match.nodeList.Contains(next) && match.nodeList.Contains(current))).wall = false;
         }
-
-
-
     }
 }

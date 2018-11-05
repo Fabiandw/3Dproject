@@ -10,8 +10,6 @@ namespace LabyrinthProject.Models
         public string decoType { get; set; }
 
         //Constructor
-        //!--Note: When making a new decoration you need to specify the decoration type so that we can seperate them in the index.html--!
-        //Example: When decoType is tree all decorations of the decoType tree get the tree model loaded onto them
         public Decoration(string decorationType, double x, double y, double z, double rotationX, double rotationY, double rotationZ)
         {
             guid = Guid.NewGuid();

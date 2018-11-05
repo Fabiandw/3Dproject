@@ -23,33 +23,37 @@ namespace LabyrinthProject.Models
         //Constructor
         public Labyrinth(Grid grid, int amountOfPuzzleRooms)
         {
-            currentNode = grid.nodeList.Where(i => i.visited == false).First();
             currentPath = new Stack<Node>();
 
             this.grid = grid;
             guid = Guid.NewGuid();
 
+            //Make the big rooms
             bigRooms = MakeBigRooms(amountOfPuzzleRooms);
+
+            //Get the first node to start a labyrinth from
+            currentNode = grid.nodeList.Where(i => i.visited == false).First();
+
             //Removes walls to create a maze of paths
             RemoveWalls();
 
             //After having removed some walls we make the models for the walls
-             MakeWalls(grid.connectionList);
+            MakeWalls(grid.connectionList);
         }
 
         //Labyrinth maker
         private void RemoveWalls()
         {
-            //set starting node to visited
+            //Set starting node to visited
             currentNode.visited = true;
 
             while (currentNode != null)
             {
-                //find a random unvisited connection and push it to the stack, and remove the wall
+                //Find a random unvisited connection and push it to the stack, and remove the wall
                 currentNode = FindNextNode();
                 if (currentNode != null)
                 {
-                    //set the chosen node to visited
+                    //Set the chosen node to visited
                     currentNode.visited = true;
                 }
             }
@@ -197,11 +201,10 @@ namespace LabyrinthProject.Models
         //Wall maker, needs a list of connections and the dimensions for the walls
         private void MakeWalls(List<Connection> list)
         {
-            //Initiating return list
-            //List<Wall> returnList = new List<Wall>();
-            //List<Decoration> decoList = new List<Decoration>();
+            //Initiating lists
             List<Wall> tempWall = new List<Wall>();
             List<Decoration> tempDeco = new List<Decoration>();
+
             //Make outer wall here
             for (int i = 1; i <= grid.xMax; i++)
             {
@@ -213,6 +216,7 @@ namespace LabyrinthProject.Models
                     tempDeco.Add(new Decoration("torch", i + 0.25, 0.3, 0.75, 0, Math.PI, 0));
                 }
             }
+
             for (int j = 1; j <= grid.zMax; j++)
             {
                 tempWall.Add(new Wall(0.5, j, true));
@@ -224,6 +228,7 @@ namespace LabyrinthProject.Models
                    tempDeco.Add(new Decoration("torch", 0.75, 0.3, j +0.25, 0, -Math.PI / 2, 0));
                 }
             }
+
             //For each connection in the given list where wall == true, make a wall using the connection and the given dimensions and then add it to the return list
             foreach (Connection connection in list.Where(i => i.wall == true))
             {
@@ -232,9 +237,6 @@ namespace LabyrinthProject.Models
             }
             decoList = tempDeco;
             walls = tempWall;
-
-            ////Return list
-            //return returnList;
         }
     }
 }

@@ -9,20 +9,12 @@ namespace LabyrinthProject.Models
     {
         private Connection parent;
 
-        public double length { get; }
-        public double width { get; }
-        public double height { get; }
-
         //Constructor using connection
         public Wall(Connection parent, bool northSouthWall)
         {
             this.parent = parent;
             guid = Guid.NewGuid();
             type = "wall";
-            //needsUpdate = true;
-            this.length = length;
-            this.width = width;
-            this.height = height;
 
 
             _x = (parent.nodeList[0].x + parent.nodeList[1].x) / 2;
@@ -50,10 +42,6 @@ namespace LabyrinthProject.Models
         {
             guid = Guid.NewGuid();
             type = "wall";
-            //needsUpdate = true;
-            this.length = length;
-            this.width = width;
-            this.height = height;
 
             _x = x;
             _y = 0;
