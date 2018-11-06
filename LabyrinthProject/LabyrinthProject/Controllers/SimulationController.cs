@@ -25,6 +25,11 @@ namespace LabyrinthProject.Controllers
             this.w = w;
         }
 
+        public void SetWorld(World w)
+        {
+            this.w = w;
+        }
+
         public void AddView(ClientView v)
         {
             ObservingClient oc = new ObservingClient();

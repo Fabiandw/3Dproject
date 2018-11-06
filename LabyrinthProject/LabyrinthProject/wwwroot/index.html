@@ -4,76 +4,23 @@
     <meta charset="UTF-8">
     <title>Labyrinth</title>
     <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link rel="stylesheet" href="css/Main.css" type="text/css" />
 
     <script type="text/javascript" src="three.min.js"></script>
-    <script type="text/javascript" src="OrbitControls.js"></script>
     <script type="text/javascript" src="MTLLoader.js"></script>
     <script type="text/javascript" src="OBJLoader.js"></script>
-
-    <style>
-        #loadingText {
-            width: 500px;
-            height: 10px;
-            position: absolute;
-            top: 75%;
-            width: 100%;
-            text-align: center;
-        }
-
-        #title {
-            width: 200px;
-            height: 10px;
-            position: absolute;
-            top: 2%;
-            width: 100%;
-            text-align: center;
-        }
-
-        #userInterface {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0%;
-            width: 100%;
-            text-align: center;
-        }
-
-        #topspan {
-            position: absolute;
-            top: 8px;
-            left: 16px;
-        }
-
-        #controls {
-            position: absolute;
-            bottom: 8px;
-        }
-
-        #date {
-            position: absolute;
-            bottom: 8px;
-            right: 16px;
-        }
-
-        #wasd {
-            position: absolute;
-            bottom: 8px;
-            left: 16px;
-            font-size: 18px;
-        }
-    </style>
-    <link rel="stylesheet" href="Main.css" type="text/css" />
-
 </head>
 
 <body style="margin:0px;padding:0px;overflow:hidden;">
 
-    <div class="menu" style="width: 100%;">
+    <div class="menu" style="width: 100%;" hidden>
         <div class="wrap">
-            <p id="option"><b><a href="index.html" id="start">Start Game</a></b></p>
+            <p id="option"><b id="start">Start Game</b></p>
             <p id="option"><b><a href="Instructions.html" id="start">Instructions</a></b></p>
         </div>
     </div>
+
+    <div id="loadingText">Please wait while the world is loading...</div>
 
     <div id="title">3D Labyrinth</div>
 
@@ -168,7 +115,7 @@
 
             // Camera
             scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 4);
+            camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 6);
 
             window.addEventListener('resize', onWindowResize, false);
             window.addEventListener('keydown', keyDown);
@@ -208,7 +155,6 @@
             // Playerlight
             var playerLight = new THREE.PointLight(0xff9933, 0.8, 3.5, 2);
             playerLight.castShadow = true;
-            playerLight.shadow.radius = 1.05;
 
             // Player
             var hitboxGeometery = new THREE.CylinderGeometry(0.25, 0.25, 1, 8);
@@ -402,7 +348,7 @@
 
                     case 'end':
                         if (keyAmount === reqKeys) {
-                            alert("End");
+                            restart();
                         }
 
                         break;
@@ -431,7 +377,7 @@
         }
 
         function createLight(x, y, z) {
-            var torchLight = new THREE.PointLight(0xff9933, 0.65, 1, 2);
+            var torchLight = new THREE.PointLight(0xff5500, 0.2, 0.5, 2);
             //torchLight.castShadow = true;
             torchLight.shadowDarkness = 0.5;
             torchLight.shadow.radius = 1;
@@ -543,6 +489,12 @@
                     object.rotation.z = command.parameters.rotationZ;
                 }
             };
+        }
+
+        // Server Restart [Server]
+        function restart() {
+            exampleSocket = new WebSocket("ws://" + window.location.hostname + ":" + window.location.port + "/restart");
+            window.location.reload(true);
         }
 
         window.onload = init();
