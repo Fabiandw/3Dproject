@@ -507,7 +507,6 @@
                                 sound.play();
                             });
                             setTimeout(5000);
-                            restart();
                         }
 
                         break;
@@ -649,11 +648,6 @@
                 }
             };
         }
-
-        function restart() {
-            exampleSocket = new WebSocket("ws://" + window.location.hostname + ":" + window.location.port + "/restart");
-            window.location.reload(true);
-        } 
 
         window.onload = init();
     </script>
