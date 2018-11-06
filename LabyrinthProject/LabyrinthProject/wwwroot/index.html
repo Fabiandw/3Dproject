@@ -38,7 +38,9 @@
                 <p align="left">D: Move Right</p>
                 <p align="left">Q: Rotate Left</p>
                 <p align="left">E: Rotate Right</p>
-                <p align="left">Arrow keys also rotate</p>
+                <p align="left">M: Mute Music</p>
+                <p align="left">⬅️/➡️ rotate</p>
+                <p align="left">⬆️/⬇️ volume</p>
             </paragraph>
         </div>
     </div>
@@ -66,6 +68,8 @@
         var raycaster = new THREE.Raycaster();
         var worldObjects = {};
 
+        var soundMusic;
+
         var rays = [
             new THREE.Vector3(0, 0, 1), // X = | Z +
             new THREE.Vector3(1, 0, 1), // X + | Z +
@@ -81,12 +85,16 @@
         var collisionZ;
 
 
-        function updateTime() {
+        function updateVolume() {
 
             var dt = new Date();
-            document.getElementById("date").innerHTML = dt.toLocaleTimeString();
+
+            var volume = soundMusic.getVolume() * 100;
+            var volume2 = Math.round(volume);
+
+            document.getElementById("date").innerHTML = "Volume: " + volume2 + "%";
         }
-        setInterval(updateTime, 1000);
+        setInterval(updateVolume, 2);
 
         var loadingScreen = {
             scene: new THREE.Scene(),
@@ -135,6 +143,23 @@
             playerHitbox.add(playerLight);
             scene.add(playerHitbox);
             playerHitbox.add(camera);
+
+            //Music
+            // create an AudioListener and add it to the camera
+            var listener = new THREE.AudioListener();
+            camera.add(listener);
+
+            // create a global audio source
+            soundMusic = new THREE.Audio(listener);
+
+            // load a sound and set it as the Audio object's buffer
+            var audioLoader = new THREE.AudioLoader();
+            audioLoader.load('textures/song.mp3', function (buffer) {
+                soundMusic.setBuffer(buffer);
+                soundMusic.setLoop(true);
+                soundMusic.setVolume(0.2);
+                soundMusic.play();
+            });
 
             // Render
             renderer = new THREE.WebGLRenderer();
@@ -194,6 +219,7 @@
             rotate();
             movement();
             keyCheck();
+            audio();
         }
 
         function keyDown(event) {
@@ -295,6 +321,27 @@
             }
         }
 
+        function audio() {
+            //up for volume up
+            if (keyboard[38]) {
+                if (soundMusic.getVolume() < 0.99) {
+                    soundMusic.setVolume(soundMusic.getVolume() + 0.01);
+                }
+            }
+            //down for volume down
+            if (keyboard[40]) {
+                if (soundMusic.getVolume() > 0.01) {
+                    soundMusic.setVolume(soundMusic.getVolume() - 0.01);
+                }
+            }
+            //m for mute
+            if (keyboard[77]) {
+                if (soundMusic.getVolume() > 0) {
+                    soundMusic.setVolume(0);
+                }
+            }
+        }
+
         function keyCheck() {
             // Cast a ray in front of the camera
             var target = new THREE.Vector3(camera.x, camera.y + 0.5, camera.z);
@@ -305,6 +352,22 @@
             if (intersects.length > 0 && intersects[0].distance < 0.2) {
                 switch (intersects[0].object.type) {
                     case 'key':
+                        //key sound effect
+                        // create an AudioListener and add it to the camera
+                        var listener = new THREE.AudioListener();
+                        camera.add(listener);
+
+                        // create a global audio source
+                        var sound = new THREE.Audio(listener);
+
+                        // load a sound and set it as the Audio object's buffer
+                        var audioLoader = new THREE.AudioLoader();
+                        audioLoader.load('textures/keySound.wav', function (buffer) {
+                            sound.setBuffer(buffer);
+                            sound.setLoop(false);
+                            sound.setVolume(0.5);
+                            sound.play();
+                        });
                         keyAmount++;
                         scene.remove(intersects[0].object);
                         if (keyAmount === 1) {
@@ -319,6 +382,25 @@
 
                     case 'end':
                         if (keyAmount === reqKeys) {
+                            soundMusic.setVolume(0);
+                            //End sound effect
+                            // create an AudioListener and add it to the camera
+                            var listener = new THREE.AudioListener();
+                            camera.add(listener);
+
+                            // create a global audio source
+                            var sound = new THREE.Audio(listener);
+
+                            // load a sound and set it as the Audio object's buffer
+                            var audioLoader = new THREE.AudioLoader();
+                            audioLoader.load('textures/winSound.mp3', function (buffer) {
+                                sound.setBuffer(buffer);
+                                sound.setLoop(false);
+                                sound.setVolume(0.5);
+                                sound.play();
+                            });
+                            document.getElementById("title").innerHTML = "You won!";
+                            setTimeout(5000);
                             restart();
                         }
 
@@ -515,7 +597,7 @@
 
         window.onload = init();
     </script>
-    <embed name="GoodEnough" src="/textures/song.mp3" loop="true" hidden autostart="true">
+    
 </body>
 
 </html>
