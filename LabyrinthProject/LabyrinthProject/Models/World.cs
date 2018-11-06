@@ -24,6 +24,8 @@ namespace LabyrinthProject.Models
             worldObjects.AddRange(newLab.bigRooms);
             worldObjects.AddRange(newLab.walls);
             worldObjects.AddRange(newLab.decoList);
+            worldObjects.AddRange(newLab.roofs);
+            worldObjects.AddRange(newLab.floors);
             worldObjects.Add(LastLoad);
             
             

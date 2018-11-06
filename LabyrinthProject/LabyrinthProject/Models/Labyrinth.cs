@@ -15,7 +15,8 @@ namespace LabyrinthProject.Models
         public List<BigRoom> bigRooms { get; set; }
         public List<Wall> walls { get; set; }
         public List<Decoration> decoList { get; set; }
-
+        public List<Floor> floors { get; set; }
+        public List<Roof> roofs { get; set; }
 
         //Praise RNGsus
         private static Random rng = new Random();
@@ -37,8 +38,10 @@ namespace LabyrinthProject.Models
             //Removes walls to create a maze of paths
             RemoveWalls();
 
-            //After having removed some walls we make the models for the walls
+            //After having removed some walls we make the models for the walls, floors and roofs
             MakeWalls(grid.connectionList);
+            floors = MakeFloor();
+            roofs = MakeRoof();
         }
 
         //Labyrinth maker
@@ -237,6 +240,30 @@ namespace LabyrinthProject.Models
             }
             decoList = tempDeco;
             walls = tempWall;
+        }
+        private List<Floor> MakeFloor()
+        {
+            List<Floor> returnlist = new List<Floor>();
+            //for (int i = 0; i < Math.Round(Convert.ToDouble(grid.xMax)); i++)
+            //{
+                //for (int j = 0; j < Math.Round(Convert.ToDouble(grid.zMax)); j++)
+                //{
+                    returnlist.Add(new Floor(grid.xMax, grid.zMax));
+               // }
+            //}
+            return returnlist;
+        }
+        private List<Roof> MakeRoof()
+        {
+            List<Roof> returnlist = new List<Roof>();
+            //for (int i = 0; i < Math.Round(Convert.ToDouble(grid.xMax)); i++)
+            //{
+               // for (int j = 0; j < Math.Round(Convert.ToDouble(grid.zMax)); j++)
+               // {
+                    returnlist.Add(new Roof(grid.xMax, grid.zMax));
+               // }
+          //  }
+            return returnlist;
         }
     }
 }
