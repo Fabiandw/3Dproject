@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Labyrinth</title>
     <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link rel="stylesheet" href="Main.css" type="text/css" />
 
     <script type="text/javascript" src="three.min.js"></script>
     <script type="text/javascript" src="OrbitControls.js"></script>
@@ -68,43 +69,39 @@
             font-size: 18px;
         }
     </style>
-    <link rel="stylesheet" href="Main.css" type="text/css" />
+
 
 </head>
 
 <body style="margin:0px;padding:0px;overflow:hidden;">
 
-    <div class="menu" style="width: 100%;">
-        <div class="wrap">
-            <p id="option"><b><a href="index.html" id="start">Start Game</a></b></p>
-            <p id="option"><b><a href="Instructions.html" id="start">Instructions</a></b></p>
+    <div class="hud" id=" hud" display="none">
+        <div id="loadingText">Please wait while we load the world for you...</div>
+
+        <div id="title">3D Labyrinth</div>
+
+        <div id="userInterface">
+            <button class="level" id="level" align="left">Level: 1</button>
+            <div id="topspan">
+                <img class="keys" src="textures/keyBlack.png" alt="key" id="key1" width="75" height="75" />
+                <img class="keys" src="textures/keyBlack.png" alt="key" id="key2" width="75" height="75" />
+            </div>
+            <div id="controls">
+                <span id="date"></span>
+                <paragraph id="wasd">
+                    <p align="left">W: Move Forwards</p>
+                    <p align="left">S: Move Backwards</p>
+                    <p align="left">A: Move Left</p>
+                    <p align="left">D: Move Right</p>
+                    <p align="left">Q: Rotate Left</p>
+                    <p align="left">E: Rotate Right</p>
+                    <p align="left">M: Mute Music</p>
+                    <p align="left">⬅️/➡️ rotate</p>
+                    <p align="left">⬆️/⬇️ volume</p>
+                </paragraph>
+            </div>
         </div>
     </div>
-
-    <div id="loadingText" hidden>Please wait while we load the world for you...</div>
-
-    <div id="title" hidden>3D Labyrinth</div>
-
-    <div id="userInterface" hidden>
-        <button class="level" id="level" align="left">Level: 1</button>
-        <div id="topspan">
-            <img class="keys" src="textures/keyBlack.png" alt="key" id="key1" width="75" height="75" />
-            <img class="keys" src="textures/keyBlack.png" alt="key" id="key2" width="75" height="75" />
-        </div>
-        <div id="controls">
-            <span id="date"></span>
-            <paragraph id="wasd">
-                <p align="left">W: Move Forwards</p>
-                <p align="left">S: Move Backwards</p>
-                <p align="left">A: Move Left</p>
-                <p align="left">D: Move Right</p>
-                <p align="left">Q: Rotate Left</p>
-                <p align="left">E: Rotate Right</p>
-                <p align="left">Arrow keys also rotate</p>
-            </paragraph>
-        </div>
-    </div>
-
     <script>
         function parseCommand(input = "") {
             return JSON.parse(input);
@@ -126,6 +123,8 @@
 
         var raycaster = new THREE.Raycaster();
         var worldObjects = {};
+
+        var soundMusic;
 
         var rays = [
             new THREE.Vector3(0, 0, 1), // X = | Z +
@@ -206,6 +205,23 @@
             floortje = new THREE.Group();
             floortje.add(floor);
             scene.add(floortje);
+
+            //Music
+            // create an AudioListener and add it to the camera
+            var listener = new THREE.AudioListener();
+            camera.add(listener);
+
+            // create a global audio source
+            soundMusic = new THREE.Audio(listener);
+
+            // load a sound and set it as the Audio object's buffer
+            var audioLoader = new THREE.AudioLoader();
+            audioLoader.load('textures/song.mp3', function (buffer) {
+                soundMusic.setBuffer(buffer);
+                soundMusic.setLoop(true);
+                soundMusic.setVolume(0.2);
+                soundMusic.play();
+            });
 
             // Roof
             var roofTexture = new THREE.ImageUtils.loadTexture('textures/roof.jpg');
@@ -297,6 +313,7 @@
             }
             rotate();
             movement();
+            audio();
             keyCheck();
         }
 
@@ -371,7 +388,7 @@
                 }
             }
         }
-
+        
         function collision() {
             var collisions, i,
                 distance = 0.25,
@@ -399,6 +416,24 @@
             }
         }
 
+        function audio() {
+            //up for volume up
+            if (keyboard[38])
+            {
+                soundMusic.setVolume(soundMusic.getVolume() + 0.05);
+            }
+            //down for volume down
+            if (keyboard[40])
+            {
+                soundMusic.setVolume(soundMusic.getVolume() - 0.05);
+            }
+            //m for mute
+            if (keyboard[77])
+            {
+                soundMusic.setVolume(0);
+            }
+        }
+
         function keyCheck() {
             // Cast a ray in front of the camera
             var target = new THREE.Vector3(camera.x, camera.y + 0.5, camera.z);
@@ -409,10 +444,27 @@
             if (intersects.length > 0 && intersects[0].distance < 0.2) {
                 switch (intersects[0].object.type) {
                     case 'key':
+                        //key sound effect
+                        // create an AudioListener and add it to the camera
+                        var listener = new THREE.AudioListener();
+                        camera.add(listener);
+
+                        // create a global audio source
+                        var sound = new THREE.Audio(listener);
+
+                        // load a sound and set it as the Audio object's buffer
+                        var audioLoader = new THREE.AudioLoader();
+                        audioLoader.load('textures/keySound.wav', function (buffer) {
+                            sound.setBuffer(buffer);
+                            sound.setLoop(false);
+                            sound.setVolume(0.5);
+                            sound.play();
+                        });
                         keyAmount++;
                         scene.remove(intersects[0].object);
                         if (keyAmount === 1) {
                             document.getElementById("key1").src = "textures/keyYellow.png";
+                            
                         }
 
                         if (keyAmount === 2) {
@@ -423,6 +475,22 @@
 
                     case 'end':
                         if (keyAmount === reqKeys) {
+                            //End sound effect
+                            // create an AudioListener and add it to the camera
+                            var listener = new THREE.AudioListener();
+                            camera.add(listener);
+
+                            // create a global audio source
+                            var sound = new THREE.Audio(listener);
+
+                            // load a sound and set it as the Audio object's buffer
+                            var audioLoader = new THREE.AudioLoader();
+                            audioLoader.load('textures/winSound.mp3', function (buffer) {
+                                sound.setBuffer(buffer);
+                                sound.setLoop(false);
+                                sound.setVolume(0.5);
+                                sound.play();
+                            });
                             alert("End");
                         }
 
@@ -566,9 +634,8 @@
             };
         }
 
-        //window.onload = init();
+            window.onload = init();
     </script>
-    <embed name="GoodEnough" src="/textures/song.mp3" loop="true" hidden autostart="true">
 </body>
 
 </html>
