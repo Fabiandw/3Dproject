@@ -68,15 +68,24 @@
             font-size: 18px;
         }
     </style>
+    <link rel="stylesheet" href="Main.css" type="text/css" />
+
 </head>
 
 <body style="margin:0px;padding:0px;overflow:hidden;">
 
-    <div id="loadingText">Please wait while we load the world for you...</div>
+    <div class="menu" style="width: 100%;">
+        <div class="wrap">
+            <p id="option"><b><a href="index.html" id="start">Start Game</a></b></p>
+            <p id="option"><b><a href="Instructions.html" id="start">Instructions</a></b></p>
+        </div>
+    </div>
 
-    <div id="title">3D Labyrinth</div>
+    <div id="loadingText" hidden>Please wait while we load the world for you...</div>
 
-    <div id="userInterface">
+    <div id="title" hidden>3D Labyrinth</div>
+
+    <div id="userInterface" hidden>
         <button class="level" id="level" align="left">Level: 1</button>
         <div id="topspan">
             <img class="keys" src="textures/keyBlack.png" alt="key" id="key1" width="75" height="75" />
@@ -160,6 +169,8 @@
         var RESOURCES_LOADED = false;
 
         function init() {
+
+
             // Loading screen
             loadingScreen.box.position.set(0, 0, 2);
             loadingScreen.camera.lookAt(loadingScreen.box.position);
@@ -255,6 +266,7 @@
 
         // Animate [Function]
         function animate() {
+
             if (RESOURCES_LOADED === false) {
                 requestAnimationFrame(animate);
 
@@ -554,7 +566,7 @@
             };
         }
 
-        window.onload = init();
+        //window.onload = init();
     </script>
     <embed name="GoodEnough" src="/textures/song.mp3" loop="true" hidden autostart="true">
 </body>
