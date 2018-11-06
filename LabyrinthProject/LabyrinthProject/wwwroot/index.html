@@ -144,9 +144,13 @@
         function updateTime() {
 
             var dt = new Date();
-            document.getElementById("date").innerHTML = dt.toLocaleTimeString();
+
+            var volume = soundMusic.getVolume() * 100;
+            var volume2 = Math.round(volume);
+
+            document.getElementById("date").innerHTML = "Volume: " + volume2 + "%";
         }
-        setInterval(updateTime, 1000);
+        setInterval(updateTime, 2);
 
         var button = document.getElementById("level"),
             count = 0;
@@ -420,17 +424,23 @@
             //up for volume up
             if (keyboard[38])
             {
-                soundMusic.setVolume(soundMusic.getVolume() + 0.05);
+                if (soundMusic.getVolume() < 0.99) {
+                    soundMusic.setVolume(soundMusic.getVolume() + 0.01);
+                }
             }
             //down for volume down
             if (keyboard[40])
             {
-                soundMusic.setVolume(soundMusic.getVolume() - 0.05);
+                if (soundMusic.getVolume() > 0.01) {
+                    soundMusic.setVolume(soundMusic.getVolume() - 0.01);
+                }
             }
             //m for mute
             if (keyboard[77])
             {
-                soundMusic.setVolume(0);
+                if (soundMusic.getVolume() > 0) {
+                    soundMusic.setVolume(0);
+                }
             }
         }
 
@@ -475,6 +485,7 @@
 
                     case 'end':
                         if (keyAmount === reqKeys) {
+                            soundMusic.setVolume(0);
                             //End sound effect
                             // create an AudioListener and add it to the camera
                             var listener = new THREE.AudioListener();
@@ -491,7 +502,8 @@
                                 sound.setVolume(0.5);
                                 sound.play();
                             });
-                            alert("End");
+                            setTimeout(5000);
+                            location.reload();
                         }
 
                         break;
