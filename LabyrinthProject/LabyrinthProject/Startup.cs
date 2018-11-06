@@ -79,6 +79,10 @@ namespace LabyrinthProject
                     await next();
                 }
 
+                if (context.Request.Path == "/restart")
+                {
+                    simulationController.SetWorld(new Models.World());
+                }
             });
 
             if (env.IsDevelopment())

@@ -1,0 +1,99 @@
+﻿body {
+    height: 100%;
+    width: 100%;
+    background-image: url(../wwwroot/textures/maze.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.menu {
+    text-align: center;
+}
+
+#option {
+    max-width: 700px;
+    border: 1px;
+    background-color: rgba(5,5,2, 0.7);
+    margin: 120px auto;
+    padding: 40px;
+    text-align: center;
+    font-family: 'Courier New';
+    font-size: 100px;
+    border-radius: 23px/69px;
+}
+
+#option:hover {
+    background-color: rgba(255,255,255, 0.7);
+    cursor: pointer;
+}
+#start:link {
+    text-decoration: none;
+    color: yellow;
+}
+
+#start:active {
+    color: rgb(249,255,112);
+}
+
+#start:visited {
+    color: yellow;
+}
+
+wrap {
+    list-style-type: none;
+    display: inline-block;
+    margin: 0;
+}
+
+i{
+    color: purple;
+}
+
+.container {
+    display: inline-block;
+    margin: 0;
+}
+
+#ino {
+    max-width: 770px;
+    border: 1px;
+    background-color: rgba(5,5,2, 0.7);
+    margin: 70px auto;
+    padding: 20px;
+    font-family: 'Courier New';
+    font-size: 40px;
+    border-radius: 23px/69px;
+    color: yellow;
+    text-align: center;
+}
+
+#pop {
+    max-width: 200px;
+    border: 1px;
+    background-color: rgba(5,5,2, 0.7);
+    margin: 70px;
+    padding: 20px;
+    font-family: 'Courier New';
+    font-size: 40px;
+    border-radius: 23px/69px;
+    color: yellow;
+    text-align: center;
+}
+
+    #pop:hover {
+        background-color: rgba(255,255,255, 0.7);
+        cursor: pointer;
+    }
+
+#goback:link{
+    text-decoration: none;
+    color: yellow;
+}
+
+#goback:active{
+    color: rgb(249, 255, 112);
+}
+
+#goback:visited{
+    color: yellow;
+}
