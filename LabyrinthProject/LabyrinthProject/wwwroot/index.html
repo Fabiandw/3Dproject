@@ -349,10 +349,10 @@
 
         function createLight(x, y, z) {
 
-            var torchLight = new THREE.PointLight(0xff5500, 0.2, 0.5, 2);
-            //torchLight.castShadow = true;
-            torchLight.shadowDarkness = 0.5;
-            torchLight.shadow.radius = 1;
+            var torchLight = new THREE.PointLight(0xff5500, 0.5, 0.8, 0.2);
+            //torchLight.castShadow = false;
+            //torchLight.shadowDarkness = 0.5;
+            //torchLight.shadow.radius = 1;
             torchLight.position.set(x, y, z);
             scene.add(torchLight);
             //alert("light pos " + torchLight.position.x + torchLight.position.y + torchLight.position.z);
@@ -385,7 +385,7 @@
                             case "room":
                                 switch (command.parameters.roomType) {
                                     case "start":
-                                        playerHitbox.position.set(command.parameters.x, player.height, command.parameters.z);
+                                       
                                         var geo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
                                         var mat = new THREE.MeshLambertMaterial({ map: tloader.load("textures/start.png"), side: THREE.DoubleSide });
                                         var start = new THREE.Mesh(geo, mat);
@@ -412,6 +412,7 @@
                                         break;
 
                                     case "puzzle":
+                                        playerHitbox.position.set(command.parameters.x+1, player.height, command.parameters.z+1);
                                         var geo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
                                        var mat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 });
                                         var key = new THREE.Mesh(geo, mat);
@@ -419,7 +420,12 @@
 
                                         loadOBJModel("textures/Decoration/", "key.obj", "textures/Decoration/", "key.mtl", (oldkey) => {
                                             oldkey.scale.set(1, 1, 1);
+                                            oldkey.castShadow = false;
+                                            oldkey.receiveShadow = false;
+                                            
                                             key.add(oldkey);
+                                            key.castShadow = false;
+                                            key.receiveShadow = false;
                                             worldObjects[command.parameters.guid] = oldkey;
                                         });
                                         scene.add(key);
@@ -439,6 +445,7 @@
                                         worldObjects[command.parameters.guid] = torches;
                                         loadOBJModel("textures/Decoration/", "walltorch.obj", "textures/Decoration/", "walltorch.mtl", (mesh) => {
                                             mesh.scale.set(1, 1, 1);
+                                            
                                             torches.add(mesh);
                                             scene.add(torches);
                                         });
@@ -515,7 +522,7 @@
 
         window.onload = init();
     </script>
-    <embed name="GoodEnough" src="/textures/song.mp3" loop="true" hidden autostart="true">
+   
 </body>
 
 </html>

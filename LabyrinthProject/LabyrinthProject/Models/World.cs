@@ -13,20 +13,16 @@ namespace LabyrinthProject.Models
 
         public World()
         {
-            Decoration testDecoration = new Decoration("torch", 1, 2, 1, 0, 0, 0);
-            worldObjects.Add(testDecoration);
+            
             //DEBUG TEST
             int counter = 0;
             Grid newGrid = new Grid(20, 20);
             Labyrinth newLab = new Labyrinth(newGrid, 2);
-            Decoration LastLoad = new Decoration("TESTOBJ", 0, 0, 0, 0, 0, 0);
-           
             worldObjects.AddRange(newLab.bigRooms);
             worldObjects.AddRange(newLab.walls);
             worldObjects.AddRange(newLab.decoList);
             worldObjects.AddRange(newLab.roofs);
             worldObjects.AddRange(newLab.floors);
-            worldObjects.Add(LastLoad);
             
             
             List<Connection> resultList = new List<Connection>();
