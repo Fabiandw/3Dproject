@@ -44,12 +44,6 @@
             left: 16px;
         }
 
-        #level {
-            position: absolute;
-            top: 8px;
-            right: 16px;
-        }
-
         #controls {
             position: absolute;
             bottom: 8px;
@@ -77,7 +71,6 @@
     <div id="title">3D Labyrinth</div>
 
     <div id="userInterface">
-        <button class="level" id="level" align="left">Level: 1</button>
         <div id="topspan">
             <img class="keys" src="textures/keyBlack.png" alt="key" id="key1" width="75" height="75" />
             <img class="keys" src="textures/keyBlack.png" alt="key" id="key2" width="75" height="75" />
@@ -139,13 +132,6 @@
             document.getElementById("date").innerHTML = dt.toLocaleTimeString();
         }
         setInterval(updateTime, 1000);
-
-        var button = document.getElementById("level"),
-            count = 0;
-        button.onclick = function () {
-            count += 1;
-            button.innerHTML = "Level: " + count;
-        };
 
         var loadingScreen = {
             scene: new THREE.Scene(),
@@ -218,12 +204,10 @@
             playerLight.shadow.radius = 1.05;
 
             // Player
-            var hitboxGeometery = new THREE.CylinderGeometry(0.25, 0.25, 0.8, 8);
+            var hitboxGeometery = new THREE.CylinderGeometry(0.25, 0.25, 1, 8);
             var hitboxMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
             playerHitbox = new THREE.Mesh(hitboxGeometery, hitboxMaterial);
-            playerHitbox.position.set(1, -0.1, 1);
-            playerHitbox.lookAt(new THREE.Vector3(-2, player.height - 0.1, -2));
-            playerHitbox.lookAt(new THREE.Vector3(-Math.PI, player.height, -Math.PI));
+            playerHitbox.lookAt(new THREE.Vector3(-1, player.height, -1));
             playerHitbox.add(playerLight);
             scene.add(playerHitbox);
             playerHitbox.add(camera);
