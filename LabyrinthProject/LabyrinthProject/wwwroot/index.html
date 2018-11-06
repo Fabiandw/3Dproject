@@ -116,11 +116,8 @@
 
             // Camera
             scene = new THREE.Scene();
-<<<<<<< HEAD
-            camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 5);
-=======
+
             camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 6);
->>>>>>> master
 
             window.addEventListener('resize', onWindowResize, false);
             window.addEventListener('keydown', keyDown);
@@ -351,13 +348,9 @@
         }
 
         function createLight(x, y, z) {
-<<<<<<< HEAD
-            var torchLight = new THREE.PointLight(0xff9933, 0.65, 1, 2);
-            torchLight.castShadow = false;
-=======
+
             var torchLight = new THREE.PointLight(0xff5500, 0.2, 0.5, 2);
             //torchLight.castShadow = true;
->>>>>>> master
             torchLight.shadowDarkness = 0.5;
             torchLight.shadow.radius = 1;
             torchLight.position.set(x, y, z);
