@@ -342,6 +342,10 @@
             else if (keyboard[39]) { // Right arrow key
                 playerHitbox.rotation.y += player.turnSpeed;
             }
+
+            if (keyboard[75]) {
+                restart();
+            }
         }
 
         function movement() {
@@ -503,7 +507,7 @@
                                 sound.play();
                             });
                             setTimeout(5000);
-                            location.reload();
+                            restart();
                         }
 
                         break;
@@ -646,7 +650,12 @@
             };
         }
 
-            window.onload = init();
+        function restart() {
+            exampleSocket = new WebSocket("ws://" + window.location.hostname + ":" + window.location.port + "/restart");
+            window.location.reload(true);
+        } 
+
+        window.onload = init();
     </script>
 </body>
 
