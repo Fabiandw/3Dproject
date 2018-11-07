@@ -432,8 +432,6 @@
         function createLight(x, y, z) {
 
             var torchLight = new THREE.PointLight(0xff5500, 0.2, 1, 2);
-            //torchLight.castShadow = true;
-            torchLight.shadowDarkness = 0.5;
             torchLight.shadow.radius = 1;
             torchLight.position.set(x, y, z);
             scene.add(torchLight);
@@ -548,7 +546,7 @@
 
                                     });
                                     var roofMaterial = new THREE.MeshPhongMaterial({ map: roofTexture, side: THREE.DoubleSide });
-                                    var roofGeometry = new THREE.PlaneGeometry(command.parameters.x*3,command.parameters.z*3, 10, 10);
+                                    var roofGeometry = new THREE.PlaneGeometry(command.parameters.x*3,command.parameters.z*3);
                                     var roof = new THREE.Mesh(roofGeometry, roofMaterial);
                                     roof.rotation.x = Math.PI / 2;
                                     roof.position.y = 0.5;
@@ -570,7 +568,7 @@
 
                                     });
                                     var floorMaterial = new THREE.MeshPhongMaterial({ map: floorTexture, side: THREE.DoubleSide });
-                                    var floorGeometry = new THREE.PlaneGeometry(command.parameters.x * 3, command.parameters.z * 3, 10, 10);
+                                    var floorGeometry = new THREE.PlaneGeometry(command.parameters.x * 3, command.parameters.z * 3);
                                     var floor = new THREE.Mesh(floorGeometry, floorMaterial);
                                     floor.rotation.x = Math.PI / 2;
                                     floor.position.y = -0.5;
