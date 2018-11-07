@@ -21,7 +21,7 @@
     </div>
 
     <div id="loadingText">Please wait while the world is loading...</div>
-
+    <!-- Creates hud (head up display) in html -->
     <div id="title">3D Labyrinth</div>
 
     <div id="userInterface">
@@ -70,6 +70,7 @@
 
         var soundMusic;
 
+        //makes 8 raycasters for collision
         var rays = [
             new THREE.Vector3(0, 0, 1), // X = | Z +
             new THREE.Vector3(1, 0, 1), // X + | Z +
@@ -84,7 +85,7 @@
         var collisionX;
         var collisionZ;
 
-
+        //function for updating ingame music volume
         function updateVolume() {
 
             var dt = new Date();
@@ -95,7 +96,7 @@
             document.getElementById("date").innerHTML = "Volume: " + volume2 + "%";
         }
         setInterval(updateVolume, 2);
-
+        //Function for loading screen
         var loadingScreen = {
             scene: new THREE.Scene(),
             camera: new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 100),
@@ -230,6 +231,8 @@
             keyboard[event.keyCode] = false;
         }
 
+        //Function for rotating the player
+
         function rotate() {
             if (keyboard[81]) { // Q key
                 playerHitbox.rotation.y -= player.turnSpeed;
@@ -244,6 +247,8 @@
                 playerHitbox.rotation.y += player.turnSpeed;
             }
         }
+
+        //Function for all Movement and Collision
 
         function movement() {
             collision();
@@ -294,6 +299,8 @@
             }
         }
 
+        
+
         function collision() {
             var collisions, i,
                 distance = 0.25,
@@ -321,6 +328,8 @@
             }
         }
 
+        //Function for audio volumecontrols
+
         function audio() {
             //up for volume up
             if (keyboard[38]) {
@@ -341,6 +350,8 @@
                 }
             }
         }
+
+        //Function for picking up keys and ending the game
 
         function keyCheck() {
             // Cast a ray in front of the camera
@@ -597,7 +608,7 @@
             };
         }
 
-        // Server Restart [Server]
+        // Server Restart [Server] after winning the game
         function restart() {
             exampleSocket = new WebSocket("ws://" + window.location.hostname + ":" + window.location.port + "/restart");
             window.location.reload(true);
