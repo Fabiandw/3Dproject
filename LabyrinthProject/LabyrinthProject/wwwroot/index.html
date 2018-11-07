@@ -506,7 +506,10 @@
                             case "room":
                                 switch (command.parameters.roomType) {
                                     case "start":
-                                        // Creates the START room with the ladder object, using the node parameters from server. Generates the object, uring object parameters to generate the light in createLight()
+                                        // Creates the START room with the ladder object, using the node parameters from server. Generates the object, using object parameters to generate the light in createLight()
+                                        // Set player in the start room, but not inside the ladder object.
+                                        // Box is used for Collision of the ladder
+                                    
                                         playerHitbox.position.set(command.parameters.x + 1, player.height, command.parameters.z + 1);
                                         var geo = new THREE.BoxGeometry(0.15, 0.5, 0.2);
                                         var mat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 });
@@ -588,7 +591,10 @@
 
                                 break;
 
-                            // Generates the Rooftile on the given Roof.parameters, ???with a variable size but fixed position???
+                            // Generates the Roof plane of the given size. 
+                            // Repeating pattern and plane size scale to Grid size
+                            // Starting position and rotation is fixed, this position is the corner of the plane
+                            
                             case "roof":
                                 {
                                     var roofTexture = tloader.load('textures/roof-min.jpg', function (texture) {
@@ -614,7 +620,8 @@
 
                                 break;
 
-                            // Generates the Floortile on the given NODE parameters
+                            // Same as Roof except the height and texture
+
                             case "floor":
                                 {
                                     var floorTexture = tloader.load('textures/floor-min.jpg', function (texture) {

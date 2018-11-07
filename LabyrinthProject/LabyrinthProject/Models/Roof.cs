@@ -7,12 +7,12 @@ namespace LabyrinthProject.Models
 {
     public class Roof : Model3D
     {
-        public Roof(int centreX, int centreZ)
+        public Roof(int xMax, int zMax)
         {
             guid = Guid.NewGuid();
             type = "roof";
-            _x = centreX;
-            _z = centreZ;
+            _x = xMax;
+            _z = zMax;
         }
     }
 }
