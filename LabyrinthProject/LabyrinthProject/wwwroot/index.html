@@ -97,6 +97,7 @@
             document.getElementById("date").innerHTML = "Volume: " + volume2 + "%";
         }
         setInterval(updateVolume, 2);
+
         //Function for loading screen
         var loadingScreen = {
             scene: new THREE.Scene(),
@@ -190,6 +191,7 @@
 
         // Animate [Function]
         function animate() {
+            // Loadingscreen while NOT everything is loaded yet
             if (RESOURCES_LOADED === false) {
                 requestAnimationFrame(animate);
 
@@ -207,6 +209,7 @@
                 return;
             }
 
+            // renders the ACTUAL scene+camera while everything is loaded in
             if (RESOURCES_LOADED === true) {
                 requestAnimationFrame(animate);
 
@@ -406,6 +409,8 @@
                         });
                         keyAmount++;
                         scene.remove(intersects[0].object);
+
+                        // Pops up the key icons in the top left of the screen when a key gets picked up
                         if (keyAmount === 1) {
                             document.getElementById("key1").src = "textures/keyYellow.png";
                         }
@@ -465,13 +470,13 @@
                 });
         }
 
+        // Creates the torchlights around the map, also creates the lights in the key/lock/start rooms
         function createLight(x, y, z) {
 
             var torchLight = new THREE.PointLight(0xff5500, 0.15, 1, 2);
             torchLight.shadow.radius = 1;
             torchLight.position.set(x, y, z);
             scene.add(torchLight);
-            //alert("light pos " + torchLight.position.x + torchLight.position.y + torchLight.position.z);
             return torchLight;
         }
 
@@ -485,12 +490,11 @@
                     if (Object.keys(worldObjects).indexOf(command.parameters.guid) < 0) {
                         switch (command.parameters.type) {
                             case "wall":
-                                //Position and Dimensions need to be obtained from the object, but idk if this works
+                                // Creates the 'clientside' object wall in client through the sent parameters, adding it to the collidable objects
                                 var geometry = new THREE.BoxGeometry(1, 1, 0.07);
-                                var material = new THREE.MeshLambertMaterial({ map: tloader.load("textures/wall.jpg"), side: THREE.DoubleSide/*, transparent: true, opacity: 0.2 */ });
+                                var material = new THREE.MeshLambertMaterial({ map: tloader.load("textures/wall.jpg"), side: THREE.DoubleSide});
                                 var wall = new THREE.Mesh(geometry, material);
                                 var walls = new THREE.Group();
-                                //wall.castShadow = true;
                                 walls.add(wall);
                                 walls.castShadow = true;
                                 scene.add(walls);
@@ -502,14 +506,15 @@
                             case "room":
                                 switch (command.parameters.roomType) {
                                     case "start":
-                                       
-                                        var geo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+                                        // Creates the START room with the ladder object, using the node parameters from server. Generates the object, uring object parameters to generate the light in createLight()
+                                        playerHitbox.position.set(command.parameters.x + 1, player.height, command.parameters.z + 1);
+                                        var geo = new THREE.BoxGeometry(0.15, 0.5, 0.2);
                                         var mat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 });
                                         var start = new THREE.Mesh(geo, mat);
                                         start.type = "start";
                                         scene.add(start);
+                                        collidableMeshList.push(start);
                                         worldObjects[command.parameters.guid] = start;
-
                                         loadOBJModel("textures/Decoration/", "ladder.obj", "textures/Decoration/", "ladder.mtl", (ladder) => {
                                             ladder.scale.set(0.1, 0.1, 0.1);
                                             ladder.position.set(command.parameters.x, command.parameters.y - 0.2, command.parameters.z);
@@ -520,6 +525,8 @@
                                         break;
 
                                     case "end":
+                                        // Creates the END room with the LOCK object, using the node parameters from server. Generates the object, uring object parameters to generate the light in createLight()
+                                        // Contains an invisible box for interaction, as the key/lock object itself doesnt work well with the intersecter
                                         var geo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
                                         var mat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 });
                                         var end = new THREE.Mesh(geo, mat);
@@ -537,17 +544,16 @@
                                         break;
 
                                     case "puzzle":
-                                        playerHitbox.position.set(command.parameters.x+1, player.height, command.parameters.z+1);
+                                        // Creates the KEY room with the KEY object, using the node parameters from server. Generates the object, uring object parameters to generate the light in createLight()
+                                        // Contains an invisible box for interaction, as the key/lock object itself doesnt work well with the intersecter
                                         var geo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-                                       var mat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 });
+                                        var mat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 });
                                         var key = new THREE.Mesh(geo, mat);
                                         key.type = "key";
 
                                         loadOBJModel("textures/Decoration/", "key.obj", "textures/Decoration/", "key.mtl", (oldkey) => {
                                             oldkey.scale.set(1, 1, 1);
-                                            oldkey.castShadow = false;
-                                            oldkey.receiveShadow = false;
-                                            
+
                                             key.add(oldkey);
                                             key.castShadow = false;
                                             key.receiveShadow = false;
@@ -561,6 +567,9 @@
                                         break;
                                 }
 
+                                break;
+
+                            // Generates the lamps/torches on the outside border of the map. Generates the object, uring object parameters to generate the light in createLight()
                             case "decoration":
                                 switch (command.parameters.decoType) {
                                     case "torch":
@@ -578,6 +587,8 @@
                                 }
 
                                 break;
+
+                            // Generates the Rooftile on the given Roof.parameters, ???with a variable size but fixed position???
                             case "roof":
                                 {
                                     var roofTexture = tloader.load('textures/roof-min.jpg', function (texture) {
@@ -600,7 +611,10 @@
                                     scene.add(roofGroup);
                                     worldObjects[command.parameters.guid] = roofGroup;
                                 }
+
                                 break;
+
+                            // Generates the Floortile on the given NODE parameters
                             case "floor":
                                 {
                                     var floorTexture = tloader.load('textures/floor-min.jpg', function (texture) {
