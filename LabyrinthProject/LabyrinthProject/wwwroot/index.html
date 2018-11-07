@@ -154,7 +154,7 @@
 
             // load a sound and set it as the Audio object's buffer
             var audioLoader = new THREE.AudioLoader();
-            audioLoader.load('textures/song.mp3', function (buffer) {
+            audioLoader.load('textures/songMaze.mp3', function (buffer) {
                 soundMusic.setBuffer(buffer);
                 soundMusic.setLoop(true);
                 soundMusic.setVolume(0.2);
@@ -469,10 +469,18 @@
                                     case "start":
                                         playerHitbox.position.set(command.parameters.x, player.height, command.parameters.z);
                                         var geo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-                                        var mat = new THREE.MeshLambertMaterial({ map: tloader.load("textures/start.png"), side: THREE.DoubleSide });
+                                        var mat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 });
                                         var start = new THREE.Mesh(geo, mat);
+                                        start.type = "start";
                                         scene.add(start);
                                         worldObjects[command.parameters.guid] = start;
+
+                                        loadOBJModel("textures/Decoration/", "ladder.obj", "textures/Decoration/", "ladder.mtl", (ladder) => {
+                                            ladder.scale.set(0.1, 0.1, 0.1);
+                                            ladder.position.set(command.parameters.x, command.parameters.y - 0.2, command.parameters.z);
+                                            scene.add(ladder);
+                                        });
+                                        createLight(command.parameters.x, command.parameters.y, command.parameters.z);
 
                                         break;
 
