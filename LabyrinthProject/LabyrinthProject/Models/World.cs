@@ -14,7 +14,10 @@ namespace LabyrinthProject.Models
         public World()
 
         {
+            //Give the size of the Grid, x and y respectively
             Grid newGrid = new Grid(20, 20);
+            //Make Labyrinth with the Grid and give the amount of puzzle rooms 
+            //Maximum amount of puzzles is the lowest value of either xMax or yMax, divided by 10
             Labyrinth newLab = new Labyrinth(newGrid, 2);
             worldObjects.AddRange(newLab.bigRooms);
             worldObjects.AddRange(newLab.walls);
@@ -64,8 +67,6 @@ namespace LabyrinthProject.Models
                     if (needsCommand)
                     {
                         SendCommandToObservers(new UpdateModel3DCommand(u));
-                        // Verify all Updatable objects in WorldObjects - DEBUG purposes
-                        Console.WriteLine(u.type + " x" + u.x + " y" + u.y + " z" + u.z);
                     }
                 }
             }
