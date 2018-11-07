@@ -36,10 +36,9 @@
                 <p align="left">S: Move Backwards</p>
                 <p align="left">A: Move Left</p>
                 <p align="left">D: Move Right</p>
-                <p align="left">Q: Rotate Left</p>
-                <p align="left">E: Rotate Right</p>
+                <p align="left">Q / ⬅: Rotate Left</p>
+                <p align="left">E / ⮕: Rotate Right</p>
                 <p align="left">M: Mute Music</p>
-                <p align="left">⬅️/➡️ rotate</p>
                 <p align="left">⬆️/⬇️ volume</p>
             </paragraph>
         </div>
@@ -537,8 +536,6 @@
                                 }
 
                             case "decoration":
-                                //var decorations = new THREE.Group();
-                                //worldObjects[command.parameters.guid] = decorations;
                                 switch (command.parameters.decoType) {
                                     case "torch":
                                         var torches = new THREE.Group();

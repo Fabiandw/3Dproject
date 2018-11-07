@@ -15,8 +15,8 @@ namespace LabyrinthProject.Models
         public List<BigRoom> bigRooms { get; set; }
         public List<Wall> walls { get; set; }
         public List<Decoration> decoList { get; set; }
-        public List<Floor> floors { get; set; }
-        public List<Roof> roofs { get; set; }
+        public Floor floor { get; set; }
+        public Roof roof { get; set; }
 
         //Praise RNGsus
         private static Random rng = new Random();
@@ -40,8 +40,8 @@ namespace LabyrinthProject.Models
 
             //After having removed some walls we make the models for the walls, floors and roofs
             MakeWalls(grid.connectionList);
-            floors = MakeFloor();
-            roofs = MakeRoof();
+            MakeFloor();
+            MakeRoof();
         }
 
         //Labyrinth maker
@@ -91,6 +91,7 @@ namespace LabyrinthProject.Models
         //The current node and chosen random next node's connection wall boolean will be set to false
         private void RemoveCurrentWall(Node current, Node next)
         {
+            //Set the boolean 'wall' to false on the Node matching the current and next Nodes
             grid.connectionList.Find(match => (match.nodeList.Contains(current) && match.nodeList.Contains(next))).wall = false;
             grid.connectionList.Find(match => (match.nodeList.Contains(next) && match.nodeList.Contains(current))).wall = false;
         }
@@ -213,7 +214,7 @@ namespace LabyrinthProject.Models
             {
                 tempWall.Add(new Wall(i, 0.5, false));
                 tempWall.Add(new Wall(i, grid.zMax + 0.5, false));
-                if (i%2.5 == 0)
+                if (i % 2.5 == 0)
                 {
                     tempDeco.Add(new Decoration("torch", i + 0.25, 0.3, grid.zMax + 0.25, 0, 0, 0));
                     tempDeco.Add(new Decoration("torch", i + 0.25, 0.3, 0.75, 0, Math.PI, 0));
@@ -227,8 +228,8 @@ namespace LabyrinthProject.Models
 
                 if (j % 2.5 == 0)
                 {
-                   tempDeco.Add(new Decoration("torch", grid.xMax + 0.25, 0.3, j +0.25, 0, Math.PI / 2, 0));
-                   tempDeco.Add(new Decoration("torch", 0.75, 0.3, j +0.25, 0, -Math.PI / 2, 0));
+                    tempDeco.Add(new Decoration("torch", grid.xMax + 0.25, 0.3, j + 0.25, 0, Math.PI / 2, 0));
+                    tempDeco.Add(new Decoration("torch", 0.75, 0.3, j + 0.25, 0, -Math.PI / 2, 0));
                 }
             }
 
@@ -241,29 +242,17 @@ namespace LabyrinthProject.Models
             decoList = tempDeco;
             walls = tempWall;
         }
-        private List<Floor> MakeFloor()
+        private void MakeFloor()
         {
-            List<Floor> returnlist = new List<Floor>();
-            //for (int i = 0; i < Math.Round(Convert.ToDouble(grid.xMax)); i++)
-            //{
-                //for (int j = 0; j < Math.Round(Convert.ToDouble(grid.zMax)); j++)
-                //{
-                    returnlist.Add(new Floor(grid.xMax, grid.zMax));
-               // }
-            //}
-            return returnlist;
+            //Make floor according to the size of the grid
+            Floor newFloor = new Floor(grid.xMax, grid.zMax);
+            floor = newFloor;
         }
-        private List<Roof> MakeRoof()
+        private void MakeRoof()
         {
-            List<Roof> returnlist = new List<Roof>();
-            //for (int i = 0; i < Math.Round(Convert.ToDouble(grid.xMax)); i++)
-            //{
-               // for (int j = 0; j < Math.Round(Convert.ToDouble(grid.zMax)); j++)
-               // {
-                    returnlist.Add(new Roof(grid.xMax, grid.zMax));
-               // }
-          //  }
-            return returnlist;
+            //Make roof according to the size of the grid
+            Roof newRoof = new Roof(grid.xMax, grid.zMax);
+            roof = newRoof;
         }
     }
 }
