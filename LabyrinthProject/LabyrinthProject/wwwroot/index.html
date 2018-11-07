@@ -431,7 +431,7 @@
 
         function createLight(x, y, z) {
 
-            var torchLight = new THREE.PointLight(0xff5500, 0.2, 1, 2);
+            var torchLight = new THREE.PointLight(0xff5500, 0.15, 1, 2);
             torchLight.shadow.radius = 1;
             torchLight.position.set(x, y, z);
             scene.add(torchLight);
@@ -454,8 +454,9 @@
                                 var material = new THREE.MeshLambertMaterial({ map: tloader.load("textures/wall.jpg"), side: THREE.DoubleSide/*, transparent: true, opacity: 0.2 */ });
                                 var wall = new THREE.Mesh(geometry, material);
                                 var walls = new THREE.Group();
-                                wall.castShadow = true;
+                                //wall.castShadow = true;
                                 walls.add(wall);
+                                walls.castShadow = true;
                                 scene.add(walls);
                                 collidableMeshList.push(wall);
                                 worldObjects[command.parameters.guid] = walls;
@@ -554,6 +555,7 @@
                                     roof.position.z =  1;
                                     roofGroup = new THREE.Group();
                                     roofGroup.add(roof);
+                                    roofGroup.receiveShadow = true;
                                     scene.add(roofGroup);
                                     worldObjects[command.parameters.guid] = roofGroup;
                                 }
