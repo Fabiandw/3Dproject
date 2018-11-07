@@ -12,10 +12,14 @@ namespace LabyrinthProject.Models
         private List<IObserver<Command>> observers = new List<IObserver<Command>>();
 
         public World()
+<<<<<<< HEAD
         {
             
             //DEBUG TEST
             int counter = 0;
+=======
+        { int counter = 0;
+>>>>>>> master
             Grid newGrid = new Grid(20, 20);
             Labyrinth newLab = new Labyrinth(newGrid, 2);
             worldObjects.AddRange(newLab.bigRooms);

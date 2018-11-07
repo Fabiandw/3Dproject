@@ -21,7 +21,7 @@
     </div>
 
     <div id="loadingText">Please wait while the world is loading...</div>
-
+    <!-- Creates hud (head up display) in html -->
     <div id="title">3D Labyrinth</div>
 
     <div id="userInterface">
@@ -38,7 +38,9 @@
                 <p align="left">D: Move Right</p>
                 <p align="left">Q: Rotate Left</p>
                 <p align="left">E: Rotate Right</p>
-                <p align="left">Arrow keys also rotate</p>
+                <p align="left">M: Mute Music</p>
+                <p align="left">⬅️/➡️ rotate</p>
+                <p align="left">⬆️/⬇️ volume</p>
             </paragraph>
         </div>
     </div>
@@ -53,7 +55,7 @@
         var crate, crateTexture, crateNormalMap, crateBumpMap;
         var keyboard = {};
         var collidableMeshList = [];
-        var player = { height: 0, speed: 0.02, turnSpeed: Math.PI * 0.015 };
+        var player = { height: 0, speed: 0.015, turnSpeed: Math.PI * 0.015 };
         var playerHitbox;
 
         var renderer, scene, camera;
@@ -66,6 +68,9 @@
         var raycaster = new THREE.Raycaster();
         var worldObjects = {};
 
+        var soundMusic;
+
+        //makes 8 raycasters for collision
         var rays = [
             new THREE.Vector3(0, 0, 1), // X = | Z +
             new THREE.Vector3(1, 0, 1), // X + | Z +
@@ -80,14 +85,18 @@
         var collisionX;
         var collisionZ;
 
-
-        function updateTime() {
+        //function for updating ingame music volume
+        function updateVolume() {
 
             var dt = new Date();
-            document.getElementById("date").innerHTML = dt.toLocaleTimeString();
-        }
-        setInterval(updateTime, 1000);
 
+            var volume = soundMusic.getVolume() * 100;
+            var volume2 = Math.round(volume);
+
+            document.getElementById("date").innerHTML = "Volume: " + volume2 + "%";
+        }
+        setInterval(updateVolume, 2);
+        //Function for loading screen
         var loadingScreen = {
             scene: new THREE.Scene(),
             camera: new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 100),
@@ -124,7 +133,7 @@
             window.addEventListener('keyup', keyUp);
 
             // Playerlight
-            var playerLight = new THREE.PointLight(0xff9933, 0.8, 3.5, 2);
+            var playerLight = new THREE.PointLight(0xff5500, 0.8, 2.5, 2);
             playerLight.castShadow = true;
 
             // Player
@@ -135,6 +144,23 @@
             playerHitbox.add(playerLight);
             scene.add(playerHitbox);
             playerHitbox.add(camera);
+
+            //Music
+            // create an AudioListener and add it to the camera
+            var listener = new THREE.AudioListener();
+            camera.add(listener);
+
+            // create a global audio source
+            soundMusic = new THREE.Audio(listener);
+
+            // load a sound and set it as the Audio object's buffer
+            var audioLoader = new THREE.AudioLoader();
+            audioLoader.load('textures/songMaze.mp3', function (buffer) {
+                soundMusic.setBuffer(buffer);
+                soundMusic.setLoop(true);
+                soundMusic.setVolume(0.2);
+                soundMusic.play();
+            });
 
             // Render
             renderer = new THREE.WebGLRenderer();
@@ -194,6 +220,7 @@
             rotate();
             movement();
             keyCheck();
+            audio();
         }
 
         function keyDown(event) {
@@ -203,6 +230,8 @@
         function keyUp(event) {
             keyboard[event.keyCode] = false;
         }
+
+        //Function for rotating the player
 
         function rotate() {
             if (keyboard[81]) { // Q key
@@ -218,6 +247,8 @@
                 playerHitbox.rotation.y += player.turnSpeed;
             }
         }
+
+        //Function for all Movement and Collision
 
         function movement() {
             collision();
@@ -268,6 +299,8 @@
             }
         }
 
+        
+
         function collision() {
             var collisions, i,
                 distance = 0.25,
@@ -295,6 +328,31 @@
             }
         }
 
+        //Function for audio volumecontrols
+
+        function audio() {
+            //up for volume up
+            if (keyboard[38]) {
+                if (soundMusic.getVolume() < 0.99) {
+                    soundMusic.setVolume(soundMusic.getVolume() + 0.01);
+                }
+            }
+            //down for volume down
+            if (keyboard[40]) {
+                if (soundMusic.getVolume() > 0.01) {
+                    soundMusic.setVolume(soundMusic.getVolume() - 0.01);
+                }
+            }
+            //m for mute
+            if (keyboard[77]) {
+                if (soundMusic.getVolume() > 0) {
+                    soundMusic.setVolume(0);
+                }
+            }
+        }
+
+        //Function for picking up keys and ending the game
+
         function keyCheck() {
             // Cast a ray in front of the camera
             var target = new THREE.Vector3(camera.x, camera.y + 0.5, camera.z);
@@ -305,6 +363,22 @@
             if (intersects.length > 0 && intersects[0].distance < 0.2) {
                 switch (intersects[0].object.type) {
                     case 'key':
+                        //key sound effect
+                        // create an AudioListener and add it to the camera
+                        var listener = new THREE.AudioListener();
+                        camera.add(listener);
+
+                        // create a global audio source
+                        var sound = new THREE.Audio(listener);
+
+                        // load a sound and set it as the Audio object's buffer
+                        var audioLoader = new THREE.AudioLoader();
+                        audioLoader.load('textures/keySound.wav', function (buffer) {
+                            sound.setBuffer(buffer);
+                            sound.setLoop(false);
+                            sound.setVolume(0.5);
+                            sound.play();
+                        });
                         keyAmount++;
                         scene.remove(intersects[0].object);
                         if (keyAmount === 1) {
@@ -319,6 +393,25 @@
 
                     case 'end':
                         if (keyAmount === reqKeys) {
+                            soundMusic.setVolume(0);
+                            //End sound effect
+                            // create an AudioListener and add it to the camera
+                            var listener = new THREE.AudioListener();
+                            camera.add(listener);
+
+                            // create a global audio source
+                            var sound = new THREE.Audio(listener);
+
+                            // load a sound and set it as the Audio object's buffer
+                            var audioLoader = new THREE.AudioLoader();
+                            audioLoader.load('textures/winSound.mp3', function (buffer) {
+                                sound.setBuffer(buffer);
+                                sound.setLoop(false);
+                                sound.setVolume(0.5);
+                                sound.play();
+                            });
+                            document.getElementById("title").innerHTML = "You won!";
+                            setTimeout(5000);
                             restart();
                         }
 
@@ -349,10 +442,15 @@
 
         function createLight(x, y, z) {
 
+<<<<<<< HEAD
             var torchLight = new THREE.PointLight(0xff5500, 0.5, 0.8, 0.2);
             //torchLight.castShadow = false;
             //torchLight.shadowDarkness = 0.5;
             //torchLight.shadow.radius = 1;
+=======
+            var torchLight = new THREE.PointLight(0xff5500, 0.15, 1, 2);
+            torchLight.shadow.radius = 1;
+>>>>>>> master
             torchLight.position.set(x, y, z);
             scene.add(torchLight);
             //alert("light pos " + torchLight.position.x + torchLight.position.y + torchLight.position.z);
@@ -374,8 +472,9 @@
                                 var material = new THREE.MeshLambertMaterial({ map: tloader.load("textures/wall.jpg"), side: THREE.DoubleSide/*, transparent: true, opacity: 0.2 */ });
                                 var wall = new THREE.Mesh(geometry, material);
                                 var walls = new THREE.Group();
-                                wall.castShadow = true;
+                                //wall.castShadow = true;
                                 walls.add(wall);
+                                walls.castShadow = true;
                                 scene.add(walls);
                                 collidableMeshList.push(wall);
                                 worldObjects[command.parameters.guid] = walls;
@@ -387,10 +486,18 @@
                                     case "start":
                                        
                                         var geo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-                                        var mat = new THREE.MeshLambertMaterial({ map: tloader.load("textures/start.png"), side: THREE.DoubleSide });
+                                        var mat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 });
                                         var start = new THREE.Mesh(geo, mat);
+                                        start.type = "start";
                                         scene.add(start);
                                         worldObjects[command.parameters.guid] = start;
+
+                                        loadOBJModel("textures/Decoration/", "ladder.obj", "textures/Decoration/", "ladder.mtl", (ladder) => {
+                                            ladder.scale.set(0.1, 0.1, 0.1);
+                                            ladder.position.set(command.parameters.x, command.parameters.y - 0.2, command.parameters.z);
+                                            scene.add(ladder);
+                                        });
+                                        createLight(command.parameters.x, command.parameters.y, command.parameters.z);
 
                                         break;
 
@@ -465,7 +572,7 @@
 
                                     });
                                     var roofMaterial = new THREE.MeshPhongMaterial({ map: roofTexture, side: THREE.DoubleSide });
-                                    var roofGeometry = new THREE.PlaneGeometry(command.parameters.x*3,command.parameters.z*3, 10, 10);
+                                    var roofGeometry = new THREE.PlaneGeometry(command.parameters.x*3,command.parameters.z*3);
                                     var roof = new THREE.Mesh(roofGeometry, roofMaterial);
                                     roof.rotation.x = Math.PI / 2;
                                     roof.position.y = 0.5;
@@ -473,6 +580,7 @@
                                     roof.position.z =  1;
                                     roofGroup = new THREE.Group();
                                     roofGroup.add(roof);
+                                    roofGroup.receiveShadow = true;
                                     scene.add(roofGroup);
                                     worldObjects[command.parameters.guid] = roofGroup;
                                 }
@@ -487,7 +595,7 @@
 
                                     });
                                     var floorMaterial = new THREE.MeshPhongMaterial({ map: floorTexture, side: THREE.DoubleSide });
-                                    var floorGeometry = new THREE.PlaneGeometry(command.parameters.x * 3, command.parameters.z * 3, 10, 10);
+                                    var floorGeometry = new THREE.PlaneGeometry(command.parameters.x * 3, command.parameters.z * 3);
                                     var floor = new THREE.Mesh(floorGeometry, floorMaterial);
                                     floor.rotation.x = Math.PI / 2;
                                     floor.position.y = -0.5;
@@ -514,7 +622,7 @@
             };
         }
 
-        // Server Restart [Server]
+        // Server Restart [Server] after winning the game
         function restart() {
             exampleSocket = new WebSocket("ws://" + window.location.hostname + ":" + window.location.port + "/restart");
             window.location.reload(true);
@@ -522,7 +630,11 @@
 
         window.onload = init();
     </script>
+<<<<<<< HEAD
    
+=======
+    
+>>>>>>> master
 </body>
 
 </html>

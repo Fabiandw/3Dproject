@@ -78,7 +78,7 @@ namespace LabyrinthProject
                 {
                     await next();
                 }
-
+                //if statement for restarting the game after winning
                 if (context.Request.Path == "/restart")
                 {
                     simulationController.SetWorld(new Models.World());
