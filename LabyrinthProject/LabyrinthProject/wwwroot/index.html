@@ -432,8 +432,6 @@
         function createLight(x, y, z) {
 
             var torchLight = new THREE.PointLight(0xff5500, 0.2, 1, 2);
-            //torchLight.castShadow = true;
-            torchLight.shadowDarkness = 0.5;
             torchLight.shadow.radius = 1;
             torchLight.position.set(x, y, z);
             scene.add(torchLight);
